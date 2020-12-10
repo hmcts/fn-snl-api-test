@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class uk.gov.hmcts.futurehearings.snl.acceptance.hearings.POSTHearingsValidationTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class uk.gov.hmcts.futurehearings.snl.acceptance.hearings.POSTHearingsValidationTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/uk.gov.hmcts.futurehearings.snl.acceptance.hearings.html">uk.gov.hmcts.futurehearings.snl.acceptance.hearings</a> &gt; POSTHearingsValidationTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">27</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.672s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">Destination System Header with invalid values - Param : Null_Value --&gt; null</td>
+<td class="success">test_destination_system_invalid_values(String, String)[1]</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Destination System Header with invalid values - Param : Empty_Space --&gt; </td>
+<td class="success">test_destination_system_invalid_values(String, String)[2]</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Destination System Header with invalid values - Param : Invalid_Destination_System --&gt; SNL</td>
+<td class="success">test_destination_system_invalid_values(String, String)[3]</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Destination System Header with invalid values - Param : Invalid_Destination_System --&gt; S&amp;amp;L</td>
+<td class="success">test_destination_system_invalid_values(String, String)[4]</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Destination System Header with invalid values - Param : Invalid_Destination_System --&gt; CfT</td>
+<td class="success">test_destination_system_invalid_values(String, String)[5]</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Mandatory Keys truncated from the Header - Key : Accept</td>
+<td class="success">test_header_keys_truncated(String)[1]</td>
+<td class="success">1.463s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">API call with Standard Header but unimplemented METHOD</td>
+<td class="success">test_invalid_REST_method()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">API call with Standard Header but slight Error URL</td>
+<td class="success">test_invalid_URL()</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Headers with all empty and null values</td>
+<td class="success">test_no_headers_populated()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Null_Value --&gt; null</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[1]</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Empty_Space --&gt; &quot; &quot;</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[2]</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Value --&gt; value</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[3]</td>
+<td class="success">0.017s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Date_Format --&gt; 2002-02-31T10:00:30-05:00Z</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[4]</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Date_Format --&gt; 2002-02-31T1000:30-05:00</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[5]</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Date_Format --&gt; 2002-02-31T10:00-30-05:00</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[6]</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Date_Format --&gt; 2002-10-02T15:00:00*05Z</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[7]</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Date_Format --&gt; 2002-10-02T15:00?0005Z</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[8]</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Request Created At System Header invalid values - Param : Invalid_Date_Format --&gt; 2002-10-02 15:00:00</td>
+<td class="success">test_request_created_at_invalid_values(String, String)[9]</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Source System Header invalid values - Param : Null_Value --&gt; null</td>
+<td class="success">test_source_system_invalid_values(String, String)[1]</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Source System Header invalid values - Param : Empty_Space --&gt; </td>
+<td class="success">test_source_system_invalid_values(String, String)[2]</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Source System Header invalid values - Param : Invalid_Source_System --&gt; SNL</td>
+<td class="success">test_source_system_invalid_values(String, String)[3]</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Source System Header invalid values - Param : Invalid_Source_System --&gt; CfT</td>
+<td class="success">test_source_system_invalid_values(String, String)[4]</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Source System Header invalid values - Param : Invalid_Source_System --&gt; S&amp;amp;L</td>
+<td class="success">test_source_system_invalid_values(String, String)[5]</td>
+<td class="success">0.012s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Successfully validated response with a valid payload but a ,charset appended to the Content-Type</td>
+<td class="success">test_successful_response_for_content_type_with_charset_not_appended()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Successfully validated response with an empty payload</td>
+<td class="success">test_successful_response_for_empty_json_body()</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Successfully validated response with all the header values</td>
+<td class="success">test_successful_response_with_a_complete_header()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Successfully validated response with mandatory header values</td>
+<td class="success">test_successful_response_with_a_mandatory_header()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2020-12-10 15:19:54.778  INFO 17125 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [uk.gov.hmcts.futurehearings.snl.acceptance.hearings.POSTHearingsValidationTest], using SpringBootContextLoader
+2020-12-10 15:19:54.779  INFO 17125 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [uk.gov.hmcts.futurehearings.snl.acceptance.hearings.POSTHearingsValidationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2020-12-10 15:19:54.784  INFO 17125 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2020-12-10 15:19:54.786  INFO 17125 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@45d2ff65, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1c701713, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@3117081c, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@602de15f, org.springframework.test.context.support.DirtiesContextTestExecutionListener@32d613e8, org.springframework.test.context.event.EventPublishingTestExecutionListener@2e82422e, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@27dcf80a, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@28f4c2b7, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@2abfdd12, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@16107959, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@56cccf39, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@58a34e2d]
+2020-12-10 15:19:54.796 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Test execution Class Initiated: uk.gov.hmcts.futurehearings.snl.acceptance.hearings.POSTHearingsValidationTest
+2020-12-10 15:19:54.797 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&amp;password=JTuREp6m4W9KyjbzFpnUFanh
+2020-12-10 15:19:54.798 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    &quot;accessToken&quot;: &quot;eyJ0eXAiOiJKV1QiLCJub25jZSI6Im9JeUFwU2NNN3Awa2MwaVBiSjlQZ2M5T0NMSjVxU05WRWVNZXV4Q2RkVHciLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80NDBkYjQ3NS0yNWJmLTQ3OTAtODI3NS05MzBkNGI2MWViMWMvIiwiaWF0IjoxNjA3NjEzMjk1LCJuYmYiOjE2MDc2MTMyOTUsImV4cCI6MTYwNzYxNzE5NSwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsidXJuOnVzZXI6cmVnaXN0ZXJzZWN1cml0eWluZm8iLCJ1cm46bWljcm9zb2Z0OnJlcTEiLCJ1cm46bWljcm9zb2Z0OnJlcTIiLCJ1cm46bWljcm9zb2Z0OnJlcTMiLCJjMSIsImMyIiwiYzMiLCJjNCIsImM1IiwiYzYiLCJjNyIsImM4IiwiYzkiLCJjMTAiLCJjMTEiLCJjMTIiLCJjMTMiLCJjMTQiLCJjMTUiLCJjMTYiLCJjMTciLCJjMTgiLCJjMTkiLCJjMjAiLCJjMjEiLCJjMjIiLCJjMjMiLCJjMjQiLCJjMjUiXSwiYWlvIjoiRTJSZ1lDZ3NrWnJVMytuM0pVNVM5ZmJpRCs4LzdTOFRTVE0rdFRKQk9TWG5SNDd4NVM4QSIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoidWF0LWNhc2VocWFwaS1hcHIiLCJhcHBpZCI6IjFiZTAyN2Q4LTc0NzgtNDIxOS04NGYwLTkwMzg4NTg3MGNmYSIsImFwcGlkYWNyIjoiMSIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjUxLjEzMi4yMjUuMTkzIiwibmFtZSI6ImFwaS11YXQtY2FzZWhxIiwib2lkIjoiNmUzZWY4ZDYtZmY1OC00ZGI4LWI2ZWEtM2UwOGZhNWZmOWZiIiwicGxhdGYiOiIxNCIsInB1aWQiOiIxMDAzMjAwMEU4RDg4NDJFIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzY3AiOiJVc2VyLlJlYWQgcHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzdWIiOiJnREZlaWs1ZkpEUTNzOVhvTndMRVdaOEZIQzNLa2kzLWxGbUxXYi1OaWVzIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik9DIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidW5pcXVlX25hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwidXBuIjoiYXBpLXVhdC1jYXNlaHFAbWNtc2htY3RzLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6Ijcyb2FvUmpCcjB1RjBKOEplanBOQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiSE81ZG9MVFJZc01TeXljWE1kU1hBaEhlb2ZlRDNsNkJTM0ZKYlF5UjFlSSJ9LCJ4bXNfdGNkdCI6MTU5NjQ0NDExNn0.ujajnzLeY9RvCaDR5OMePHhEl-iMMOkOx73sKqnKakwi2-5LHQ-rrcMKF5pHFdq6behj9yS7SH07rxz3j6JAZ9w4Rg_lyVZHmY-j3Tsxw5Rz75y9lW5XGKvaiPv6LRnzp-oedqviEqnuOUcvD7edXbcfRyBuOj2KC9C8YGCQzt1QPdrc_ZD4d7X5NhfyRxwlTi1AWFYXUD0lA-BuvXD0eTN6s0tV_9-Ovp6CwYZmbxinL0dOrzitDzVfSO4rYDIyxkNR90-aOQqEfsRh7TEgK3NBQ3PVvcyOJDcyOn70lWqSboW6YfuktVoZuXE553r6tS8PhzXteipqYlFpVA5RXg&quot;,
+    &quot;additionalProperties&quot;: {
+        
+    },
+    &quot;expiresIn&quot;: 3595,
+    &quot;extExpiresIn&quot;: 3595,
+    &quot;idToken&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIxYmUwMjdkOC03NDc4LTQyMTktODRmMC05MDM4ODU4NzBjZmEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjL3YyLjAiLCJpYXQiOjE2MDc2MTMyOTUsIm5iZiI6MTYwNzYxMzI5NSwiZXhwIjoxNjA3NjE3MTk1LCJuYW1lIjoiYXBpLXVhdC1jYXNlaHEiLCJvaWQiOiI2ZTNlZjhkNi1mZjU4LTRkYjgtYjZlYS0zZTA4ZmE1ZmY5ZmIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzdWIiOiJITzVkb0xUUllzTVN5eWNYTWRTWEFoSGVvZmVEM2w2QlMzRkpiUXlSMWVJIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidXRpIjoiNzJvYW9SakJyMHVGMEo4SmVqcE5BQSIsInZlciI6IjIuMCJ9.RbrafgMO8VPr8fxiO9nbaCT0wR8MZInmUi3G2FpnBoTaWxeYXfKGTSWcNVz91qOz_VKxz4tOK6M38vSsjPCY6LIq99T2Mo5JFl9Amu-8LliLiL6fA-QBz_CtaCMkBQo8DbLflNkOPIgrelWHjwauU1h5C_uSw53h54x7o5WIOQ8ffaajHCPmnNUnCX7dwj4O4EcNF8UdBctLHDDWA1CDIBBHU_eP0BUZu5Cdwqgo2jSyrfoskgaCG7T_kj3ihl1aWruLJnCfpdZtOLSwdMlXssGP38O2xwaHeZpSTS1AKqX4tssP1GKwKmWEbr5R8v20CyG5mp3cdrTZddWfEnSsBg&quot;,
+    &quot;refreshToken&quot;: &quot;0.AAAAdbQNRL8lkEeCdZMNS2HrHNgn4Bt4dBlChPCQOIWHDPpBAO4.AgABAAAAAAB2UyzwtQEKR7-rWbgdcBZIAQDs_wIA9P9ubcBKi_CnymYCMO4_4GrcModuoaz_coRGwynX1MOpc8CyGR78KZea82GQ1GlNXvtRxADEJ57iLPVTGczsJM1uJsJ5-kRgwFuaux-88eTPASuJ0XNJQRNew_3z5JFxqb-kCJYTqMnVXkMASfHAvjX_MT31B-uSOw9uVlSAWKS7oDOO8TepLbwCAHdJrOBlZeMfVn7Mp8yScp8uC5U-OVHfc_mbNh2tH6m4uvbrZcZE11WvYhV-hmmkRSgpZaRK_lSEhnw2Pf9Bhr2xrKsRBnI0GHWHWn_oc4HjQfm91gvztr4wMeaQkodoMjxUUGJObZL2Kx_WsJ_BlQX5dW22yYMnI4ZBwxs9xI7W-kYfGBs6a5OehZbiYuDXRiGhSWv_4U5S1ZtU4zu0f7yGZ6no0Zq0ZyZaoHmACYqXMQwMhwu9RXfbDDHKLBuWllSre5cclDKaS4B8ksmncQeG3EeEhKLm0lOrpu2JfRgfqkv0RPevItJLTKqCm9TFGS3ml2cXDI62N_9Wyp-cehPo0nslWPu5Cu5Fd1GxpDuwOiA2SzsibSfp7PuNTA21Bkor1KY5hWHxSzPdyYuDVXW1GFgdfr4GEDfcc5lUoYh1zDP8TTpKEZvKHsoi84XqfrBW77E0_29baUreKF371WVYpULbXkl57CicKhnkgs2uXMlIjCqfRwzgdAHuui-BbLO-T2JfwDGlJnfWsCoFDsnly5hKVtvuGuef4RE6I7TFHyCwLXrBng2CJ16KL8pP3959kGxVQ5FJkj-5p0bl1tIy34MxpDZO86zywcL0mVP2T2wAtWFfWvVGv_4bWHPizQo1Q_i7ccpSCCHm5NZnYm_BrDH4ka55gmRMq7eO-qa3qXUHuAvpUaoAua2JCr0CN7HcS6VDltDohlihqd2-huhju8yDyYjafaWsDSS0HVFn&quot;,
+    &quot;scope&quot;: &quot;User.Read profile openid email&quot;,
+    &quot;tokenType&quot;: &quot;Bearer&quot;
+}
+2020-12-10 15:20:00.228 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    &quot;accessToken&quot;: &quot;eyJ0eXAiOiJKV1QiLCJub25jZSI6Im9JeUFwU2NNN3Awa2MwaVBiSjlQZ2M5T0NMSjVxU05WRWVNZXV4Q2RkVHciLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80NDBkYjQ3NS0yNWJmLTQ3OTAtODI3NS05MzBkNGI2MWViMWMvIiwiaWF0IjoxNjA3NjEzMjk1LCJuYmYiOjE2MDc2MTMyOTUsImV4cCI6MTYwNzYxNzE5NSwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsidXJuOnVzZXI6cmVnaXN0ZXJzZWN1cml0eWluZm8iLCJ1cm46bWljcm9zb2Z0OnJlcTEiLCJ1cm46bWljcm9zb2Z0OnJlcTIiLCJ1cm46bWljcm9zb2Z0OnJlcTMiLCJjMSIsImMyIiwiYzMiLCJjNCIsImM1IiwiYzYiLCJjNyIsImM4IiwiYzkiLCJjMTAiLCJjMTEiLCJjMTIiLCJjMTMiLCJjMTQiLCJjMTUiLCJjMTYiLCJjMTciLCJjMTgiLCJjMTkiLCJjMjAiLCJjMjEiLCJjMjIiLCJjMjMiLCJjMjQiLCJjMjUiXSwiYWlvIjoiRTJSZ1lDZ3NrWnJVMytuM0pVNVM5ZmJpRCs4LzdTOFRTVE0rdFRKQk9TWG5SNDd4NVM4QSIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoidWF0LWNhc2VocWFwaS1hcHIiLCJhcHBpZCI6IjFiZTAyN2Q4LTc0NzgtNDIxOS04NGYwLTkwMzg4NTg3MGNmYSIsImFwcGlkYWNyIjoiMSIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjUxLjEzMi4yMjUuMTkzIiwibmFtZSI6ImFwaS11YXQtY2FzZWhxIiwib2lkIjoiNmUzZWY4ZDYtZmY1OC00ZGI4LWI2ZWEtM2UwOGZhNWZmOWZiIiwicGxhdGYiOiIxNCIsInB1aWQiOiIxMDAzMjAwMEU4RDg4NDJFIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzY3AiOiJVc2VyLlJlYWQgcHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzdWIiOiJnREZlaWs1ZkpEUTNzOVhvTndMRVdaOEZIQzNLa2kzLWxGbUxXYi1OaWVzIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik9DIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidW5pcXVlX25hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwidXBuIjoiYXBpLXVhdC1jYXNlaHFAbWNtc2htY3RzLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6Ijcyb2FvUmpCcjB1RjBKOEplanBOQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiSE81ZG9MVFJZc01TeXljWE1kU1hBaEhlb2ZlRDNsNkJTM0ZKYlF5UjFlSSJ9LCJ4bXNfdGNkdCI6MTU5NjQ0NDExNn0.ujajnzLeY9RvCaDR5OMePHhEl-iMMOkOx73sKqnKakwi2-5LHQ-rrcMKF5pHFdq6behj9yS7SH07rxz3j6JAZ9w4Rg_lyVZHmY-j3Tsxw5Rz75y9lW5XGKvaiPv6LRnzp-oedqviEqnuOUcvD7edXbcfRyBuOj2KC9C8YGCQzt1QPdrc_ZD4d7X5NhfyRxwlTi1AWFYXUD0lA-BuvXD0eTN6s0tV_9-Ovp6CwYZmbxinL0dOrzitDzVfSO4rYDIyxkNR90-aOQqEfsRh7TEgK3NBQ3PVvcyOJDcyOn70lWqSboW6YfuktVoZuXE553r6tS8PhzXteipqYlFpVA5RXg&quot;,
+    &quot;additionalProperties&quot;: {
+        
+    },
+    &quot;expiresIn&quot;: 3595,
+    &quot;extExpiresIn&quot;: 3595,
+    &quot;idToken&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIxYmUwMjdkOC03NDc4LTQyMTktODRmMC05MDM4ODU4NzBjZmEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjL3YyLjAiLCJpYXQiOjE2MDc2MTMyOTUsIm5iZiI6MTYwNzYxMzI5NSwiZXhwIjoxNjA3NjE3MTk1LCJuYW1lIjoiYXBpLXVhdC1jYXNlaHEiLCJvaWQiOiI2ZTNlZjhkNi1mZjU4LTRkYjgtYjZlYS0zZTA4ZmE1ZmY5ZmIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzdWIiOiJITzVkb0xUUllzTVN5eWNYTWRTWEFoSGVvZmVEM2w2QlMzRkpiUXlSMWVJIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidXRpIjoiNzJvYW9SakJyMHVGMEo4SmVqcE5BQSIsInZlciI6IjIuMCJ9.RbrafgMO8VPr8fxiO9nbaCT0wR8MZInmUi3G2FpnBoTaWxeYXfKGTSWcNVz91qOz_VKxz4tOK6M38vSsjPCY6LIq99T2Mo5JFl9Amu-8LliLiL6fA-QBz_CtaCMkBQo8DbLflNkOPIgrelWHjwauU1h5C_uSw53h54x7o5WIOQ8ffaajHCPmnNUnCX7dwj4O4EcNF8UdBctLHDDWA1CDIBBHU_eP0BUZu5Cdwqgo2jSyrfoskgaCG7T_kj3ihl1aWruLJnCfpdZtOLSwdMlXssGP38O2xwaHeZpSTS1AKqX4tssP1GKwKmWEbr5R8v20CyG5mp3cdrTZddWfEnSsBg&quot;,
+    &quot;refreshToken&quot;: &quot;0.AAAAdbQNRL8lkEeCdZMNS2HrHNgn4Bt4dBlChPCQOIWHDPpBAO4.AgABAAAAAAB2UyzwtQEKR7-rWbgdcBZIAQDs_wIA9P9ubcBKi_CnymYCMO4_4GrcModuoaz_coRGwynX1MOpc8CyGR78KZea82GQ1GlNXvtRxADEJ57iLPVTGczsJM1uJsJ5-kRgwFuaux-88eTPASuJ0XNJQRNew_3z5JFxqb-kCJYTqMnVXkMASfHAvjX_MT31B-uSOw9uVlSAWKS7oDOO8TepLbwCAHdJrOBlZeMfVn7Mp8yScp8uC5U-OVHfc_mbNh2tH6m4uvbrZcZE11WvYhV-hmmkRSgpZaRK_lSEhnw2Pf9Bhr2xrKsRBnI0GHWHWn_oc4HjQfm91gvztr4wMeaQkodoMjxUUGJObZL2Kx_WsJ_BlQX5dW22yYMnI4ZBwxs9xI7W-kYfGBs6a5OehZbiYuDXRiGhSWv_4U5S1ZtU4zu0f7yGZ6no0Zq0ZyZaoHmACYqXMQwMhwu9RXfbDDHKLBuWllSre5cclDKaS4B8ksmncQeG3EeEhKLm0lOrpu2JfRgfqkv0RPevItJLTKqCm9TFGS3ml2cXDI62N_9Wyp-cehPo0nslWPu5Cu5Fd1GxpDuwOiA2SzsibSfp7PuNTA21Bkor1KY5hWHxSzPdyYuDVXW1GFgdfr4GEDfcc5lUoYh1zDP8TTpKEZvKHsoi84XqfrBW77E0_29baUreKF371WVYpULbXkl57CicKhnkgs2uXMlIjCqfRwzgdAHuui-BbLO-T2JfwDGlJnfWsCoFDsnly5hKVtvuGuef4RE6I7TFHyCwLXrBng2CJ16KL8pP3959kGxVQ5FJkj-5p0bl1tIy34MxpDZO86zywcL0mVP2T2wAtWFfWvVGv_4bWHPizQo1Q_i7ccpSCCHm5NZnYm_BrDH4ka55gmRMq7eO-qa3qXUHuAvpUaoAua2JCr0CN7HcS6VDltDohlihqd2-huhju8yDyYjafaWsDSS0HVFn&quot;,
+    &quot;scope&quot;: &quot;User.Read profile openid email&quot;,
+    &quot;tokenType&quot;: &quot;Bearer&quot;
+}
+2020-12-10 15:20:00.241 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_header_keys_truncated
+2020-12-10 15:20:00.243 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:00.245 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Accep=application/json, Content-Type=application/json}
+2020-12-10 15:20:00.246 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Accep=application/json, Content-Type=application/json}
+2020-12-10 15:20:00.247 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The value of the baseURI : https://hmcts-uat.casehq.net
+2020-12-10 15:20:00.248 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The value of the path : /casehqapi/rest/hmcts/resources/hearings
+2020-12-10 15:20:00.248 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The value of the Authorization Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIxYmUwMjdkOC03NDc4LTQyMTktODRmMC05MDM4ODU4NzBjZmEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjL3YyLjAiLCJpYXQiOjE2MDc2MTMyOTUsIm5iZiI6MTYwNzYxMzI5NSwiZXhwIjoxNjA3NjE3MTk1LCJuYW1lIjoiYXBpLXVhdC1jYXNlaHEiLCJvaWQiOiI2ZTNlZjhkNi1mZjU4LTRkYjgtYjZlYS0zZTA4ZmE1ZmY5ZmIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzdWIiOiJITzVkb0xUUllzTVN5eWNYTWRTWEFoSGVvZmVEM2w2QlMzRkpiUXlSMWVJIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidXRpIjoiNzJvYW9SakJyMHVGMEo4SmVqcE5BQSIsInZlciI6IjIuMCJ9.RbrafgMO8VPr8fxiO9nbaCT0wR8MZInmUi3G2FpnBoTaWxeYXfKGTSWcNVz91qOz_VKxz4tOK6M38vSsjPCY6LIq99T2Mo5JFl9Amu-8LliLiL6fA-QBz_CtaCMkBQo8DbLflNkOPIgrelWHjwauU1h5C_uSw53h54x7o5WIOQ8ffaajHCPmnNUnCX7dwj4O4EcNF8UdBctLHDDWA1CDIBBHU_eP0BUZu5Cdwqgo2jSyrfoskgaCG7T_kj3ihl1aWruLJnCfpdZtOLSwdMlXssGP38O2xwaHeZpSTS1AKqX4tssP1GKwKmWEbr5R8v20CyG5mp3cdrTZddWfEnSsBg
+2020-12-10 15:20:00.248 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The value of the header : 8
+2020-12-10 15:20:00.253 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerSource-SystemThe value of the HeaderCFT
+2020-12-10 15:20:00.253 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerRequest-TypeThe value of the Headertext
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerRequest-Processed-AtThe value of the Header2012-03-19T07:22:00Z
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerSubscription-KeyThe value of the Headerpointless
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerRequest-Created-AtThe value of the Header2012-03-19T07:22:00Z
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerDestination-SystemThe value of the HeaderS&amp;L
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerAccepThe value of the Headerapplication/json
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The Key of the headerContent-TypeThe value of the Headerapplication/json
+2020-12-10 15:20:00.254 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.RestClientTemplate    : The value of the HTTP Status : 406
+{
+    &quot;errCode&quot;: &quot;9999&quot;,
+    &quot;errorDesc&quot;: &quot;Expected header 'Accept=application/json; version=1.2'&quot;,
+    &quot;errorLinkId&quot;: null
+}
+2020-12-10 15:20:01.691 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.v.e.SNLCommonErrorVerifier : Response{
+    &quot;errCode&quot;: &quot;9999&quot;,
+    &quot;errorDesc&quot;: &quot;Expected header 'Accept=application/json; version=1.2'&quot;,
+    &quot;errorLinkId&quot;: null
+}
+2020-12-10 15:20:01.699 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_header_keys_truncated
+2020-12-10 15:20:01.705 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_invalid_REST_method
+2020-12-10 15:20:01.706 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.706 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.707 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.707 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_invalid_REST_method
+2020-12-10 15:20:01.714 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_invalid_URL
+2020-12-10 15:20:01.715 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.716 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.716 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.716 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_invalid_URL
+2020-12-10 15:20:01.773 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.775 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.776 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=null, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.777 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=null, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.778 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.783 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.783 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.784 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=&quot; &quot;, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.784 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=&quot; &quot;, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.784 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.792 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.795 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.797 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=value, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.797 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=value, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.799 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.809 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.810 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.811 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-02-31T10:00:30-05:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.811 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-02-31T10:00:30-05:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.811 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.820 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.821 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.821 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-02-31T1000:30-05:00, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.822 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-02-31T1000:30-05:00, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.823 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.828 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.829 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.829 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-02-31T10:00-30-05:00, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.829 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-02-31T10:00-30-05:00, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.830 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.835 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.835 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.836 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-10-02T15:00:00*05Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.836 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-10-02T15:00:00*05Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.836 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.841 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.841 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.842 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-10-02T15:00?0005Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.842 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-10-02T15:00?0005Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.842 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.847 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.848 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.848 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-10-02 15:00:00, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.848 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2002-10-02 15:00:00, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.849 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_request_created_at_invalid_values
+2020-12-10 15:20:01.857 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_no_headers_populated
+2020-12-10 15:20:01.858 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.858 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=, Request-Type=, Request-Processed-At=, Accept=, Subscription-Key=, Request-Created-At=, Destination-System=, Content-Type=application/json}
+2020-12-10 15:20:01.858 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=, Request-Type=, Request-Processed-At=, Accept=, Subscription-Key=, Request-Created-At=, Destination-System=, Content-Type=application/json}
+2020-12-10 15:20:01.859 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.859 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=null, Request-Type=null, Request-Processed-At=null, Accept=null, Subscription-Key=null, Request-Created-At=null, Destination-System=null, Content-Type=application/json}
+2020-12-10 15:20:01.859 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=null, Request-Type=null, Request-Processed-At=null, Accept=null, Subscription-Key=null, Request-Created-At=null, Destination-System=null, Content-Type=application/json}
+2020-12-10 15:20:01.860 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_no_headers_populated
+2020-12-10 15:20:01.869 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_source_system_invalid_values
+2020-12-10 15:20:01.869 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.870 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=null, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.870 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=null, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.870 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_source_system_invalid_values
+2020-12-10 15:20:01.876 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_source_system_invalid_values
+2020-12-10 15:20:01.877 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.877 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.877 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.878 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_source_system_invalid_values
+2020-12-10 15:20:01.883 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_source_system_invalid_values
+2020-12-10 15:20:01.884 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.884 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=SNL, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.884 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=SNL, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.885 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_source_system_invalid_values
+2020-12-10 15:20:01.889 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_source_system_invalid_values
+2020-12-10 15:20:01.890 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.890 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CfT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.891 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CfT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.891 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_source_system_invalid_values
+2020-12-10 15:20:01.898 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_source_system_invalid_values
+2020-12-10 15:20:01.899 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.900 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=S&amp;amp;L, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.900 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=S&amp;amp;L, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.901 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_source_system_invalid_values
+2020-12-10 15:20:01.914 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.914 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.915 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=null, Content-Type=application/json}
+2020-12-10 15:20:01.915 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=null, Content-Type=application/json}
+2020-12-10 15:20:01.916 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.925 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.927 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.928 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=, Content-Type=application/json}
+2020-12-10 15:20:01.929 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=, Content-Type=application/json}
+2020-12-10 15:20:01.929 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.937 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.937 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.938 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=SNL, Content-Type=application/json}
+2020-12-10 15:20:01.938 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=SNL, Content-Type=application/json}
+2020-12-10 15:20:01.938 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.943 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.944 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.944 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.944 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.945 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.950 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.951 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.951 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=CfT, Content-Type=application/json}
+2020-12-10 15:20:01.951 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=Assault, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=CfT, Content-Type=application/json}
+2020-12-10 15:20:01.952 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_destination_system_invalid_values
+2020-12-10 15:20:01.958 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_successful_response_for_content_type_with_charset_not_appended
+2020-12-10 15:20:01.959 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.960 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.960 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.960 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_successful_response_for_content_type_with_charset_not_appended
+2020-12-10 15:20:01.964 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_successful_response_with_a_mandatory_header
+2020-12-10 15:20:01.964 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.965 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.965 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.965 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_successful_response_with_a_mandatory_header
+2020-12-10 15:20:01.969 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_successful_response_with_a_complete_header
+2020-12-10 15:20:01.969 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.970 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Cache-Control=no-cache, Content-Encoding=null, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.971 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Cache-Control=no-cache, Content-Encoding=null, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.972 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_successful_response_with_a_complete_header
+2020-12-10 15:20:01.978 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Before execution : test_successful_response_for_empty_json_body
+2020-12-10 15:20:01.978 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.common.TestingUtils          : File Found : true
+2020-12-10 15:20:01.979 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Header Map) : {Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.980 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.d.CommonDelegateImpl       : The value of the target header (Wiremock Header) :{Source-System=CFT, Request-Type=text, Request-Processed-At=2012-03-19T07:22:00Z, Accept=application/json;version=1.2, Subscription-Key=pointless, Request-Created-At=2012-03-19T07:22:00Z, Destination-System=S&amp;L, Content-Type=application/json}
+2020-12-10 15:20:01.980 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : After execution : test_successful_response_for_empty_json_body
+2020-12-10 15:20:01.984 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.test.SNLCommonHeaderTest   : Test execution Class Completed: uk.gov.hmcts.futurehearings.snl.acceptance.hearings.POSTHearingsValidationTest
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 6.6.1</a> at 10 Dec 2020, 15:20:08</p>
+</div>
+</div>
+</body>
+</html>

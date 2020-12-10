@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Test to Check the JWT Token Generator for OAuth, Note : In case of tests breaking - The client secret may change once a year" tests="15" skipped="0" failures="0" errors="0" timestamp="2020-12-10T15:19:15" hostname="Pettedsons-MBP.broadband" time="39.291">
+  <properties/>
+  <testcase name="Invalid UserName - Param : null" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="7.314"/>
+  <testcase name="Invalid UserName - Param : " classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.241"/>
+  <testcase name="Invalid UserName - Param :  " classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.232"/>
+  <testcase name="Invalid UserName - Param : api-sit-casehq@mcmshmcts.onmicrosoft.com" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="4.399"/>
+  <testcase name="Invalid Password - Param : null" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="5.163"/>
+  <testcase name="Invalid Password - Param : " classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.227"/>
+  <testcase name="Invalid Password - Param :  " classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.227"/>
+  <testcase name="Invalid Password - Param : https://hmcts-uat.casehq.net/hmi_oauth1/resources/hmi/token" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="5.331"/>
+  <testcase name="Invalid Password - Param : null" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="5.769"/>
+  <testcase name="Invalid Password - Param : " classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.202"/>
+  <testcase name="Invalid Password - Param :  " classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.205"/>
+  <testcase name="Invalid Password - Param : JTuREp6m4W9KyjbzFpnUfanh" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="5.091"/>
+  <testcase name="Test for Invalid OAuth Token" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.374"/>
+  <testcase name="Successfully validated response with the right response String" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="4.365"/>
+  <testcase name="Test for Expired OAuth Token" classname="uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest" time="0.133"/>
+  <system-out><![CDATA[2020-12-10 15:19:09.406  INFO   --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest], using SpringBootContextLoader
+2020-12-10 15:19:09.418  INFO   --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [uk.gov.hmcts.futurehearings.snl.acceptance.security.OAuthTokenGeneratorTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2020-12-10 15:19:09.780  INFO   --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2020-12-10 15:19:09.798  INFO   --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@eb606e, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@53f03b5c, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@4fa3aacf, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@454b4ae, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5fe74c5a, org.springframework.test.context.event.EventPublishingTestExecutionListener@d9fb621, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@5fb8908f, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7ee8be12, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1b08a809, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6bd63bf7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@70f1f2ea, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@4bd2dac8]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.4.RELEASE)
+
+2020-12-10 15:19:11.057  INFO 17125 --- [    Test worker] b.c.PropertySourceBootstrapConfiguration : Located property source: [BootstrapPropertySource {name='bootstrapProperties-propertiesvolume.null'}]
+2020-12-10 15:19:11.102  INFO 17125 --- [    Test worker] u.g.h.f.s.a.s.OAuthTokenGeneratorTest    : The following profiles are active: acceptance
+2020-12-10 15:19:12.362  WARN 17125 --- [    Test worker] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'hystrix.stream' contains invalid characters, please migrate to a valid format.
+2020-12-10 15:19:12.441  INFO 17125 --- [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ee69f49e-ffbb-30ac-9f49-f8773b281c4b
+2020-12-10 15:19:13.334  WARN 17125 --- [    Test worker] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-12-10 15:19:13.334  INFO 17125 --- [    Test worker] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-12-10 15:19:13.355  INFO 17125 --- [    Test worker] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@57247143
+2020-12-10 15:19:13.703  INFO 17125 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path ''
+2020-12-10 15:19:13.852  INFO 17125 --- [    Test worker] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-12-10 15:19:14.026  WARN 17125 --- [    Test worker] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-12-10 15:19:14.027  INFO 17125 --- [    Test worker] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-12-10 15:19:14.192  INFO 17125 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-12-10 15:19:14.855  INFO 17125 --- [    Test worker] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-12-10 15:19:14.877  INFO 17125 --- [    Test worker] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-12-10 15:19:14.929  INFO 17125 --- [    Test worker] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-12-10 15:19:15.055  INFO 17125 --- [    Test worker] u.g.h.f.s.a.s.OAuthTokenGeneratorTest    : Started OAuthTokenGeneratorTest in 5.196 seconds (JVM running for 7.231)
+2020-12-10 15:19:16.005 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=null&password=JTuREp6m4W9KyjbzFpnUFanh
+2020-12-10 15:19:16.005 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:22.449 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:22.794 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=&password=JTuREp6m4W9KyjbzFpnUFanh
+2020-12-10 15:19:22.795 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "AADSTS900144: The request body must contain the following parameter: 'username'.\r\nTrace ID: 87ebc9df-851d-4f3d-9cf9-ef3276db7600\r\nCorrelation ID: 3abf9396-fe48-473b-89b1-8b0575cbd211\r\nTimestamp: 2020-12-10 15:19:22Z"
+}
+2020-12-10 15:19:23.016 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "AADSTS900144: The request body must contain the following parameter: 'username'.\r\nTrace ID: 87ebc9df-851d-4f3d-9cf9-ef3276db7600\r\nCorrelation ID: 3abf9396-fe48-473b-89b1-8b0575cbd211\r\nTimestamp: 2020-12-10 15:19:22Z"
+}
+2020-12-10 15:19:23.041 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username= &password=JTuREp6m4W9KyjbzFpnUFanh
+2020-12-10 15:19:23.042 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "AADSTS900144: The request body must contain the following parameter: 'username'.\r\nTrace ID: b2f37037-7e10-4a20-ac36-173a00cc3a01\r\nCorrelation ID: ffaa4baa-700f-43ce-8eeb-7d69c397b0ef\r\nTimestamp: 2020-12-10 15:19:23Z"
+}
+2020-12-10 15:19:23.257 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "AADSTS900144: The request body must contain the following parameter: 'username'.\r\nTrace ID: b2f37037-7e10-4a20-ac36-173a00cc3a01\r\nCorrelation ID: ffaa4baa-700f-43ce-8eeb-7d69c397b0ef\r\nTimestamp: 2020-12-10 15:19:23Z"
+}
+2020-12-10 15:19:23.274 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-sit-casehq@mcmshmcts.onmicrosoft.com&password=JTuREp6m4W9KyjbzFpnUFanh
+2020-12-10 15:19:23.274 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:27.657 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:27.675 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=null
+2020-12-10 15:19:27.676 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:32.819 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:32.838 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=
+2020-12-10 15:19:32.838 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 96b4083e-4938-4d2f-bda6-788901469700\r\nCorrelation ID: 25c74e5c-0ae8-4709-a329-d79e1103fb04\r\nTimestamp: 2020-12-10 15:19:33Z"
+}
+2020-12-10 15:19:33.053 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 96b4083e-4938-4d2f-bda6-788901469700\r\nCorrelation ID: 25c74e5c-0ae8-4709-a329-d79e1103fb04\r\nTimestamp: 2020-12-10 15:19:33Z"
+}
+2020-12-10 15:19:33.065 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password= 
+2020-12-10 15:19:33.066 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 96829e42-cd51-4078-9226-41d8ba5f6000\r\nCorrelation ID: f5f70088-7d67-424d-a1b9-cfdc92c94854\r\nTimestamp: 2020-12-10 15:19:33Z"
+}
+2020-12-10 15:19:33.279 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 96829e42-cd51-4078-9226-41d8ba5f6000\r\nCorrelation ID: f5f70088-7d67-424d-a1b9-cfdc92c94854\r\nTimestamp: 2020-12-10 15:19:33Z"
+}
+2020-12-10 15:19:33.294 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=https://hmcts-uat.casehq.net/hmi_oauth1/resources/hmi/token
+2020-12-10 15:19:33.295 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:38.612 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:38.627 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=null
+2020-12-10 15:19:38.627 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:44.383 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:44.395 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=
+2020-12-10 15:19:44.395 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 46796365-96bf-4131-ae69-93c40ccc5400\r\nCorrelation ID: b3557c19-dc61-463a-908f-79b2a8dc28d2\r\nTimestamp: 2020-12-10 15:19:44Z"
+}
+2020-12-10 15:19:44.585 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 46796365-96bf-4131-ae69-93c40ccc5400\r\nCorrelation ID: b3557c19-dc61-463a-908f-79b2a8dc28d2\r\nTimestamp: 2020-12-10 15:19:44Z"
+}
+2020-12-10 15:19:44.597 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password= 
+2020-12-10 15:19:44.597 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 891fd3e3-fbab-4781-bbee-d87ee7c27000\r\nCorrelation ID: e021c900-8026-4c9e-881d-b81fd54d9e47\r\nTimestamp: 2020-12-10 15:19:44Z"
+}
+2020-12-10 15:19:44.787 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "AADSTS900144: The request body must contain the following parameter: 'password'.\r\nTrace ID: 891fd3e3-fbab-4781-bbee-d87ee7c27000\r\nCorrelation ID: e021c900-8026-4c9e-881d-b81fd54d9e47\r\nTimestamp: 2020-12-10 15:19:44Z"
+}
+2020-12-10 15:19:44.804 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=JTuREp6m4W9KyjbzFpnUfanh
+2020-12-10 15:19:44.804 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "message": "Invalid username/password"
+}
+2020-12-10 15:19:49.876 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "message": "Invalid username/password"
+}
+<html>
+  <head>
+    <title>401 Unauthorized</title>
+  </head>
+  <body>
+    <h1>Unauthorized</h1>
+    <p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+    <hr/>
+    <address>Apache/2.4.41 (Ubuntu) Server at hmcts-uat.casehq.net Port 80</address>
+  </body>
+</html>
+2020-12-10 15:19:50.264 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.s.OAuthTokenGeneratorTest    : <html>
+  <head>
+    <title>401 Unauthorized</title>
+  </head>
+  <body>
+    <h1>Unauthorized</h1>
+    <p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+    <hr/>
+    <address>Apache/2.4.41 (Ubuntu) Server at hmcts-uat.casehq.net Port 80</address>
+  </body>
+</html>
+2020-12-10 15:19:50.270 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Body : username=api-uat-casehq@mcmshmcts.onmicrosoft.com&password=JTuREp6m4W9KyjbzFpnUFanh
+2020-12-10 15:19:50.270 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : The value of the Target URL : https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
+{
+    "accessToken": "eyJ0eXAiOiJKV1QiLCJub25jZSI6IjVqRUdPeXB5clZpU3RJR3FqQjBxSTZlRjZXaS1jVkRqb3VJUzNabG1MbFkiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80NDBkYjQ3NS0yNWJmLTQ3OTAtODI3NS05MzBkNGI2MWViMWMvIiwiaWF0IjoxNjA3NjEzMjkwLCJuYmYiOjE2MDc2MTMyOTAsImV4cCI6MTYwNzYxNzE5MCwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsidXJuOnVzZXI6cmVnaXN0ZXJzZWN1cml0eWluZm8iLCJ1cm46bWljcm9zb2Z0OnJlcTEiLCJ1cm46bWljcm9zb2Z0OnJlcTIiLCJ1cm46bWljcm9zb2Z0OnJlcTMiLCJjMSIsImMyIiwiYzMiLCJjNCIsImM1IiwiYzYiLCJjNyIsImM4IiwiYzkiLCJjMTAiLCJjMTEiLCJjMTIiLCJjMTMiLCJjMTQiLCJjMTUiLCJjMTYiLCJjMTciLCJjMTgiLCJjMTkiLCJjMjAiLCJjMjEiLCJjMjIiLCJjMjMiLCJjMjQiLCJjMjUiXSwiYWlvIjoiRTJSZ1lBamdQNVVzVVM5ZnZQOXc0aFdtdGhTWGoxRnJKLzJyMk9PKzdYTHQrNDE4UElrQSIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoidWF0LWNhc2VocWFwaS1hcHIiLCJhcHBpZCI6IjFiZTAyN2Q4LTc0NzgtNDIxOS04NGYwLTkwMzg4NTg3MGNmYSIsImFwcGlkYWNyIjoiMSIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjUxLjEzMi4yMjUuMTkzIiwibmFtZSI6ImFwaS11YXQtY2FzZWhxIiwib2lkIjoiNmUzZWY4ZDYtZmY1OC00ZGI4LWI2ZWEtM2UwOGZhNWZmOWZiIiwicGxhdGYiOiIxNCIsInB1aWQiOiIxMDAzMjAwMEU4RDg4NDJFIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzY3AiOiJVc2VyLlJlYWQgcHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzdWIiOiJnREZlaWs1ZkpEUTNzOVhvTndMRVdaOEZIQzNLa2kzLWxGbUxXYi1OaWVzIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik9DIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidW5pcXVlX25hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwidXBuIjoiYXBpLXVhdC1jYXNlaHFAbWNtc2htY3RzLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6IktOTUR6WUxvRUUtQzNnNmZxcUE5QUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiSE81ZG9MVFJZc01TeXljWE1kU1hBaEhlb2ZlRDNsNkJTM0ZKYlF5UjFlSSJ9LCJ4bXNfdGNkdCI6MTU5NjQ0NDExNn0.Hbm__yL0fHKix7WJoQswtg7m6dZDyuJHWCpuOiHllAQgSvrb5ZBHPKmpYLH_YKiJ3tP6_U1eHxbrLcEgD4MlLg8JCqMBsaOoB40W_UJc78sh6Qnl4Jh9dteX0otRKTF0rQDnHMr-nEAgZdJwSHsqCWXcvHTDPShS2-VRIkeKQS3jY4TnlNwQvYcWvkzTVQtIQtPoauIMhRyRxgSCK-cqsi1JHryYN6obETXlIGUJjHI4vsghoWIhmpWR8IY4AKM10JgDfbvBgPHF3M0rKvvIJW66H0G-FCgxYzpSj1PPBd4L4nTzWyOk7LHeBXsi_JfnFdvZDTrKIXUuLiM1np5eWw",
+    "additionalProperties": {
+        
+    },
+    "expiresIn": 3596,
+    "extExpiresIn": 3596,
+    "idToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIxYmUwMjdkOC03NDc4LTQyMTktODRmMC05MDM4ODU4NzBjZmEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjL3YyLjAiLCJpYXQiOjE2MDc2MTMyOTAsIm5iZiI6MTYwNzYxMzI5MCwiZXhwIjoxNjA3NjE3MTkwLCJuYW1lIjoiYXBpLXVhdC1jYXNlaHEiLCJvaWQiOiI2ZTNlZjhkNi1mZjU4LTRkYjgtYjZlYS0zZTA4ZmE1ZmY5ZmIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzdWIiOiJITzVkb0xUUllzTVN5eWNYTWRTWEFoSGVvZmVEM2w2QlMzRkpiUXlSMWVJIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidXRpIjoiS05NRHpZTG9FRS1DM2c2ZnFxQTlBQSIsInZlciI6IjIuMCJ9.ef5LvGfGZlDwRUy9PIN0vzQTTSL1KkQD7vpcGxYZpvldEe0ftgXXFoGF-mdNJ0BcFX3pfwAUzLfm8E27ydGFJiSAALp4PcbCBEK6GBB6j2MyhrrH1cOlKgAHWEaTer0WvJC4tsgv7h5tbfga4vVOvtfg8hvepZIEfmVDG5KCrz56O0wF-GWGI2AN1YrM7vWCv--SLa_86JO8Po5oNhcqFR1CfRKoGAupegGf_y1IpFXentbxVWsW9k1hiCcjCziZ41hkHFyCw33EvJz6oO1bCWnS1cCEtL4lhC2TtqJymyqwwtOCQPwS6uuaM50_5XPWb5kby0-RsIDQDlRKQjf9ow",
+    "refreshToken": "0.AAAAdbQNRL8lkEeCdZMNS2HrHNgn4Bt4dBlChPCQOIWHDPpBAO4.AgABAAAAAAB2UyzwtQEKR7-rWbgdcBZIAQDs_wIA9P8NSfv13A2kCqJzXHeMH9nRVFecthsJfO3t8CzioXvjrPEYgU26GZsly0SuEZtvQjlzxh4sJWldS8RQz0n5bPBVWSul5FruMAYnfslOTnoXL7toMSJjnLF2dhyTG2W2EfA3P5rVSr0VEAxOCn0DOOKSiDJ2dXIaz7NTdxvx8U5QSDl5lHgxD9_pj7_8H30fjjYW8U5eupWEe1bNQryaaeXJHv9R9BGyBu3gLhx2-6pKEBJ8K7LAymkPcbd5PkS6TgmX1Fjl5n72cmhCF9JOD5nu6A183xdef71M5OuWSbDpqeM7rCtV37xehxG8P5AypwlvRbJpOxavbNHFqsGk3t_sd2NMqegSWy8FFfDwsOjmMRW4Q41j03hXmhqIYtB2mGPsujDnLDR00hhnoTsvKeMJ1X-jbGSthx53F-B-xWuWaW89pK2gHV6xy3Pm3WD7vGyCq5QPbwA211NM5OWjFs2XpObJDkpMhI1Y7N55f7lDC5reTxAGwvY06H8ITO_AOiSKxjC8U_K6ni8R8PpedBL_PEb1W4VV5ZsD6n_4Gs336R8PdEgDECtTKZhDMMjR0qjYs-45t-yW6EYauZS4pvLJp5gaMVBl79zxjOIWJWnrmyPhC358WnyyWTMCGHczFbvgT3D8YM--pky8IkNecrJB3tAVc6CztBXnt7DKlXb4LoA0Pi6QnsvFt2ofo8zMAl8G7chIQT5c_7VJopo_ADAIL8AvEsEF-3uq7Wb6-Xwx_zFqca72sMADo2oqeSk2kSKsPL41XtnKH8Y5KcsLcVK0079gZ9zq3bk8yE2itInReEX8qGnjmZiF8wf11kLQJ6LL8oGMzm63SoPgPEyOCbrKOjb4u_v1bU5cNWpCSJDt6K2X5T60m7UliifJ0pz1hui2BychB_zNC6zNe6UPCvqH9M553tDgEa60",
+    "scope": "User.Read profile openid email",
+    "tokenType": "Bearer"
+}
+2020-12-10 15:19:54.617 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.c.s.OAuthTokenGenerator      : {
+    "accessToken": "eyJ0eXAiOiJKV1QiLCJub25jZSI6IjVqRUdPeXB5clZpU3RJR3FqQjBxSTZlRjZXaS1jVkRqb3VJUzNabG1MbFkiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80NDBkYjQ3NS0yNWJmLTQ3OTAtODI3NS05MzBkNGI2MWViMWMvIiwiaWF0IjoxNjA3NjEzMjkwLCJuYmYiOjE2MDc2MTMyOTAsImV4cCI6MTYwNzYxNzE5MCwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsidXJuOnVzZXI6cmVnaXN0ZXJzZWN1cml0eWluZm8iLCJ1cm46bWljcm9zb2Z0OnJlcTEiLCJ1cm46bWljcm9zb2Z0OnJlcTIiLCJ1cm46bWljcm9zb2Z0OnJlcTMiLCJjMSIsImMyIiwiYzMiLCJjNCIsImM1IiwiYzYiLCJjNyIsImM4IiwiYzkiLCJjMTAiLCJjMTEiLCJjMTIiLCJjMTMiLCJjMTQiLCJjMTUiLCJjMTYiLCJjMTciLCJjMTgiLCJjMTkiLCJjMjAiLCJjMjEiLCJjMjIiLCJjMjMiLCJjMjQiLCJjMjUiXSwiYWlvIjoiRTJSZ1lBamdQNVVzVVM5ZnZQOXc0aFdtdGhTWGoxRnJKLzJyMk9PKzdYTHQrNDE4UElrQSIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoidWF0LWNhc2VocWFwaS1hcHIiLCJhcHBpZCI6IjFiZTAyN2Q4LTc0NzgtNDIxOS04NGYwLTkwMzg4NTg3MGNmYSIsImFwcGlkYWNyIjoiMSIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjUxLjEzMi4yMjUuMTkzIiwibmFtZSI6ImFwaS11YXQtY2FzZWhxIiwib2lkIjoiNmUzZWY4ZDYtZmY1OC00ZGI4LWI2ZWEtM2UwOGZhNWZmOWZiIiwicGxhdGYiOiIxNCIsInB1aWQiOiIxMDAzMjAwMEU4RDg4NDJFIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzY3AiOiJVc2VyLlJlYWQgcHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzdWIiOiJnREZlaWs1ZkpEUTNzOVhvTndMRVdaOEZIQzNLa2kzLWxGbUxXYi1OaWVzIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik9DIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidW5pcXVlX25hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwidXBuIjoiYXBpLXVhdC1jYXNlaHFAbWNtc2htY3RzLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6IktOTUR6WUxvRUUtQzNnNmZxcUE5QUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiSE81ZG9MVFJZc01TeXljWE1kU1hBaEhlb2ZlRDNsNkJTM0ZKYlF5UjFlSSJ9LCJ4bXNfdGNkdCI6MTU5NjQ0NDExNn0.Hbm__yL0fHKix7WJoQswtg7m6dZDyuJHWCpuOiHllAQgSvrb5ZBHPKmpYLH_YKiJ3tP6_U1eHxbrLcEgD4MlLg8JCqMBsaOoB40W_UJc78sh6Qnl4Jh9dteX0otRKTF0rQDnHMr-nEAgZdJwSHsqCWXcvHTDPShS2-VRIkeKQS3jY4TnlNwQvYcWvkzTVQtIQtPoauIMhRyRxgSCK-cqsi1JHryYN6obETXlIGUJjHI4vsghoWIhmpWR8IY4AKM10JgDfbvBgPHF3M0rKvvIJW66H0G-FCgxYzpSj1PPBd4L4nTzWyOk7LHeBXsi_JfnFdvZDTrKIXUuLiM1np5eWw",
+    "additionalProperties": {
+        
+    },
+    "expiresIn": 3596,
+    "extExpiresIn": 3596,
+    "idToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIxYmUwMjdkOC03NDc4LTQyMTktODRmMC05MDM4ODU4NzBjZmEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjL3YyLjAiLCJpYXQiOjE2MDc2MTMyOTAsIm5iZiI6MTYwNzYxMzI5MCwiZXhwIjoxNjA3NjE3MTkwLCJuYW1lIjoiYXBpLXVhdC1jYXNlaHEiLCJvaWQiOiI2ZTNlZjhkNi1mZjU4LTRkYjgtYjZlYS0zZTA4ZmE1ZmY5ZmIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzdWIiOiJITzVkb0xUUllzTVN5eWNYTWRTWEFoSGVvZmVEM2w2QlMzRkpiUXlSMWVJIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidXRpIjoiS05NRHpZTG9FRS1DM2c2ZnFxQTlBQSIsInZlciI6IjIuMCJ9.ef5LvGfGZlDwRUy9PIN0vzQTTSL1KkQD7vpcGxYZpvldEe0ftgXXFoGF-mdNJ0BcFX3pfwAUzLfm8E27ydGFJiSAALp4PcbCBEK6GBB6j2MyhrrH1cOlKgAHWEaTer0WvJC4tsgv7h5tbfga4vVOvtfg8hvepZIEfmVDG5KCrz56O0wF-GWGI2AN1YrM7vWCv--SLa_86JO8Po5oNhcqFR1CfRKoGAupegGf_y1IpFXentbxVWsW9k1hiCcjCziZ41hkHFyCw33EvJz6oO1bCWnS1cCEtL4lhC2TtqJymyqwwtOCQPwS6uuaM50_5XPWb5kby0-RsIDQDlRKQjf9ow",
+    "refreshToken": "0.AAAAdbQNRL8lkEeCdZMNS2HrHNgn4Bt4dBlChPCQOIWHDPpBAO4.AgABAAAAAAB2UyzwtQEKR7-rWbgdcBZIAQDs_wIA9P8NSfv13A2kCqJzXHeMH9nRVFecthsJfO3t8CzioXvjrPEYgU26GZsly0SuEZtvQjlzxh4sJWldS8RQz0n5bPBVWSul5FruMAYnfslOTnoXL7toMSJjnLF2dhyTG2W2EfA3P5rVSr0VEAxOCn0DOOKSiDJ2dXIaz7NTdxvx8U5QSDl5lHgxD9_pj7_8H30fjjYW8U5eupWEe1bNQryaaeXJHv9R9BGyBu3gLhx2-6pKEBJ8K7LAymkPcbd5PkS6TgmX1Fjl5n72cmhCF9JOD5nu6A183xdef71M5OuWSbDpqeM7rCtV37xehxG8P5AypwlvRbJpOxavbNHFqsGk3t_sd2NMqegSWy8FFfDwsOjmMRW4Q41j03hXmhqIYtB2mGPsujDnLDR00hhnoTsvKeMJ1X-jbGSthx53F-B-xWuWaW89pK2gHV6xy3Pm3WD7vGyCq5QPbwA211NM5OWjFs2XpObJDkpMhI1Y7N55f7lDC5reTxAGwvY06H8ITO_AOiSKxjC8U_K6ni8R8PpedBL_PEb1W4VV5ZsD6n_4Gs336R8PdEgDECtTKZhDMMjR0qjYs-45t-yW6EYauZS4pvLJp5gaMVBl79zxjOIWJWnrmyPhC358WnyyWTMCGHczFbvgT3D8YM--pky8IkNecrJB3tAVc6CztBXnt7DKlXb4LoA0Pi6QnsvFt2ofo8zMAl8G7chIQT5c_7VJopo_ADAIL8AvEsEF-3uq7Wb6-Xwx_zFqca72sMADo2oqeSk2kSKsPL41XtnKH8Y5KcsLcVK0079gZ9zq3bk8yE2itInReEX8qGnjmZiF8wf11kLQJ6LL8oGMzm63SoPgPEyOCbrKOjb4u_v1bU5cNWpCSJDt6K2X5T60m7UliifJ0pz1hui2BychB_zNC6zNe6UPCvqH9M553tDgEa60",
+    "scope": "User.Read profile openid email",
+    "tokenType": "Bearer"
+}
+2020-12-10 15:19:54.629 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.s.OAuthTokenGeneratorTest    : The value of Token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIxYmUwMjdkOC03NDc4LTQyMTktODRmMC05MDM4ODU4NzBjZmEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjL3YyLjAiLCJpYXQiOjE2MDc2MTMyOTAsIm5iZiI6MTYwNzYxMzI5MCwiZXhwIjoxNjA3NjE3MTkwLCJuYW1lIjoiYXBpLXVhdC1jYXNlaHEiLCJvaWQiOiI2ZTNlZjhkNi1mZjU4LTRkYjgtYjZlYS0zZTA4ZmE1ZmY5ZmIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhcGktdWF0LWNhc2VocUBtY21zaG1jdHMub25taWNyb3NvZnQuY29tIiwicmgiOiIwLkFBQUFkYlFOUkw4bGtFZUNkWk1OUzJIckhOZ240QnQ0ZEJsQ2hQQ1FPSVdIRFBwQkFPNC4iLCJzdWIiOiJITzVkb0xUUllzTVN5eWNYTWRTWEFoSGVvZmVEM2w2QlMzRkpiUXlSMWVJIiwidGlkIjoiNDQwZGI0NzUtMjViZi00NzkwLTgyNzUtOTMwZDRiNjFlYjFjIiwidXRpIjoiS05NRHpZTG9FRS1DM2c2ZnFxQTlBQSIsInZlciI6IjIuMCJ9.ef5LvGfGZlDwRUy9PIN0vzQTTSL1KkQD7vpcGxYZpvldEe0ftgXXFoGF-mdNJ0BcFX3pfwAUzLfm8E27ydGFJiSAALp4PcbCBEK6GBB6j2MyhrrH1cOlKgAHWEaTer0WvJC4tsgv7h5tbfga4vVOvtfg8hvepZIEfmVDG5KCrz56O0wF-GWGI2AN1YrM7vWCv--SLa_86JO8Po5oNhcqFR1CfRKoGAupegGf_y1IpFXentbxVWsW9k1hiCcjCziZ41hkHFyCw33EvJz6oO1bCWnS1cCEtL4lhC2TtqJymyqwwtOCQPwS6uuaM50_5XPWb5kby0-RsIDQDlRKQjf9ow
+<html>
+  <head>
+    <title>401 Unauthorized</title>
+  </head>
+  <body>
+    <h1>Unauthorized</h1>
+    <p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+    <hr/>
+    <address>Apache/2.4.41 (Ubuntu) Server at hmcts-uat.casehq.net Port 80</address>
+  </body>
+</html>
+2020-12-10 15:19:54.761 DEBUG 17125 --- [    Test worker] u.g.h.f.s.a.s.OAuthTokenGeneratorTest    : <html>
+  <head>
+    <title>401 Unauthorized</title>
+  </head>
+  <body>
+    <h1>Unauthorized</h1>
+    <p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+    <hr/>
+    <address>Apache/2.4.41 (Ubuntu) Server at hmcts-uat.casehq.net Port 80</address>
+  </body>
+</html>
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
