@@ -4,7 +4,7 @@ targetSubscriptionKey: ${ENDPOINT_SUBSCRIPTION_KEY}
 hmiApiRootContext : /casehqapi/rest/hmcts/
 hearingsApiRootContext: /casehqapi/rest/hmcts/resources/hearings
 sessionsApiRootContext: /casehqapi/rest/hmcts/resources/sessions
-#hearings_idRootContext: /hmi/hearings/%s
+hearingsApi_idRootContext: /casehqapi/rest/hmcts/resources/hearings/%s
 #schedulesApiRootContext: /hmi/schedules
 #resourcesRootContext: /hmi/resources
 #resourcesByLocationRootContext: /hmi/resources/location/
