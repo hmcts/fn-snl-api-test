@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hmcts/spring-boot-template.svg?branch=master)](https://travis-ci.org/hmcts/spring-boot-template)
 
+
 ## Purpose
 
 The purpose of this template is to speed up the creation of new Spring applications within HMCTS
