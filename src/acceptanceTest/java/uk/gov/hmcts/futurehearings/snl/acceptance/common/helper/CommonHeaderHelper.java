@@ -1,6 +1,6 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.common.helper;
 
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.header.dto.factory.PayloadHeaderDTOFactory.buildStandardBuinessHeaderPart;
+import static uk.gov.hmcts.futurehearings.snl.acceptance.common.header.dto.factory.PayloadHeaderDTOFactory.buildStandardBusinessHeaderPart;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.header.dto.factory.PayloadHeaderDTOFactory.buildStandardSytemHeaderPart;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.header.dto.factory.PayloadHeaderDTOFactory.convertToMapAfterHeadersRemoved;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.header.dto.factory.PayloadHeaderDTOFactory.convertToMapAfterTruncatingHeaderKey;
@@ -11,6 +11,7 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.header.dto.facto
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import io.restassured.http.Headers;
 import org.springframework.http.MediaType;
@@ -24,7 +25,7 @@ public class CommonHeaderHelper {
     public static final Map<String, String> createCompletePayloadHeader(final String subscriptionKey) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE+";version=1.2",
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "no-cache",
                 null,
@@ -32,20 +33,22 @@ public class CommonHeaderHelper {
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                "text"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
     public static final Map<String, String> createStandardPayloadHeader(final String subscriptionKey) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE+";version=1.2",
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                "text"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
@@ -53,7 +56,7 @@ public class CommonHeaderHelper {
                                                                                Map<String, String> duplicateHeaderValues) {
 
         return buildHeaderWithDoubleValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "no-cache",
                 null,
@@ -61,7 +64,8 @@ public class CommonHeaderHelper {
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                "Assault",
+                "text",
+                UUID.randomUUID().toString(),
                 duplicateHeaderValues
         );
     }
@@ -69,6 +73,7 @@ public class CommonHeaderHelper {
     public static final Map<String, String> createHeaderWithAllValuesNull() {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
+                null,
                 null,
                 null,
                 null,
@@ -88,6 +93,7 @@ public class CommonHeaderHelper {
                 "",
                 "",
                 "",
+                "",
                 ""
         );
     }
@@ -96,13 +102,14 @@ public class CommonHeaderHelper {
                                                                                final List<String> headersToBeTruncated) {
 
         return buildHeaderWithValuesWithKeysTruncated(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
                 "text",
+                UUID.randomUUID().toString(),
                 headersToBeTruncated
         );
     }
@@ -111,13 +118,14 @@ public class CommonHeaderHelper {
                                                                              final List<String> headersToBeRemoved) {
 
         return buildHeaderWithValuesWithKeysTruncated(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                "Assault",
+                "text",
+                UUID.randomUUID().toString(),
                 headersToBeRemoved
         );
     }
@@ -126,13 +134,14 @@ public class CommonHeaderHelper {
                                                                         final String sourceSystem) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
                 sourceSystem,
                 DESTINATION_SYSTEM,
-                "Assault"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
@@ -140,13 +149,14 @@ public class CommonHeaderHelper {
                                                                              final String destinationSystem) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 destinationSystem,
-                "Assault"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
@@ -154,13 +164,14 @@ public class CommonHeaderHelper {
                                                                                   final String requestCreatedAt) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 requestCreatedAt,
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                "Assault"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
@@ -168,27 +179,29 @@ public class CommonHeaderHelper {
                                                                                     final String requestProcessedAt) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 requestProcessedAt,
                 "CFT",
                 DESTINATION_SYSTEM,
-                "Assault"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
-    public static Map<String, String> createHeaderWithRequestTypeAtSystemValue(final String subscriptionKey,
-                                                                               final String requestType) {
+    public static Map<String, String> createHeaderWithTransactionIdHMCTSAtSystemValue(final String subscriptionKey,
+                                                                                 final String transactionIdHMCTS) {
 
         return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                requestType
+                "text",
+                transactionIdHMCTS
         );
     }
 
@@ -202,7 +215,8 @@ public class CommonHeaderHelper {
                 "2012-03-19T07:22:00Z",
                 "CFT",
                 DESTINATION_SYSTEM,
-                "Assault"
+                "text",
+                UUID.randomUUID().toString()
         );
     }
 
@@ -220,16 +234,16 @@ public class CommonHeaderHelper {
 
         Map<String, String> headers = convertToMapWithMandatoryHeaders(buildStandardSytemHeaderPart(
                 MediaType.APPLICATION_JSON_VALUE,
-                acceptType,
+                acceptType + "; version=1.2",
                 null,
                 null,
                 subscriptionKey,
                 null),
-                buildStandardBuinessHeaderPart(requestCreatedAt,
+                buildStandardBusinessHeaderPart(requestCreatedAt,
                         requestProcessedAt,
                         sourceSystem,
                         destinationSystem,
-                        requestType));
+                        requestType, UUID.randomUUID().toString()));
         headers.put(deprecatedHeaderKey, deprecatedHeaderVal);
         return Collections.unmodifiableMap(headers);
     }
@@ -241,7 +255,8 @@ public class CommonHeaderHelper {
                                                              final String requestProcessedAt,
                                                              final String sourceSystem,
                                                              final String destinationSystem,
-                                                             final String requestType) {
+                                                             final String requestType,
+                                                             final String transactionIdHMCTS) {
         return Collections.unmodifiableMap(convertToMapWithMandatoryHeaders(buildStandardSytemHeaderPart(
                 contentType,
                 acceptType,
@@ -249,11 +264,11 @@ public class CommonHeaderHelper {
                 null,
                 subscriptionKey,
                 null),
-                buildStandardBuinessHeaderPart(requestCreatedDate,
+                buildStandardBusinessHeaderPart(requestCreatedDate,
                         requestProcessedAt,
                         sourceSystem,
                         destinationSystem,
-                        requestType)));
+                        requestType, transactionIdHMCTS)));
     }
 
     private static Map<String, String> buildHeaderWithValues(final String contentType,
@@ -265,7 +280,8 @@ public class CommonHeaderHelper {
                                                              final String requestProcessedAt,
                                                              final String sourceSystem,
                                                              final String destinationSystem,
-                                                             final String requestType) {
+                                                             final String requestType,
+                                                             final String transactionIdHMCTS) {
         return Collections.unmodifiableMap(convertToMapWithAllHeaders(buildStandardSytemHeaderPart(
                 contentType,
                 acceptType,
@@ -273,11 +289,11 @@ public class CommonHeaderHelper {
                 contentEncoding,
                 subscriptionKey,
                 cacheControl),
-                buildStandardBuinessHeaderPart(requestCreatedDate,
+                buildStandardBusinessHeaderPart(requestCreatedDate,
                         requestProcessedAt,
                         sourceSystem,
                         destinationSystem,
-                        requestType)));
+                        requestType, transactionIdHMCTS)));
     }
 
     private static Headers buildHeaderWithDoubleValues(final String contentType,
@@ -290,6 +306,7 @@ public class CommonHeaderHelper {
                                                        final String sourceSystem,
                                                        final String destinationSystem,
                                                        final String requestType,
+                                                       final String transactionIdHMCTS,
                                                        final Map<String, String> extraHeaderValue) {
         return convertToRestAssuredHeaderRequiredHeaders(buildStandardSytemHeaderPart(
                 contentType,
@@ -298,11 +315,11 @@ public class CommonHeaderHelper {
                 contentEncoding,
                 subscriptionKey,
                 cacheControl),
-                buildStandardBuinessHeaderPart(requestCreatedDate,
+                buildStandardBusinessHeaderPart(requestCreatedDate,
                         requestProcessedAt,
                         sourceSystem,
                         destinationSystem,
-                        requestType), extraHeaderValue);
+                        requestType, transactionIdHMCTS), extraHeaderValue);
     }
 
     private static Map<String, String> buildHeaderWithValuesWithKeysTruncated(final String contentType,
@@ -313,6 +330,7 @@ public class CommonHeaderHelper {
                                                                               final String sourceSystem,
                                                                               final String destinationSystem,
                                                                               final String requestType,
+                                                                              final String transactionIdHMCTS,
                                                                               List<String> headersToTruncate) {
         return Collections.unmodifiableMap(convertToMapAfterTruncatingHeaderKey(buildStandardSytemHeaderPart(
                 contentType,
@@ -321,11 +339,11 @@ public class CommonHeaderHelper {
                 null,
                 subscriptionKey,
                 null),
-                buildStandardBuinessHeaderPart(requestCreatedDate,
+                buildStandardBusinessHeaderPart(requestCreatedDate,
                         requestProcessedAt,
                         sourceSystem,
                         destinationSystem,
-                        requestType), headersToTruncate));
+                        requestType, transactionIdHMCTS), headersToTruncate));
 
     }
 
@@ -337,6 +355,7 @@ public class CommonHeaderHelper {
                                                                             final String sourceSystem,
                                                                             final String destinationSystem,
                                                                             final String requestType,
+                                                                            final String transactionIdHMCTS,
                                                                             List<String> headersToBeRemoved) {
         return Collections.unmodifiableMap(convertToMapAfterHeadersRemoved(buildStandardSytemHeaderPart(
                 contentType,
@@ -345,11 +364,11 @@ public class CommonHeaderHelper {
                 null,
                 subscriptionKey,
                 null),
-                buildStandardBuinessHeaderPart(requestCreatedDate,
+                buildStandardBusinessHeaderPart(requestCreatedDate,
                         requestProcessedAt,
                         sourceSystem,
                         destinationSystem,
-                        requestType), headersToBeRemoved));
+                        requestType,transactionIdHMCTS), headersToBeRemoved));
 
     }
 

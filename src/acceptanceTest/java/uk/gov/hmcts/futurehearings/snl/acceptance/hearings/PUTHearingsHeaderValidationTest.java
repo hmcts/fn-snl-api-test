@@ -38,9 +38,9 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SelectClasses(PUTHearingsValidationTest.class)
+@SelectClasses(PUTHearingsHeaderValidationTest.class)
 @IncludeTags("Post")
-class PUTHearingsValidationTest extends HearingValidationTest {
+class PUTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
 
     private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
 
@@ -58,45 +58,49 @@ class PUTHearingsValidationTest extends HearingValidationTest {
 
     @BeforeAll
     public void initialiseValues() throws Exception {
+
         super.initialiseValues();
         this.setHttpMethod(HttpMethod.PUT);
         this.setInputPayloadFileName("hearing-request-template.json");
-        this.setHttpSucessStatus(HttpStatus.ACCEPTED);
-        this.setHmiSuccessVerifier(new SNLCommonSuccessVerifier());
-        this.setHmiErrorVerifier(new SNLCommonErrorVerifier());
+        this.setHttpSuccessStatus(HttpStatus.ACCEPTED);
+        this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
+        this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
 
         this.hearingId = makePostHearingAndFetchHearingId();
         this.hearingsApi_idRootContext = String.format(hearingsApi_idRootContext, hearingId);
         this.setRelativeURL(hearingsApi_idRootContext);
-        this.setRelativeURLForNotFound(this.getRelativeURL().replace("hearings","hearing"));
+        this.setRelativeURLForNotFound(this.getRelativeURL().replace("hearings", "hearing"));
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory())
+                + "/" + getInputPayloadFileName()), hearingId));
     }
 
     @Test
     @DisplayName("Successfully validated response with an empty payload")
     @Override
     public void test_successful_response_for_empty_json_body() throws Exception {
-       this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,"1004","[$.hearingRequest: is missing but it is required]",null));
-       super.test_successful_response_for_empty_json_body();
+        this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,
+                "1004", "[$.hearingRequest: is missing but it is required]", null));
+        super.test_successful_response_for_empty_json_body();
     }
 
     private Integer makePostHearingAndFetchHearingId() throws Exception {
         int randomId = new Random().nextInt(99999999);
 
         DelegateDTO delegateDTO = DelegateDTO.builder()
-            .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
-            .targetURL(hearingsApiRootContext)
-            .inputPayload( String.format(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
-                                                            "/" + getInputPayloadFileName()), randomId))
-            .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
-            .headers(null)
-            .params(getUrlParams())
-            .httpMethod(HttpMethod.POST)
-            .status(HttpStatus.ACCEPTED)
-            .build();
-
-        Response response = RestClientTemplate.shouldExecute(convertHeaderMapToRestAssuredHeaders(delegateDTO.standardHeaderMap()), delegateDTO.authorizationToken(),
-                                         delegateDTO.inputPayload(), delegateDTO.targetURL(),
-                                         delegateDTO.params(), delegateDTO.status(), delegateDTO.httpMethod());
+                .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
+                .targetURL(hearingsApiRootContext)
+                .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
+                        "/" + getInputPayloadFileName()), randomId))
+                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                .headers(null)
+                .params(getUrlParams())
+                .httpMethod(HttpMethod.POST)
+                .status(HttpStatus.ACCEPTED)
+                .build();
+        Response response = RestClientTemplate.shouldExecute(convertHeaderMapToRestAssuredHeaders(delegateDTO.standardHeaderMap()),
+                delegateDTO.authorizationToken(),
+                delegateDTO.inputPayload(), delegateDTO.targetURL(),
+                delegateDTO.params(), delegateDTO.status(), delegateDTO.httpMethod());
         log.debug("POST Response : " + response.getBody().asString());
         return randomId;
     }
@@ -129,5 +133,15 @@ class PUTHearingsValidationTest extends HearingValidationTest {
                 this.getHttpSucessStatus(),
                 getHmiSuccessVerifier(),
                 new SNLDTO(HttpStatus.OK,null,null,null));
+    }*/
+
+    /*@ParameterizedTest(name = "Source System Header invalid values - Param : {0} --> {1}")
+    @CsvSource(value = {"Null_Value, NIL", "Empty_Space,''", "Invalid_Source_System, SNL", "Invalid_Source_System, CfT","Invalid_Source_System, Anybody", "Invalid_Source_System, S&amp;L"}, nullValues = "NIL")
+    void test_source_system_invalid_values(String sourceSystemKey, String sourceSystemVal) throws Exception {
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createHeaderWithSourceSystemValue(getApiSubscriptionKey(), sourceSystemVal), HttpStatus.BAD_REQUEST);
+        commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
     }*/
 }

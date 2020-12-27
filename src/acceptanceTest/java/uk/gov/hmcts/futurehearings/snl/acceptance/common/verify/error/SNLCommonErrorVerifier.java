@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component("HMICommonErrorVerifier")
+@Component("SNLCommonErrorVerifier")
 public class SNLCommonErrorVerifier implements SNLErrorVerifier {
     public void verify(SNLDto snlDTO,
                        Response response) {
-        log.debug("Response" + response.getBody().prettyPrint());
+        log.debug("Response :" + response.getBody().prettyPrint());
         SNLVerificationDTO snlVerificationDTO = null;
         if (snlDTO instanceof SNLVerificationDTO) {
             snlVerificationDTO = (SNLVerificationDTO) snlDTO;

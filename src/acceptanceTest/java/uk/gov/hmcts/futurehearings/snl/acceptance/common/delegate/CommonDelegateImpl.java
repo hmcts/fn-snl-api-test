@@ -29,9 +29,10 @@ public class CommonDelegateImpl implements CommonDelegate {
                                                            final SNLDto snlDto) throws IOException {
 
         log.debug("The value of the target header (Header Map) : " + delegateDTO.standardHeaderMap());
-        log.debug("The value of the target header (Wiremock Header) :" + delegateDTO.standardHeaderMap());
+        log.debug("The value of the target header (Wiremock Header) : " + delegateDTO.standardHeaderMap());
         Headers standardRestAssuredHeaders = null;
         if (Objects.nonNull(delegateDTO.standardHeaderMap()) && delegateDTO.standardHeaderMap().size() > 0) {
+            log.debug("We have standard Headers.... ");
             standardRestAssuredHeaders = convertHeaderMapToRestAssuredHeaders(delegateDTO.standardHeaderMap());
         } else {
             standardRestAssuredHeaders = delegateDTO.headers();
@@ -51,6 +52,8 @@ public class CommonDelegateImpl implements CommonDelegate {
                                 final SNLVerifier SNLVerifier,
                                 final SNLDto snlDto) throws IOException {
 
+        log.debug("handleRestCall()");
+        log.debug("httpMethod"+httpMethod);
         switch (httpMethod) {
             case POST:
             case PUT:
@@ -59,6 +62,7 @@ public class CommonDelegateImpl implements CommonDelegate {
                         performRESTCall(targetURL, headers, authorizationToken, params, httpMethod, status, inputPayload));
                 break;
             case GET:
+                log.debug("Case : GET");
                 SNLVerifier.verify(snlDto, performRESTCall(targetURL, headers, authorizationToken, params, httpMethod, status, inputPayload));
                 break;
             case OPTIONS:
@@ -73,6 +77,7 @@ public class CommonDelegateImpl implements CommonDelegate {
                                      final HttpMethod httpMethod,
                                      final HttpStatus status,
                                      final String inputPayload) {
+        log.debug("performRestCAll()");
         return shouldExecute(
                 headers,
                 authorizationToken,

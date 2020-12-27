@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -39,17 +40,21 @@ public class PayloadHeaderDTOFactory {
                 .subscriptionKey(subscriptionKey).build();
     }
 
-    public static final BusinessHeaderDTO buildStandardBuinessHeaderPart(final String requestCreatedAt,
-                                                                         final String requestProcessedAt,
-                                                                         final String sourceSystem,
-                                                                         final String destinationSystem,
-                                                                         final String requestType) {
+    public static final BusinessHeaderDTO buildStandardBusinessHeaderPart(final String requestCreatedAt,
+                                                                          final String requestProcessedAt,
+                                                                          final String sourceSystem,
+                                                                          final String destinationSystem,
+                                                                          final String requestType,
+                                                                          final String transactionIdHMCTS
+                                                                            ) {
         return BusinessHeaderDTO.builder()
                 .requestCreatedAt(requestCreatedAt)
                 .requestProcessedAt(requestProcessedAt)
                 .sourceSystem(sourceSystem)
                 .destinationSystem(destinationSystem)
-                .requestType(requestType).build();
+                .requestType(requestType)
+                .transactionIdHMCTS(transactionIdHMCTS)
+                .build();
     }
 
     public static final Headers convertToRestAssuredHeaderRequiredHeaders(final SystemHeaderDTO systemHeaderDTO,
@@ -72,6 +77,8 @@ public class PayloadHeaderDTOFactory {
         listOfHeaders.add(requestProcessedAtHeader);
         Header requestTypeHeader =  new Header("Request-Type", businessHeaderDTO.requestType());
         listOfHeaders.add(requestTypeHeader);
+        Header transactionIdHMCTS =  new Header("transactionIdHMCTS", businessHeaderDTO.transactionIdHMCTS());
+        listOfHeaders.add(transactionIdHMCTS);
         mapAddedHeaderValues.forEach((key, value) -> {
            Header extraHeader = new Header (key,value);
             listOfHeaders.add(extraHeader);
@@ -92,6 +99,7 @@ public class PayloadHeaderDTOFactory {
         headerAsMultiMap.put("Request-Created-At", businessHeaderDTO.requestCreatedAt());
         headerAsMultiMap.put("Request-Processed-At", businessHeaderDTO.requestProcessedAt());
         headerAsMultiMap.put("Request-Type", businessHeaderDTO.requestType());
+        headerAsMultiMap.put("transactionIdHMCTS", businessHeaderDTO.transactionIdHMCTS());
         mapAddedHeaderValues.forEach((key, value) -> {
             headerAsMultiMap.put(key, value);
         });
@@ -109,6 +117,7 @@ public class PayloadHeaderDTOFactory {
         headerMap.put("Request-Created-At", businessHeaderDTO.requestCreatedAt());
         headerMap.put("Request-Processed-At", businessHeaderDTO.requestProcessedAt());
         headerMap.put("Request-Type", businessHeaderDTO.requestType());
+        headerMap.put("transactionIdHMCTS", businessHeaderDTO.transactionIdHMCTS());
         return headerMap;
     }
 

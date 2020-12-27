@@ -1,6 +1,7 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.sessions;
 
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
+import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createHeaderWithSourceSystemValue;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
@@ -46,31 +49,34 @@ public class GETSessionsValidationTest extends SessionsValidationTest {
         sessionsApiRootContext = String.format(sessionsApiRootContext, "12345");
         this.setRelativeURL(sessionsApiRootContext);
         this.setHttpMethod(HttpMethod.GET);
-        this.setHttpSucessStatus(HttpStatus.OK);
+        this.setHttpSuccessStatus(HttpStatus.OK);
         this.setRelativeURLForNotFound(this.getRelativeURL().replace("sessions", "session"));
-        this.setHmiSuccessVerifier(new GETSessionsValidationVerifier());
-        this.setHmiErrorVerifier(new SNLCommonErrorVerifier());
+        this.setSnlSuccessVerifier(new GETSessionsValidationVerifier());
+        this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
         this.setInputPayloadFileName("empty-json-payload.json");
+        TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
+                "/" + getInputPayloadFileName());
+        Map<String,String> urlParams = Map.of("requestSessionType","ADHOC");
+        this.setUrlParams(urlParams);
     }
 
-    @Test
+   /* @Test
     @DisplayName("Successfully validated response with all the header values")
     @Override
     public void test_successful_response_with_a_complete_header() throws Exception {
 
-        Map<String,String> urlParams = Map.of("requestSessionType","ADHOC");
-        this.setUrlParams(urlParams);
-        super.test_successful_response_with_a_complete_header();
-    }
 
-    @Test
+        super.test_successful_response_with_a_complete_header();
+    }*/
+
+    /*@Test
     @DisplayName("Successfully validated response with mandatory header values")
     public void test_successful_response_with_a_mandatory_header() throws Exception {
 
         Map<String,String> urlParams = Map.of("requestSessionType","ADHOC");
         this.setUrlParams(urlParams);
         super.test_successful_response_with_a_mandatory_header();
-    }
+    }*/
 
     @Test
     @DisplayName("Successfully validated response with an empty payload")
@@ -79,6 +85,7 @@ public class GETSessionsValidationTest extends SessionsValidationTest {
         return;
     }
 
+    /*
     @Test
     @DisplayName("Successfully validated response with all the header values and Error Http Status as No Query params were passed.")
     void test_mandatory_query_parameter_not_provided () throws Exception {
@@ -87,7 +94,21 @@ public class GETSessionsValidationTest extends SessionsValidationTest {
                 createCompletePayloadHeader(getApiSubscriptionKey()),HttpStatus.BAD_REQUEST);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getHmiSuccessVerifier(),
+                getSnlSuccessVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST,null,null,null));
     }
+
+    @ParameterizedTest(name = "Source System Header invalid values - Param : {0} --> {1}")
+    @CsvSource(value = {"Null_Value, NIL", "Empty_Space,''", "Invalid_Source_System, SNL", "Invalid_Source_System, CfT",
+            "Invalid_Source_System, Anybody", "Invalid_Source_System, S&amp;L"}, nullValues = "NIL")
+    public void test_source_system_invalid_values(String sourceSystemKey, String sourceSystemVal) throws Exception {
+        log.debug("Inside the test_source_system_invalid_values() method :");
+        Map<String,String> urlParams = Map.of("requestSessionType","ADHOC");
+        this.setUrlParams(urlParams);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createHeaderWithSourceSystemValue(getApiSubscriptionKey(), sourceSystemVal), HttpStatus.BAD_REQUEST);
+        commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+    }*/
 }

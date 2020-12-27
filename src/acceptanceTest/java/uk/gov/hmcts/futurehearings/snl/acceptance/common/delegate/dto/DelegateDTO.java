@@ -18,8 +18,8 @@ import org.springframework.http.HttpStatus;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
-@Builder
 @Accessors(fluent = true)
+@Builder
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -28,10 +28,14 @@ public class DelegateDTO implements SNLDto {
     final String targetSubscriptionKey;
     final String authorizationToken;
     final String targetURL;
-    final String inputPayload;
+    String inputPayload;
     final Map<String, String> standardHeaderMap;
     final Headers headers;
     final Map<String, String> params;
     final HttpMethod httpMethod;
     final HttpStatus status;
+
+    public void inputPayload(String inputPayload){
+        this.inputPayload = inputPayload;
+    };
 }

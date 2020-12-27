@@ -1,10 +1,8 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.hearings;
 
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
-
 import uk.gov.hmcts.futurehearings.snl.Application;
+import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.CommonDelegate;
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
@@ -29,9 +27,9 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SelectClasses(POSTHearingsValidationTest.class)
+@SelectClasses(POSTHearingsHeaderValidationTest.class)
 @IncludeTags("Post")
-class POSTHearingsValidationTest extends HearingValidationTest {
+class POSTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
 
     private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
 
@@ -48,17 +46,20 @@ class POSTHearingsValidationTest extends HearingValidationTest {
         this.setRelativeURL(hearingsApiRootContext);
         this.setHttpMethod(HttpMethod.POST);
         this.setInputPayloadFileName("hearing-request-standard.json");
-        this.setHttpSucessStatus(HttpStatus.ACCEPTED);
+        this.setHttpSuccessStatus(HttpStatus.ACCEPTED);
         this.setRelativeURLForNotFound(this.getRelativeURL().replace("hearings","hearing"));
-        this.setHmiSuccessVerifier(new SNLCommonSuccessVerifier());
-        this.setHmiErrorVerifier(new SNLCommonErrorVerifier());
+        this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
+        this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
+        this.setInputBodyPayload(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
+                "/" + getInputPayloadFileName()));
     }
 
     @Test
     @DisplayName("Successfully validated response with an empty payload")
     @Override
     public void test_successful_response_for_empty_json_body() throws Exception {
-       this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,"1004","[$.hearingRequest: is missing but it is required]",null));
+       this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,
+               "1004","[$.hearingRequest: is missing but it is required]",null));
        super.test_successful_response_for_empty_json_body();
     }
 
@@ -79,5 +80,15 @@ class POSTHearingsValidationTest extends HearingValidationTest {
                 this.getHttpSucessStatus(),
                 getHmiSuccessVerifier(),
                 new SNLDTO(HttpStatus.OK,null,null,null));
+    }*/
+
+   /* @ParameterizedTest(name = "Source System Header invalid values - Param : {0} --> {1}")
+    @CsvSource(value = {"Null_Value, NIL", "Empty_Space,''", "Invalid_Source_System, SNL", "Invalid_Source_System, CfT","Invalid_Source_System, Anybody", "Invalid_Source_System, S&amp;L"}, nullValues = "NIL")
+    void test_source_system_invalid_values(String sourceSystemKey, String sourceSystemVal) throws Exception {
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createHeaderWithSourceSystemValue(getApiSubscriptionKey(), sourceSystemVal), HttpStatus.BAD_REQUEST);
+        commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
     }*/
 }

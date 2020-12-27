@@ -18,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Slf4j
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
-public abstract class HearingValidationTest extends SNLCommonHeaderTest {
+public abstract class HearingsHeaderValidationTest extends SNLCommonHeaderTest {
 
     @Value("${targetInstance}")
     private String targetInstance;

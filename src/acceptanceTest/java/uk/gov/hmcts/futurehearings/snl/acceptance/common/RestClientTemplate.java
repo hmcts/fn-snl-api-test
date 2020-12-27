@@ -27,14 +27,16 @@ public class RestClientTemplate {
         log.debug("The value of the Authorization Token : " + authorizationToken);
         log.debug("The value of the header : " + headers.size());
         headers.asList().forEach(header ->
-                log.debug("The Key of the header" + header.getName() + "The value of the Header" + header.getValue()));
+                log.debug("The Key of the header :" + header.getName() + " The value of the Header :" + header.getValue()));
+        //log.debug("The value of the param : " + params);
+        log.debug("The value of the param : " + params);
         log.debug("The value of the HTTP Status : " + expectedHttpStatus.value());
 
 
         switch (httpMethod) {
             case POST:
                 return RestAssured
-                        .expect().that().statusCode(expectedHttpStatus.value())
+                        //.expect().that().statusCode(expectedHttpStatus.value())
                         .given()
                         .headers(headers)
                         .auth()
@@ -45,7 +47,7 @@ public class RestClientTemplate {
                         .post().then().extract().response();
             case PUT:
                     return RestAssured
-                            .expect().that().statusCode(expectedHttpStatus.value())
+                            //.expect().that().statusCode(expectedHttpStatus.value())
                             .given()
                             .headers(headers)
                             .auth()
@@ -56,7 +58,7 @@ public class RestClientTemplate {
                             .put().then().extract().response();
             case DELETE:
                 return RestAssured
-                        .expect().that().statusCode(expectedHttpStatus.value())
+                        //.expect().that().statusCode(expectedHttpStatus.value())
                         .given()
                         .headers(headers)
                         .auth()
@@ -67,7 +69,8 @@ public class RestClientTemplate {
                         .delete().then().extract().response();
             case GET:
                 if (Objects.isNull(params) || params.size() == 0) {
-                    return RestAssured.expect().that().statusCode(expectedHttpStatus.value())
+                    return RestAssured
+                            //.expect().that().statusCode(expectedHttpStatus.value())
                             .given()
                             .headers(headers)
                             .auth()
@@ -78,7 +81,9 @@ public class RestClientTemplate {
                 } else {
                     log.debug("Query Params " + params);
                     Response response = null;
-                    response = RestAssured.expect().that().statusCode(expectedHttpStatus.value())
+                    response =
+                            RestAssured
+                                    //.expect().that().statusCode(expectedHttpStatus.value())
                             .given()
                             .queryParams(params)
                             .headers(headers)
@@ -87,18 +92,19 @@ public class RestClientTemplate {
                             .basePath(requestURL)
                             .when()
                             .get().then().extract().response();
-                    log.debug(response.getBody().asString());
+                    log.debug(response.getBody().prettyPrint());
                     return response;
                 }
-            case OPTIONS:
-                return RestAssured.expect().that().statusCode(expectedHttpStatus.value())
+            case PATCH:
+                return RestAssured
+                        .expect().that().statusCode(expectedHttpStatus.value())
                         .given()
                         .headers(headers)
                         .auth()
                         .oauth2(authorizationToken)
                         .basePath(requestURL)
                         .when()
-                        .options().then().extract().response();
+                        .patch().then().extract().response();
             default:
                 log.error("Http method not identified :" + httpMethod.name());
                 throw new IllegalArgumentException("HTTP method not identified");

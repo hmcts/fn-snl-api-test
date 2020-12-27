@@ -1,2 +1,0 @@
-uk/gov/hmcts/reform/rsecheck/DemoUnitTest.java
- uk.gov.hmcts.reform.rsecheck.DemoUnitTest
