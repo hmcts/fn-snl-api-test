@@ -1,4 +1,6 @@
-package uk.gov.hmcts.futurehearings.snl.acceptance.hearings;
+package uk.gov.hmcts.futurehearings.snl.acceptance.resources;
+
+import static uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonPayloadTest.INPUT_TEMPLATE_FILE_PATH;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -7,11 +9,16 @@ import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificat
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
 
+import java.io.IOException;
+import java.util.UUID;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +34,25 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SelectClasses(POSTHearingsHeaderValidationTest.class)
+@SelectClasses(POSTResourcesByUserHeaderValidationTest.class)
 @IncludeTags("Post")
-class POSTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
-
-    //private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
+class POSTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTest {
 
     @Qualifier("CommonDelegate")
     @Autowired(required = true)
     private CommonDelegate commonDelegate;
 
-    @Value("${hearingsApiRootContext}")
-    private String hearingsApiRootContext;
+    @Value("${resourcesByUserRootContext}")
+    private String resourcesByUserRootContext;
 
     @BeforeAll
     public void initialiseValues() throws Exception {
         super.initialiseValues();
-        this.setRelativeURL(hearingsApiRootContext);
+        this.setRelativeURL(resourcesByUserRootContext);
         this.setHttpMethod(HttpMethod.POST);
-        this.setInputPayloadFileName("hearing-request-standard.json");
-        this.setHttpSuccessStatus(HttpStatus.ACCEPTED);
-        this.setRelativeURLForNotFound(this.getRelativeURL().replace("hearings","hearing"));
+        this.setInputPayloadFileName("resources-by-username-complete.json");
+        this.setHttpSuccessStatus(HttpStatus.CREATED);
+        this.setRelativeURLForNotFound(this.getRelativeURL().replace("resources", "resource"));
         this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
         this.setInputBodyPayload(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
@@ -55,14 +60,63 @@ class POSTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
     }
 
     @Test
+    @DisplayName("Successfully validated response with all the header values")
+    @Override
+    public void test_successful_response_with_a_complete_header() throws Exception {
+
+        generateResourcesByUserPayloadWithRandomHMCTSId();
+        super.test_successful_response_with_a_complete_header();
+    }
+
+    @Test
+    @DisplayName("Successfully validated response with mandatory header values")
+    @Override
+    public void test_successful_response_with_a_mandatory_header() throws Exception {
+        generateResourcesByUserPayloadWithRandomHMCTSId();
+        super.test_successful_response_with_a_mandatory_header();
+    }
+
+
+    @Test
     @DisplayName("Successfully validated response with an empty payload")
     @Override
     public void test_successful_response_for_empty_json_body() throws Exception {
-       this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,
-               "1004","[$.hearingRequest: is missing but it is required]",null));
-       super.test_successful_response_for_empty_json_body();
+        this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,
+                "1004", "[$.userRequest: is missing but it is required]", null));
+        super.test_successful_response_for_empty_json_body();
     }
 
+    @ParameterizedTest(name = "Request Created At System Header With Valid Date Format - Param : {0} --> {1}")
+    @CsvSource({"Valid_Date_Format, 2012-03-19T07:22:00Z",
+            "Valid_Date_Format, 2002-10-02T15:00:00-10:00",
+            "Valid_Date_Format, 2002-10-02T15:00:00+05:00",
+            "Valid_Date,2099-10-02T15:00:00Z"})
+    @Override
+    public void test_request_created_at_with_valid_values(final String requestCreatedAtKey, final String requestCreatedAtVal) throws Exception {
+
+        generateResourcesByUserPayloadWithRandomHMCTSId();
+        super.test_request_created_at_with_valid_values(requestCreatedAtKey, requestCreatedAtVal);
+
+    }
+
+
+    @ParameterizedTest(name = "Request Processed At System Header With Valid Date Format - Param : {0} --> {1}")
+    @CsvSource({"Valid_Date_Format,2002-10-02T10:00:00-05:00",
+            "Valid_Date_Format,2002-10-02T15:00:00Z",
+            "Valid_Date,2099-10-02T15:00:00Z"
+    })
+    //@Disabled("TODO - Enable the following tests after MCGIRRSD-1745 and MCGIRRSD-1776")
+    @Override
+    public void test_request_processed_at_with_valid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
+        generateResourcesByUserPayloadWithRandomHMCTSId();
+        super.test_request_processed_at_with_valid_values(requestProcessedAtKey, requestProcessedAtVal);
+    }
+
+    private void generateResourcesByUserPayloadWithRandomHMCTSId() throws IOException {
+        final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+    }
     //This test is for a Standard Header but a Payload for Non JSON Type is to be tested.
     //Confirmed by Product Owner that this should be a Success Scenario.
     /*@Test

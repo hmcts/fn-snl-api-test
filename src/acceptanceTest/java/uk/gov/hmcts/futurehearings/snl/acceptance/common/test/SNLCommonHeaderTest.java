@@ -15,34 +15,23 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHea
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeaderWithDuplicateValues;
 
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.CommonDelegate;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLErrorVerifier;
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLSuccessVerifier;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import io.restassured.RestAssured;
-import io.restassured.http.Headers;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
@@ -50,50 +39,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 @Getter
 @SuppressWarnings("java:S5786")
-public abstract class SNLCommonHeaderTest {
-
-
-    private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
-
-    private String apiSubscriptionKey;
-    private String authorizationToken;
-    private String relativeURL;
-    private String relativeURLForNotFound;
-    private HttpMethod httpMethod;
-    private HttpStatus httpSuccessStatus;
-    private String inputFileDirectory;
-    private String outputFileDirectory;
-    private String inputPayloadFileName;
-    private String inputBodyPayload;
-    private Map<String, String> urlParams;
-    private SNLVerificationDTO snlVerificationDTO;
-
-    @Autowired(required = false)
-    public CommonDelegate commonDelegate;
-
-    public SNLSuccessVerifier snlSuccessVerifier;
-
-    public SNLErrorVerifier snlErrorVerifier;
-
-    @BeforeAll
-    public void beforeAll(TestInfo info) {
-        log.debug("Test execution Class Initiated: " + info.getTestClass().get().getName());
-    }
-
-    @BeforeEach
-    public void beforeEach(TestInfo info) {
-        log.debug("Before execution : " + info.getTestMethod().get().getName());
-    }
-
-    @AfterEach
-    public void afterEach(TestInfo info) {
-        log.debug("After execution : " + info.getTestMethod().get().getName());
-    }
-
-    @AfterAll
-    public void afterAll(TestInfo info) {
-        log.debug("Test execution Class Completed: " + info.getTestClass().get().getName());
-    }
+public abstract class SNLCommonHeaderTest extends SNLCommonTest {
 
     @Test
     @DisplayName("Successfully validated response with all the header values")
@@ -104,7 +50,7 @@ public abstract class SNLCommonHeaderTest {
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.ACCEPTED, null, null, null));
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
     @Test
@@ -115,7 +61,7 @@ public abstract class SNLCommonHeaderTest {
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
                 getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.ACCEPTED, null, null, null));
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
 
@@ -311,7 +257,7 @@ public abstract class SNLCommonHeaderTest {
             "Invalid_Date, 2099-10-02T15:00:00Z"
     }, nullValues = "NIL")
     @Disabled("TODO - Enable the following tests after MCGIRRSD-1745 and MCGIRRSD-1776")
-    void test_request_processed_at_with_invalid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
+    public void test_request_processed_at_with_invalid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestProcessedAtSystemValue(getApiSubscriptionKey(), requestProcessedAtVal),
                 getHttpMethod(), HttpStatus.BAD_REQUEST);
@@ -339,8 +285,8 @@ public abstract class SNLCommonHeaderTest {
             "Valid_Date_Format,2002-10-02T15:00:00Z",
             "Valid_Date,2099-10-02T15:00:00Z"
     })
-        //TODO - The placement of a futuristic Date be it positive or negative is to be decided upoun the outcome of MCGIRRSD-1776
-    void test_request_processed_at_with_valid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
+    //TODO - The placement of a futuristic Date be it positive or negative is to be decided upoun the outcome of MCGIRRSD-1776
+    public void test_request_processed_at_with_valid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
 
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestProcessedAtSystemValue(getApiSubscriptionKey(), requestProcessedAtVal),
@@ -357,7 +303,7 @@ public abstract class SNLCommonHeaderTest {
             "Valid_Date_Format, 2002-10-02T15:00:00-10:00",
             "Valid_Date_Format, 2002-10-02T15:00:00+05:00",
             "Valid_Date,2099-10-02T15:00:00Z"})
-    void test_request_created_at_with_valid_values(String requestCreatedAtKey, String requestCreatedAtVal) throws Exception {
+    public void test_request_created_at_with_valid_values(String requestCreatedAtKey, String requestCreatedAtVal) throws Exception {
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestCreatedAtSystemValue(getApiSubscriptionKey(), requestCreatedAtVal),
                 getHttpMethod(),
@@ -405,7 +351,7 @@ public abstract class SNLCommonHeaderTest {
             "Request-Processed-At,NIL", "Request-Processed-At,''", "Request-Processed-At,2002-10-02T15:00:00Z",
             "Request-Type,NIL", "Request-Type,''", "Request-Type,THEFT", "Request-Type,ASSAULT"
     }, nullValues = "NIL")
-    @Disabled("TODO - Findout what McGirr Intend to do in order to tests this scenario,Most likely it would not be a defect as HMI is picking up on this one.")
+    @Disabled("TODO - Find out what McGirr Intend to do in order to tests this scenario,Most likely it would not be a defect as HMI is picking up on this one.")
     void test_duplicate_headers(String duplicateHeaderKey, String duplicateHeaderValue) throws Exception {
 
         final String expectedErrorMessage =
@@ -421,37 +367,5 @@ public abstract class SNLCommonHeaderTest {
                 getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.NOT_ACCEPTABLE, "9999", "HTTP 406 Not Acceptable", null));
 
-    }
-
-    public DelegateDTO buildDelegateDTO(final String relativeURL,
-                                        final Map<String, String> payloadHeader,
-                                        final HttpMethod httpMethod,
-                                        final HttpStatus httpSuccessStatus) throws IOException {
-        return DelegateDTO.builder()
-                .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
-                .targetURL(relativeURL)
-                .inputPayload(getInputBodyPayload())
-                .standardHeaderMap(payloadHeader)
-                .headers(null)
-                .params(getUrlParams())
-                .httpMethod(httpMethod)
-                .status(httpSuccessStatus)
-                .build();
-    }
-
-    public DelegateDTO buildDelegateDTO(final String relativeURL,
-                                        Headers headers,
-                                        final HttpMethod httpMethod,
-                                        final HttpStatus httpSuccessStatus) throws IOException {
-        return DelegateDTO.builder()
-                .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
-                .targetURL(relativeURL)
-                .inputPayload(getInputBodyPayload())
-                .standardHeaderMap(null)
-                .headers(headers)
-                .params(getUrlParams())
-                .httpMethod(httpMethod)
-                .status(httpSuccessStatus)
-                .build();
     }
 }

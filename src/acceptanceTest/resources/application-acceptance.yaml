@@ -11,8 +11,8 @@ sessionsApiRootContext: /casehqapi/rest/hmcts/resources/sessions
 #resourcesByLocationRootContext: /hmi/resources/location/
 #resourcesByLocation_idRootContext: /hmi/resources/location/%s
 #resources_idRootContext: /hmi/resources/%s
-#resourcesByUserRootContext: /hmi/resources/user/
-#resourcesByUser_idRootContext: /hmi/resources/user/%s
+resourcesByUserRootContext: /casehqapi/rest/hmcts/resources/users
+resourcesByUser_idRootContext: /casehqapi/rest/hmcts/resources/users/%s
 #sessionsRootContext: /hmi/sessions
 #sessions_idRootContext: /hmi/sessions/%s
 #listingsRootContext: /hmi/listings

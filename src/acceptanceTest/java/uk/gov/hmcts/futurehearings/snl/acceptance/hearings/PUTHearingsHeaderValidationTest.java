@@ -42,7 +42,7 @@ import org.springframework.test.context.ActiveProfiles;
 @IncludeTags("Post")
 class PUTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
 
-    private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
+    //private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
 
     @Qualifier("CommonDelegate")
     @Autowired(required = true)

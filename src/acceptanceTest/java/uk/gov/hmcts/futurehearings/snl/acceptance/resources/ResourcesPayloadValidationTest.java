@@ -1,19 +1,15 @@
-package uk.gov.hmcts.futurehearings.snl.acceptance.hearings;
+package uk.gov.hmcts.futurehearings.snl.acceptance.resources;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.security.OAuthTokenGenerator.generateOAuthToken;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonHeaderTest;
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
+import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonPayloadTest;
 
 import io.restassured.RestAssured;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -22,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Slf4j
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
-public abstract class HearingsPayloadValidationTest extends SNLCommonHeaderTest {
+public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTest {
 
     @Value("${targetInstance}")
     private String targetInstance;
@@ -49,11 +45,12 @@ public abstract class HearingsPayloadValidationTest extends SNLCommonHeaderTest 
         this.setApiSubscriptionKey("pointless");
         RestAssured.config = RestAssured.config()
                 .encoderConfig(encoderConfig().defaultContentCharset("UTF-8").appendDefaultContentCharsetToContentTypeIfUndefined(true));
-        this.setInputFileDirectory("hearings");
+        this.setInputFileDirectory("resources");
         String authorizationToken = generateOAuthToken(token_apiURL,
                 token_username,
                 token_password,
                 HttpStatus.OK);
         this.setAuthorizationToken(authorizationToken);
     }
+
 }
