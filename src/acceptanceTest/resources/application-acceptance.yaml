@@ -18,6 +18,9 @@ resourcesByUser_idRootContext: /casehqapi/rest/hmcts/resources/users/%s
 #listingsRootContext: /hmi/listings
 #listings_idRootContext: /hmi/listings/%s
 
+resourcesByLocationRootContext: /casehqapi/rest/hmcts/resources/locations
+resourcesByLocation_idRootContext: /casehqapi/rest/hmcts/resources/locations/%s
+
 token_apiURL: https://hmcts-uat.casehq.net/hmi_oauth2/resources/hmi/token
 token_username: ${TOKEN_USERNAME}
 token_password: ${TOKEN_PASSWORD}

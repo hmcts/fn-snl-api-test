@@ -40,6 +40,7 @@ import org.springframework.test.context.ActiveProfiles;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SelectClasses(POSTResourcesByUserHeaderValidationTest.class)
 @IncludeTags("Post")
+@Disabled("Disabled the test as test users were getting created in the UAT environment")
 public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadValidationTest {
 
     @Qualifier("CommonDelegate")

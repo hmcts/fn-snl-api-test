@@ -1,0 +1,23 @@
+{
+  "locationRequest": {
+    "meta": {
+      "transactionIdHMCTS": "ABCDEFGHIJ",
+      "timestamp": "1980-11-13T20:20:39+00:00"
+    },
+    "location": {
+
+      "locationIdHMCTS": "599",
+      "locationIdCaseHQ": "599",
+      "locationDescription": "This is a NewCourt",
+      "locationAddress": "71 Agency Drive",
+      "locationCluster": "TV",
+      "locationPrimaryFlag": true,
+
+      "locationActiveFrom": "2020-01-01T20:20:39+00:00",
+      "locationActiveTo": "",
+      "locationSecurityGuardFlag": true,
+      "locationVideoConfFlag": false,
+      "locationSeatingCapacity": 35
+    }
+  }
+}
