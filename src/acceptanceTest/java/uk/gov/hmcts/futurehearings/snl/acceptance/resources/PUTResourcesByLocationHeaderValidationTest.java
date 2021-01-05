@@ -10,21 +10,19 @@ import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDT
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
-import uk.gov.hmcts.futurehearings.snl.acceptance.hearings.HearingsHeaderValidationTest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 import java.util.Random;
 
-import io.restassured.http.Header;
-import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,52 +33,60 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+
 @Slf4j
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SelectClasses(PUTResourcesByUserHeaderValidationTest.class)
+@SelectClasses(PUTResourcesByLocationHeaderValidationTest.class)
 @IncludeTags("Put")
-class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTest {
-
-    //private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
+class PUTResourcesByLocationHeaderValidationTest extends ResourcesHeaderValidationTest {
 
     @Qualifier("CommonDelegate")
     @Autowired(required = true)
     private CommonDelegate commonDelegate;
 
-    @Value("${resourcesByUser_idRootContext}")
-    private String resourcesByUser_idRootContext;
+    @Value("${resourcesByLocationRootContext}")
+    private String resourcesByLocationRootContext;
 
-    @Value("${resourcesByUserRootContext}")
-    private String resourcesByUserRootContext;
+    @Value("${resourcesByLocation_idRootContext}")
+    private String resourcesByLocation_idRootContext;
 
-    private Integer resourcesUserId;
+    private Integer resourcesLocationId;
 
     @BeforeAll
     public void initialiseValues() throws Exception {
-
         super.initialiseValues();
         this.setHttpMethod(HttpMethod.PUT);
-        this.setInputPayloadFileName("resources-by-username-complete.json");
+        this.setInputPayloadFileName("resource-by-location-complete.json");
         this.setHttpSuccessStatus(HttpStatus.NO_CONTENT);
         this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
 
-        this.resourcesUserId = makePostResourcesByUserAndFetchUserId();
-        this.resourcesByUser_idRootContext = String.format(resourcesByUser_idRootContext, resourcesUserId);
-        this.setRelativeURL(resourcesByUser_idRootContext);
+        this.resourcesLocationId = makePostResourcesByLocationAndFetchLocationId();
+        this.resourcesByLocation_idRootContext = String.format(resourcesByLocation_idRootContext, resourcesLocationId);
+        this.setRelativeURL(resourcesByLocation_idRootContext);
         this.setRelativeURLForNotFound(this.getRelativeURL().replace("resources", "resource"));
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory())
-                + "/" + getInputPayloadFileName()), resourcesUserId));
+                + "/" + getInputPayloadFileName()), resourcesLocationId));
     }
 
-    private Integer makePostResourcesByUserAndFetchUserId() throws Exception {
-        int randomId = new Random().nextInt(99999);
+    @Test
+    @DisplayName("Successfully validated response with an empty payload")
+    @Override
+    public void test_successful_response_for_empty_json_body() throws Exception {
+        this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,
+                "1004", "[$.locationRequest: is missing but it is required]", null));
+        super.test_successful_response_for_empty_json_body();
+    }
+
+
+    private Integer makePostResourcesByLocationAndFetchLocationId() throws Exception {
+        int randomId = new Random().nextInt(999999);
 
         DelegateDTO delegateDTO = DelegateDTO.builder()
                 .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
-                .targetURL(resourcesByUserRootContext)
+                .targetURL(resourcesByLocationRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory()) +
                         "/" + getInputPayloadFileName()), randomId))
                 .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
@@ -95,15 +101,6 @@ class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTe
                 delegateDTO.params(), delegateDTO.status(), delegateDTO.httpMethod());
         log.debug("POST Response : " + response.getBody().asString());
         return randomId;
-    }
-
-    @Test
-    @DisplayName("Successfully validated response with an empty payload")
-    @Override
-    public void test_successful_response_for_empty_json_body() throws Exception {
-        this.setSnlVerificationDTO(new SNLVerificationDTO(HttpStatus.BAD_REQUEST,
-                "1004", "[$.userRequest: is missing but it is required]", null));
-        super.test_successful_response_for_empty_json_body();
     }
 
     //This test is for a Standard Header but a Payload for Non JSON Type is to be tested.
@@ -125,7 +122,7 @@ class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTe
                 new SNLDTO(HttpStatus.OK,null,null,null));
     }*/
 
-    /*@ParameterizedTest(name = "Source System Header invalid values - Param : {0} --> {1}")
+   /* @ParameterizedTest(name = "Source System Header invalid values - Param : {0} --> {1}")
     @CsvSource(value = {"Null_Value, NIL", "Empty_Space,''", "Invalid_Source_System, SNL", "Invalid_Source_System, CfT","Invalid_Source_System, Anybody", "Invalid_Source_System, S&amp;L"}, nullValues = "NIL")
     void test_source_system_invalid_values(String sourceSystemKey, String sourceSystemVal) throws Exception {
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
