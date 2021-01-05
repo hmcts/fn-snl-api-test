@@ -232,6 +232,22 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @ParameterizedTest(name = "PersonRegistry Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Mr,Mr","Miss,Miss","TRY,TRY"}, nullValues = "NIL")
+    public void test_negative_response_for_person_salutation_with_mandatory_elements_payload(final String personSalutationKey,
+                                                                                             final String personSalutationValue) throws Exception {
+
+        this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
+        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personSalutationValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
     private void generateResourcesByUserPayloadWithRandomHMCTSId() throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,

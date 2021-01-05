@@ -191,6 +191,9 @@ repositories {
     mavenLocal()
     jcenter()
     mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 def versions = [
@@ -284,6 +287,8 @@ dependencies {
     acceptanceTestImplementation "ch.qos.logback:logback-classic:1.2.3"
     acceptanceTestImplementation group: 'com.github.tomakehurst', name: 'wiremock-standalone', version: '2.27.1'
     acceptanceTestImplementation group: 'com.google.guava', name: 'guava', version: '29.0-jre'
+
+    acceptanceTestImplementation group: 'com.github.everit-org.json-schema', name: 'org.everit.json.schema', version: '1.12.1'
 
     acceptanceTestImplementation sourceSets.main.runtimeClasspath
     acceptanceTestImplementation sourceSets.test.runtimeClasspath
