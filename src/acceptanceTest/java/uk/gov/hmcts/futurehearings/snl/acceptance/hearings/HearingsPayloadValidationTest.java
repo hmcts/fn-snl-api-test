@@ -7,6 +7,7 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.security.OAuthTo
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonHeaderTest;
+import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonPayloadTest;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
 
 import io.restassured.RestAssured;
@@ -22,7 +23,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Slf4j
 @SpringBootTest(classes = {Application.class})
 @ActiveProfiles("acceptance")
-public abstract class HearingsPayloadValidationTest extends SNLCommonHeaderTest {
+public abstract class HearingsPayloadValidationTest extends SNLCommonPayloadTest {
 
     @Value("${targetInstance}")
     private String targetInstance;
