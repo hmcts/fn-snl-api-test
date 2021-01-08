@@ -137,14 +137,12 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
-        switch (locationClusterValue) {
-            case "":
-            case " ":
-            case "RGB":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'"+locationClusterValue+"' is not a valid value for field 'locationCluster'", null);
+        switch (locationClusterKey) {
+            case "Invalid_Cluster_Max_Value":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationCluster: may only be 3 characters long]", null);
                 break;
             default:
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationCluster: may only be 3 characters long]", null);
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'"+locationClusterValue+"' is not a valid value for field 'locationCluster'", null);
                 break;
 
         }
@@ -155,12 +153,12 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     //TODO: LocationAddress accepts empty space and single space eventhough it is a mandatory field. Defect needs to be raised.
-    @ParameterizedTest(name = "locationAddress Negative tests")
-    @CsvSource(value = {"Location Address More than Max Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
-    public void test_negative_response_with_mandatory_location_address_payload(final String locationAddressKey, final String locationAddressValue) throws Exception {
+    @ParameterizedTest(name = "locationDescription Negative tests")
+    @CsvSource(value = {"Location Description More than Max Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey, final String locationDescriptionValue) throws Exception {
 
-        this.setInputPayloadFileName("resource-by-location-mandatory-address.json");
-        generateLocationPayloadWithRandomHMCTSIDAndField(locationAddressValue);
+        this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationDescriptionValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -243,6 +241,71 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 delegateDTO,
                 getSnlErrorVerifier(),
                 snlVerificationDTO);
+    }
+
+    @ParameterizedTest(name = "locationDescription Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Location Description,' '", "Location Description,'This is location description'"})
+    public void test_positive_response_for_location_description_with_mandatory_elements_payload(final String locationDescriptionKey,
+                                                                                                final String locationDescriptionValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationDescriptionValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "locationCluster Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Location Cluster,'TV'", "Location Cluster,'KNT'"})
+    public void test_positive_response_for_location_cluster_with_mandatory_elements_payload(final String locationClusterKey,
+                                                                                            final String locationClusterValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-cluster.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationClusterValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @Disabled("needs to fix boolean formatter in json file")
+    @ParameterizedTest(name = "locationPrimaryFlag Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Location Primary Flag, true", "Location Primary Flag, false"})
+    public void test_positive_response_for_location_primary_flag_with_mandatory_elements_payload(final String locationPrimaryFlagKey,
+                                                                                                final String locationPrimaryFlagValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-primary-flag.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationPrimaryFlagValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "locationActiveFrom Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Location Active From, '2020-01-01T20:20:39+00:00'"})
+    public void test_positive_response_for_location_active_from_with_mandatory_elements_payload(final String locationActiveFromKey,
+                                                                                                 final String locationActiveFromValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationActiveFromValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
     private void generateLocationPayloadWithRandomLocationIdHMCTS() throws IOException {
