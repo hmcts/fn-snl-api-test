@@ -151,6 +151,95 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 snlVerificationDTO);
     }
 
+    //TODO: LocationAddress filed accepts empty space and single space. Bug needs to be raised.
+    @ParameterizedTest(name = "locationAddress Negative tests")
+    @CsvSource(value = {"Location_Max_Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    public void test_negative_response_with_mandatory_location_address_payload(final String locationAddressKey, final String locationAddressValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-address.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationAddressValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+
+        SNLVerificationDTO snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationDescription: may only be 80 characters long]", null);
+
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
+    }
+
+    @Disabled("Disabling this tests as locationPrimaryFlag in JSON doesn't accept boolean formatter")
+    @ParameterizedTest(name = "locationPrimaryFlag Negative tests")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Random_Cluster_Value,'false'", "Invalid_Cluster_Max_Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    public void test_negative_response_with_mandatory_location_primary_flag_payload(final String locationPrimaryFlagKey, final String locationPrimaryFlagValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-primaryflag.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationPrimaryFlagValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (locationPrimaryFlagValue) {
+            case "":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'' is not a valid value for field 'locationCluster'", null);
+                break;
+            case " ":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "' ' is not a valid value for field 'locationCluster'", null);
+                break;
+            case "RGB":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'RGB' is not a valid value for field 'locationCluster'", null);
+                break;
+            default:
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationCluster: may only be 3 characters long]", null);
+                break;
+
+        }
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
+    }
+
+    @Disabled("Disabling this tests as locationActiveFrom is throwing exceptions from McGirr for invalid date format.")
+    @ParameterizedTest(name = "locationActiveFrom Negative tests")
+    @CsvSource({"Null_Value, null", "Empty_Space,\" \"", "Invalid_Value, value",
+            "Invalid_Date_Format, 2002-02-31T10:00:30-05:00Z",
+            "Invalid_Date_Format, 2002-02-31T1000:30-05:00",
+            "Invalid_Date_Format, 2002-02-31T10:00-30-05:00",
+            "Invalid_Date_Format, 2002-10-02T15:00:00*05Z",
+            "Invalid_Date_Format, 2002-10-02 15:00?0005Z",
+            "Invalid_Date_Format, 2002-10-02T15:00:00",
+    })public void test_negative_response_with_mandatory_location_activeFrom_payload(final String locationActiveFromKey, final String locationActiveFromValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationActiveFromValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (locationActiveFromValue) {
+            case "":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'' is not a valid value for field 'locationActiveFrom'", null);
+                break;
+            case " ":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "' ' is not a valid value for field 'locationActiveFrom'", null);
+                break;
+            case "RGB":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'RGB' is not a valid value for field 'locationActiveFrom'", null);
+                break;
+            default:
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationActiveFrom: may only be 3 characters long]", null);
+                break;
+
+        }
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
+    }
+
     private void generateLocationPayloadWithRandomLocationIdHMCTS() throws IOException {
         final int randomId = new Random().nextInt(99999);
         generateLocationPayloadWithRandomLocationIdHMCTS(String.valueOf(randomId));
