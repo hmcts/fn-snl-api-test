@@ -152,7 +152,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 snlVerificationDTO);
     }
 
-    //TODO: LocationAddress accepts empty space and single space eventhough it is a mandatory field. Defect needs to be raised.
+    //TODO: LocationDescription accepts empty space and single space eventhough it is a mandatory field. Defect needs to be raised.
     @ParameterizedTest(name = "locationDescription Negative tests")
     @CsvSource(value = {"Location Description More than Max Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey, final String locationDescriptionValue) throws Exception {
@@ -173,7 +173,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     @Disabled("Disabling this tests as locationPrimaryFlag in JSON doesn't accept boolean formatter")
     @ParameterizedTest(name = "locationPrimaryFlag Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Random_Cluster_Value,'false'", "Invalid_Cluster_Max_Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid_PrimaryFlag_Max_Value, C_FEFC2424-32A6-4B3A-BD97-4B3A-BD97-4B3A"}, nullValues = "NIL")
     public void test_negative_response_with_mandatory_location_primary_flag_payload(final String locationPrimaryFlagKey, final String locationPrimaryFlagValue) throws Exception {
 
         this.setInputPayloadFileName("resource-by-location-mandatory-primary-flag.json");
@@ -182,20 +182,13 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
-        switch (locationPrimaryFlagValue) {
-            case "":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'' is not a valid value for field 'locationCluster'", null);
-                break;
-            case " ":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "' ' is not a valid value for field 'locationCluster'", null);
-                break;
-            case "RGB":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'RGB' is not a valid value for field 'locationCluster'", null);
+        switch (locationPrimaryFlagKey) {
+            case "Invalid_PrimaryFlag_Max_Value":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",  "[$.locationRequest.location.locationPostCode: may only be 15 characters long]", null);
                 break;
             default:
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationCluster: may only be 3 characters long]", null);
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'"+locationPrimaryFlagValue+"' is not a valid value for field 'locationCluster'", null);
                 break;
-
         }
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -221,19 +214,32 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        SNLVerificationDTO snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'"+locationActiveFromValue+"' is not a valid value for field 'locationCluster'", null);;
+
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
+    }
+
+    //TODO: PostCode accepts empty space, single space and even doesn't validate postcode.
+    // Any random postcode like HHKK7788WW is acceptable
+    @ParameterizedTest(name = "locationPostCode Negative tests")
+    @CsvSource(value = {"Invalid_PostCode_Max_Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424"}, nullValues = "NIL")
+    public void test_negative_response_with_optional_location_postcode_payload(final String locationPostCodeKey, final String locationPostCodeValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-optional-postcode.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationPostCodeValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
-        switch (locationActiveFromValue) {
-            case "":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'' is not a valid value for field 'locationActiveFrom'", null);
-                break;
-            case " ":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "' ' is not a valid value for field 'locationActiveFrom'", null);
-                break;
-            case "RGB":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",  "'RGB' is not a valid value for field 'locationActiveFrom'", null);
+        switch (locationPostCodeKey) {
+            case "Invalid_PostCode_Max_Value":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationPostCode: may only be 15 characters long]", null);
                 break;
             default:
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationActiveFrom: may only be 3 characters long]", null);
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'"+locationPostCodeValue+"' is not a valid value for field 'locationPostCode'", null);
                 break;
 
         }
@@ -299,6 +305,22 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
         this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
         generateLocationPayloadWithRandomHMCTSIDAndField(locationActiveFromValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "locationPostCode Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Valid Location PostCode,'HA2 0NB'", "Valid Location PostCode,'SW7'", "Valid Location PostCode,'SW78LU'"})
+    public void test_positive_response_for_location_postcode_with_optional_elements_payload(final String locationPostCodeKey,
+                                                                                                final String locationPostCodeValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-optional-postcode.json");
+        generateLocationPayloadWithRandomHMCTSIDAndField(locationPostCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
