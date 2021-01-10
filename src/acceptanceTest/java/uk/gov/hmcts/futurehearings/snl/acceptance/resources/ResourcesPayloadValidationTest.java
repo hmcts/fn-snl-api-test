@@ -57,18 +57,25 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
         this.setAuthorizationToken(authorizationToken);
     }
 
-    final void generateResourcesByUserPayloadWithRandomHMCTSId() throws IOException {
+    final void generatePayloadWithRandomHMCTSID() throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
     }
 
-    final void generateResourcesByUserPayloadWithHMCTSID(final String randomID) throws IOException {
+    final String  generatePayloadWithRandomHMCTSID(int maxLength) throws IOException {
+        final String randomID = UUID.randomUUID().toString().substring(0,maxLength);
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+        return randomID;
+    }
+
+    final void generatePayloadWithHMCTSID(final String randomID) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
     }
 
-    final void generateResourcesByUserPayloadWithRandomHMCTSIDAndField(final String formatValue) throws IOException {
+    final void generatePayloadWithRandomHMCTSIDAndField(final String formatValue) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID, formatValue));

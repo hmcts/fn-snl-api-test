@@ -5,18 +5,17 @@
       "timestamp": "1980-11-13T20:20:39+00:00"
     },
     "location": {
-
-      "locationIdHMCTS": "599",
-      "locationIdCaseHQ": "599",
+      "locationIdHMCTS": "%s",
       "locationDescription": "This is a NewCourt",
-      "locationAddress": "71 Agency Drive",
       "locationCluster": "TV",
       "locationPrimaryFlag": true,
-      "locationActiveFrom": "2020-01-01T20:20:39+00:00",
-      "locationActiveTo": "",
+      "locationActiveFrom": "2002-02-31T10:00:30Z",
+      "locationActiveTo": "2002-02-31T10:00:30Z",
       "locationSecurityGuardFlag": true,
-      "locationVideoConfFlag": false,
-      "locationSeatingCapacity": 35
+      "locationVideoConfFlag": true,
+      "locationSeatingCapacity": 25,
+      "locationRecordingEqFlag": true,
+      "locationVCSite": "%s"
     }
   }
 }

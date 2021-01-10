@@ -11,6 +11,8 @@ import java.util.Map;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -18,6 +20,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.util.ResourceUtils;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestingUtils {
 
     public static String readFileContents (final String path) throws IOException {
@@ -49,5 +52,20 @@ public class TestingUtils {
         });
         Headers headers = new Headers(listOfHeaders);
         return headers;
+    }
+
+    public static final String generateStringForGivenLength(int length, String character) {
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            builder.append(character);
+        }
+        return builder.toString();
+    }
+
+    public static String replaceCharacterSequence(final String tokenToReplace,
+                                            final String valueToReplace,
+                                            final String targetStringForReplacement) throws IOException {
+        return targetStringForReplacement.replace(tokenToReplace, valueToReplace);
     }
 }

@@ -82,8 +82,7 @@ class PUTResourcesByLocationHeaderValidationTest extends ResourcesHeaderValidati
 
 
     private Integer makePostResourcesByLocationAndFetchLocationId() throws Exception {
-        int randomId = new Random().nextInt(999999);
-
+        int randomId = new Random().nextInt(99999999);
         DelegateDTO delegateDTO = DelegateDTO.builder()
                 .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
                 .targetURL(resourcesByLocationRootContext)

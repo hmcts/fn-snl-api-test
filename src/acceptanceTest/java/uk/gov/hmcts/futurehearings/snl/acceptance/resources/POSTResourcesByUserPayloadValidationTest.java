@@ -1,9 +1,6 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.resources;
 
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonHeaderTest.INPUT_FILE_PATH;
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonPayloadTest.INPUT_TEMPLATE_FILE_PATH;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -12,9 +9,6 @@ import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDT
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
-
-import java.io.IOException;
-import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -69,7 +63,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_successful_response_with_mandatory_elements_payload() throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
-        generateResourcesByUserPayloadWithRandomHMCTSId();
+        generatePayloadWithRandomHMCTSID();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -84,7 +78,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_successful_response_with_complete_elements_payload() throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-complete.json");
-        generateResourcesByUserPayloadWithRandomHMCTSId();
+        generatePayloadWithRandomHMCTSID();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -99,7 +93,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_with_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
-        generateResourcesByUserPayloadWithHMCTSID(personHMCTSIDValue);
+        generatePayloadWithHMCTSID(personHMCTSIDValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -127,7 +121,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_for_person_first_name_with_mandatory_elements_payload(final String personFirstNameKey, final String personFirstNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personFirstNameValue);
+        generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -142,7 +136,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_positive_response_for_person_first_name_with_mandatory_elements_payload(final String personFirstNameKey, final String personFirstNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personFirstNameValue);
+        generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -157,7 +151,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_for_person_last_name_with_mandatory_elements_payload(final String personFirstNameKey, final String personLastNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-last-name.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personLastNameValue);
+        generatePayloadWithRandomHMCTSIDAndField(personLastNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -173,7 +167,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                             final String personLastNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personLastNameValue);
+        generatePayloadWithRandomHMCTSIDAndField(personLastNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -190,7 +184,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                            final String personRegistryValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-registry.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personRegistryValue);
+        generatePayloadWithRandomHMCTSIDAndField(personRegistryValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -206,7 +200,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                            final String personRegistryValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-registry.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personRegistryValue);
+        generatePayloadWithRandomHMCTSIDAndField(personRegistryValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -223,7 +217,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                            final String personSalutationValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personSalutationValue);
+        generatePayloadWithRandomHMCTSIDAndField(personSalutationValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -239,7 +233,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                              final String personSalutationValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personSalutationValue);
+        generatePayloadWithRandomHMCTSIDAndField(personSalutationValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -255,7 +249,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                              final String personRoleIdValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personRoleIdValue);
+        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -269,9 +263,8 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     @CsvSource(value = {"Empty Space,''","Null Value,NIL","Invalid LOV Value,32","Invalid LOV Value,153"}, nullValues = "NIL")
     public void test_negative_response_for_person_role_id_with_mandatory_elements_payload(final String personRoleIdKey,
                                                                                           final String personRoleIdValue) throws Exception {
-
         this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personRoleIdValue);
+        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -287,7 +280,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                           final String personVenueIdValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-venue-id.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personVenueIdValue);
+        generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -303,7 +296,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                           final String personVenueIdValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personVenueIdValue);
+        generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -319,7 +312,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                            final String personRoleIdValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-active-date.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personRoleIdValue);
+        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -338,7 +331,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                               final String personActiveDateValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-active-date.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personActiveDateValue);
+        generatePayloadWithRandomHMCTSIDAndField(personActiveDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -354,7 +347,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                               final String personInactiveDateValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-inactive-date.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personInactiveDateValue);
+        generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -373,7 +366,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                               final String personInactiveDateValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-inactive-date.json");
-        generateResourcesByUserPayloadWithRandomHMCTSIDAndField(personInactiveDateValue);
+        generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -393,7 +386,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_mandatory_elements_payload(final String userPayloadTestScenarioDescription,
                                                                                                 final String userPayloadTestScenarioFileName) throws Exception {
         this.setInputPayloadFileName(userPayloadTestScenarioFileName);
-        generateResourcesByUserPayloadWithRandomHMCTSId();
+        generatePayloadWithRandomHMCTSID();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());

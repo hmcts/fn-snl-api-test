@@ -8,8 +8,10 @@
       "locationIdHMCTS": "%s",
       "locationDescription": "This is a NewCourt",
       "locationCluster": "TV",
-      "locationPrimaryFlag": 0,
-      "locationActiveFrom": "2020-01-01T20:20:39+00:00"
+      "locationPrimaryFlag": true,
+      "locationActiveFrom": "2002-02-31T10:00:30Z",
+      "locationActiveTo": "2002-02-31T10:00:30Z",
+      "locationSecurityGuardFlag": 0
     }
   }
 }
