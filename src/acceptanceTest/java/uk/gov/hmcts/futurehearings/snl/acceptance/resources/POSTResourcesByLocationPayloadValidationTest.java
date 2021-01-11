@@ -94,7 +94,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @ParameterizedTest(name = "LocationIdHMCTS Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid Location id, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid Location id, C_FEFC242"}, nullValues = "NIL")
     //TODO - LocationIdHMCTS Empty values should not be ingested in the System - Data - "Single Space,' '"
     public void test_negative_response_with_mandatory_locationId_payload(final String locationIdHMCTSKey, final String locationIdHMCTSValue) throws Exception {
 
@@ -186,7 +186,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    //TODO: LocationDescription accepts empty space and single space eventhough it is a mandatory field. Defect needs to be raised.
+    //TODO: LocationDescription accepts empty space and single space even though it is a mandatory field. Defect needs to be raised.
     @ParameterizedTest(name = "locationDescription Negative tests")
     @CsvSource(value = {"Location Description More than Max Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey, final String locationDescriptionValue) throws Exception {
