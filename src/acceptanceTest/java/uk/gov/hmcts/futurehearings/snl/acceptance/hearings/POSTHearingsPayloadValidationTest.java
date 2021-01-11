@@ -232,7 +232,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "Date without Year ,12-11T19:28:30.45Z", "Date without Month ,2015- -11T19:28:30.45Z", "Date without Day ,2015-11-T19:28:30.45Z", "Date without T ,2015-12-1109:28:30.45Z", "Date without hour,2015-12-11T:28:30.45Z", "Date without minute ,2015-12-11T09::30.45Z", "Date without seconds ,2015-12-11T09:28:30.Z", "Date without milliseconds,2015-12-11T09:28:30", "Date without z,2015-12-11T09:28:30.45", "Date with wrong format,12-11-2015T09:28:30.45Z", "Date with wrong format,12-2015-11T09:28:30.45Z", "Date with wrong format,12-2015-11", "Date with wrong format,12-11-2015", "Date with wrong format,2015-11-12", "General Date wrong format,06/30/2018 10:10:42 AM", "Long Date with wrong format,Monday,August 27, 2018", "Medium Date with wrong format,27/Aug/18 27-Aug-18", "Short Date with wrong format,8/27/2018 8-27-2018"}, nullValues = "NIL")
+    @CsvFileSource(resources = "/caseRegisteredTestValues.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the Case registered")
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
