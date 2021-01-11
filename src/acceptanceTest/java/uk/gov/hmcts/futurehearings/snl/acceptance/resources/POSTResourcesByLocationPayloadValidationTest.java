@@ -652,6 +652,26 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationVCEmail: may only be 255 characters long]", null));
     }
 
+    @ParameterizedTest(name = "Mandatory Fields not available Negative Tests Scenario : {0} - {1}")
+    @CsvSource(value = {
+            "Checking Payload without the Location Id HMCTS, resources-by-location-mandatory-without-location-id-hmcts.json",
+            "Checking Payload without the Location Cluster HMCTS, resources-by-location-mandatory-without-location-cluster.json",
+            "Checking Payload without the Location Description HMCTS, resources-by-location-mandatory-without-location-description.json",
+            "Checking Payload without the Location Active From HMCTS, resources-by-location-mandatory-without-location-active-from.json",
+            "Checking Payload without the Location Primary Flag HMCTS, resources-by-location-mandatory-without-location-primary-flag.json"
+    }, nullValues = "NIL")
+    public void test_negative_response_mandatory_elements_payload(final String locationPayloadTestScenarioDescription,
+                                                                  final String locationPayloadTestScenarioFileName) throws Exception {
+        this.setInputPayloadFileName(locationPayloadTestScenarioFileName);
+        generatePayloadWithRandomHMCTSID();
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+    }
 
     private void generateLocationPayloadWithRandomLocationIdHMCTS() throws IOException {
         final int randomId = new Random().nextInt(99999999);

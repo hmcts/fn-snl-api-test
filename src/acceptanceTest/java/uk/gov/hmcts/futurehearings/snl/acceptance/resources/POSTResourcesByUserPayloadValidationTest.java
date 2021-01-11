@@ -379,9 +379,9 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     @ParameterizedTest(name = "Mandatory Fields not available Negative Tests Scenario : {0} - {1}")
     @CsvSource(value = {
             "Checking Payload without the Person Id HMCTS, resources-by-username-mandatory-without-person-id-hmcts.json",
-            "Checking Payload without the Person Id HMCTS, resources-by-username-mandatory-without-person-first-name.json",
-            "Checking Payload without the Person Id HMCTS, resources-by-username-mandatory-without-person-last-name.json",
-            "Checking Payload without the Person Id HMCTS, resources-by-username-mandatory-without-person-registry.json"
+            "Checking Payload without the Person First Name, resources-by-username-mandatory-without-person-first-name.json",
+            "Checking Payload without the Person Last Name, resources-by-username-mandatory-without-person-last-name.json",
+            "Checking Payload without the Person Registry, resources-by-username-mandatory-without-person-registry.json"
     }, nullValues = "NIL")
     public void test_negative_response_mandatory_elements_payload(final String userPayloadTestScenarioDescription,
                                                                                                 final String userPayloadTestScenarioFileName) throws Exception {
