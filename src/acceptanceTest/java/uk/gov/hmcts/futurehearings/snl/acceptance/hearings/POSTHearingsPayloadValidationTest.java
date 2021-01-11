@@ -63,8 +63,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @Test
-    @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
-    public void test_successful_response_with_mandatory_elements_payload() throws Exception {
+    @DisplayName("Successfully validated response for case id hmcts tests")
+    public void test_successful_response_with_case_id_mandatory_elements_payload() throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-id-hmcts-template.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -78,9 +78,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "caseIDHMCTS Negative tests")
     @CsvSource(value = {"Empty Space,''", "Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with all the mandatory required fields")
+    @DisplayName("Negative validated response for case id hmcts tests")
+    //TODO -  Check caseIDHMCTS length max and min
     //TODO - Does not check for blank Spaces - Defect to be raised. Data - "Single Space,' '",.
-    public void test_negative_response_with_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
+    public void test_negative_response_with_case_id_hmcts_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
         final String errorMessage = personHMCTSIDKey.equalsIgnoreCase("Empty Space") ? "[$.hearingRequest._case.caseIdHMCTS: must be at least 1 characters long]" : "[$.hearingRequest._case.caseIdHMCTS: may only be 30 characters long]";
         this.setInputPayloadFileName("hearing-request-mandatory-case-id-hmcts-template.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTS(personHMCTSIDValue);
@@ -107,9 +108,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "caseTitle Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid Case Title, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with all the mandatory required fields")
+    @ParameterizedTest(name = "caseListingRequestId Negative tests")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid case listing requested id, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @DisplayName("Negative validated response for case listing requested Id tests")
     public void test_negative_response_with_case_listing_request_id_mandatory_elements_payload() throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-listing-request-id.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(UUID.randomUUID().toString().substring(0, 9));
@@ -123,7 +124,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @Test
-    @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
+    @DisplayName("Successfully validated response for case title tests")
     public void test_successful_response_with_case_title_mandatory_elements_payload() throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-title.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField("Title of the Case");
@@ -136,9 +137,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "caseListingRequestId Negative tests")
+    @ParameterizedTest(name = "caseTitle Negative tests")
     @CsvSource(value = {"Invalid Case Title, C"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with all the mandatory required fields")
+    @DisplayName("Negative validated response for case title tests")
     //TODO - Raised Defect created by Venkata(MCGIRRSD-1683) around blank case titles. - Data "Empty Space,''", "Single Space,' '",
     public void test_negative_response_with_case_title_mandatory_elements_payload(final String caseTitleKey, String caseTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-title.json");
@@ -156,9 +157,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 snlVerificationDTO);
     }
 
-    @ParameterizedTest(name = "caseListingRequestId Negative tests")
+    @ParameterizedTest(name = "Jurisdiction Positive tests")
     @CsvSource(value = {"Valid LOV Value, FAM", "Valid LOV Value, CIV"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with the Case Jurisdiction")
+    @DisplayName("Successfully response for a payload with the Case Jurisdiction")
     public void test_successful_response_with_case_jurisdiction_mandatory_elements_payload(final String caseJurisdictionKey, String caseJurisdictionValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-jurisdiction.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseJurisdictionValue);
@@ -171,9 +172,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "caseTitle Negative tests")
+    @ParameterizedTest(name = "Jurisdiction Negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid Case Jurisdiction, VIC"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with all the mandatory required fields")
+    @DisplayName("Negative validated response for Jurisdiction tests")
     public void test_negative_response_with_case_jurisdiction_mandatory_elements_payload(final String caseJurisdictionKey, String caseJurisdictionValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-jurisdiction.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseJurisdictionValue);
@@ -186,9 +187,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'" + caseJurisdictionValue + "' is not a valid value for field 'caseJurisdiction'", null));
     }
 
-    @ParameterizedTest(name = "caseCourt Negative tests")
-    @CsvSource(value = {"Valid LOV Value, 1", "Valid LOV Value, 5", "Valid LOV Value, 10"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with the Case Court")
+    @ParameterizedTest(name = "caseCourt Positive tests")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/case-court-test-positive-values.csv", numLinesToSkip = 1)
+    @DisplayName("Successfully response for a payload with the Case Court")
     public void test_successful_response_with_case_court_mandatory_elements_payload(final String caseCourtKey, String caseCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-court.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseCourtValue);
@@ -201,9 +202,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "caseTitle Negative tests")
+    @ParameterizedTest(name = "caseCourt Negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "Invalid Case Court, 0", "Invalid Case Court, 11", "Invalid Case Court, 4.5"}, nullValues = "NIL")
-    @DisplayName("Negative response for a payload with all the mandatory required fields")
+    @DisplayName("Negative validated response for caseCourt tests")
     public void test_negative_response_with_case_court_mandatory_elements_payload(final String caseCourtKey, final String caseCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-court.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseCourtValue);
@@ -234,8 +235,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered Negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/input/data/caseRegisteredTestValues.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the Case registered")
+
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseRegisteredValue);
@@ -250,7 +252,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listing Court positive tests")
-    @CsvFileSource(resources = "/listingCourtTestValues.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/listing-court-test-positive-values.csv", numLinesToSkip = 1)
     @DisplayName("Successfully response for a payload with the listing Court")
     public void test_successful_response_with_listing_court_mandatory_elements_payload(final String listingCourtKey, String listingCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-court.json");
@@ -295,7 +297,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "listing Negative positive tests")
+    @ParameterizedTest(name = "listing Priority negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL","Listing priority, Critical", "Listing priority, High","Listing priority, Normal","Listing priority, ABC"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the listing Priority")
     public void test_negative_response_with_listing_priority_mandatory_elements_payload(final String listingPriorityKey, String listingPriorityValue) throws Exception {
@@ -312,7 +314,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listing Session Type positive tests")
-    @CsvFileSource(resources = "/listingSessionTypeTestValues.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/listing-session-type-test-positive-values.csv", numLinesToSkip = 1)
     @DisplayName("Successfully response for a payload with the listing session type")
     public void test_successful_response_with_listing_session_type_mandatory_elements_payload(final String listingSessionTypeKey, String listingSessionTypeValue,String listingTypeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-session-type.json");
@@ -327,7 +329,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listing Session Type negative tests")
-    @CsvFileSource(resources = "/listingSessionTypeTestNegativeValues.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/listing-session-type-test-negative-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listing session type")
     public void test_negative_response_with_listing_session_type_mandatory_elements_payload(final String listingSessionTypeKey, String listingSessionTypeValue,String listingTypeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-session-type.json");
