@@ -77,7 +77,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "caseIDHMCTS Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Invalid_Source_System, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with all the mandatory required fields")
     //TODO - Does not check for blank Spaces - Defect to be raised. Data - "Single Space,' '",.
     public void test_negative_response_with_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
@@ -219,7 +219,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @ParameterizedTest(name = "case registered positive tests")
     @CsvSource(value = {"Valid Time,2015-12-11T19:28:30.45Z"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the Case registered")
-    public void test_successful_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
+    //TODO - The Time formats for payload is pending confirmation from McGirr
+    public void test_successful_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey,
+                                                                                         String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseRegisteredValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -232,7 +234,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered Negative tests")
-    @CsvFileSource(resources = "/caseRegisteredTestValues.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/input/data/caseRegisteredTestValues.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the Case registered")
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
