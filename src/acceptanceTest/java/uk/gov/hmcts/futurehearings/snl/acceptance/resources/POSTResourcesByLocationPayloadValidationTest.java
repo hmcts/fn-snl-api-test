@@ -40,6 +40,7 @@ import org.springframework.test.context.ActiveProfiles;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SelectClasses(POSTResourcesByLocationPayloadValidationTest.class)
 @IncludeTags("Post")
+@Disabled("This test is disabled till the till we have an agreement with S&L over the UAT")
 class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValidationTest {
 
     @Qualifier("CommonDelegate")
@@ -64,21 +65,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @Test
-    @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
-    public void test_successful_response_with_mandatory_elements_payload() throws Exception {
-
-        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
-        generateLocationPayloadWithRandomLocationIdHMCTS();
-        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
-        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        commonDelegate.test_expected_response_for_supplied_header(
-                delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
-    }
-
-    @Test
     @DisplayName("Successfully validated response for a payload including optional fields")
     public void test_successful_response_with_optional_elements_payload() throws Exception {
 
@@ -91,6 +77,50 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 delegateDTO,
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @Test
+    @DisplayName("LocationIdHMCTS Positive tests")
+    public void test_positive_response_with_mandatory_locationId_payload() throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
+        generateLocationPayloadWithRandomLocationIdHMCTS();
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "LocationIdHMCTS Negative tests")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid Location id, C_FEFC242"}, nullValues = "NIL")
+    //TODO - LocationIdHMCTS Empty values should not be ingested in the System - Data - "Single Space,' '"
+    public void test_positive_response_with_mandatory_locationId_payload(final String locationIdHMCTSKey, final String locationIdHMCTSValue) throws Exception {
+
+        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
+        generateLocationPayloadWithRandomLocationIdHMCTS(locationIdHMCTSValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (locationIdHMCTSValue) {
+            case "":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
+                break;
+            case " ":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
+                break;
+            default:
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: may only be 8 characters long]", null);
+                break;
+
+        }
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
     }
 
     @ParameterizedTest(name = "LocationIdHMCTS Negative tests")
@@ -145,7 +175,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
             "Random_Cluster_Value,'Z'",
             "Random_Cluster_Value,'BR'",
             "Random_Cluster_Value,'RGB'",
-            "Invalid_Cluster_Max_Value, C_FEFC2424"}, nullValues = "NIL")
+            "Invalid_Cluster_Max_Value, C_FE"}, nullValues = "NIL")
     public void test_negative_response_with_mandatory_location_cluster_payload(final String locationClusterKey, final String locationClusterValue) throws Exception {
 
         this.setInputPayloadFileName("resource-by-location-mandatory-cluster.json");
@@ -188,17 +218,20 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     //TODO: LocationDescription accepts empty space and single space even though it is a mandatory field. Defect needs to be raised.
     @ParameterizedTest(name = "locationDescription Negative tests")
-    @CsvSource(value = {"Location Description More than Max Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
-    public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey, final String locationDescriptionValue) throws Exception {
-
+    @CsvSource(value = {"Invalid Data : Description Length 81, C"}, nullValues = "NIL")
+    public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey,
+                                                                                   final String locationDescriptionValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
-        generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationDescriptionValue);
+        if (locationDescriptionKey.trim().equals("Invalid Data : Description Length 80")) {
+            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+                    generateStringForGivenLength(81, locationDescriptionValue));
+        } else {
+            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationDescriptionValue);
+        }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-
         SNLVerificationDTO snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationDescription: may only be 80 characters long]", null);
-
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
@@ -291,11 +324,15 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     //TODO: PostCode accepts empty space, single space and even doesn't validate postcode.
     // Any random postcode like HHKK7788WW is acceptable
     @ParameterizedTest(name = "locationPostCode Negative tests")
-    @CsvSource(value = {"Invalid_PostCode_Max_Value, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424"}, nullValues = "NIL")
-    public void test_negative_response_with_optional_location_postcode_payload(final String locationPostCodeKey, final String locationPostCodeValue) throws Exception {
+    @CsvSource(value = {"Invalid Data PostCode Max Value, C"}, nullValues = "NIL")
+    public void test_negative_response_with_optional_location_postcode_payload(final String locationPostCodeKey,
+                                                                               final String locationPostCodeValue) throws Exception {
 
         this.setInputPayloadFileName("resource-by-location-optional-postcode.json");
-        generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationPostCodeValue);
+        if (locationPostCodeKey.trim().equals("Invalid Data PostCode Max Value")) {
+            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+                    generateStringForGivenLength(16, locationPostCodeKey));
+        }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -431,7 +468,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
     }
 
-    @ParameterizedTest(name = "locationDataEquivalentFlag Positive Tests Scenario : {0}")
+    @ParameterizedTest(name = "locationRecordingEquivalentFlag Positive Tests Scenario : {0}")
     @CsvSource(value = {"Valid Data,true", "Valid Data,false"})
     public void test_positive_response_for_location_recording_equivalent_flag_with_mandatory_elements_payload(final String locationDataEquivalentFlagKey,
                                                                                                               final String locationDataEquivalentFlagValue) throws Exception {
@@ -471,13 +508,13 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     @Disabled("TODO - Raise a defect as these scenarios should be failing.....")
     @ParameterizedTest(name = "locationVCSite Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 255,c"})
+    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 256,c"})
     public void test_negative_response_for_location_vc_site_with_mandatory_elements_payload(final String locationVCSiteKey,
                                                                                             final String locationVCSiteValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-site.json");
-        if (locationVCSiteKey.trim().equals("Invalid Data 255")) {
+        if (locationVCSiteKey.trim().equals("Invalid Data 256")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
-                    generateStringForGivenLength(255, locationVCSiteValue) + locationVCSiteValue);
+                    generateStringForGivenLength(256, locationVCSiteValue));
         } else {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationVCSiteValue);
         }
@@ -495,7 +532,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     public void test_positive_response_for_location_vc_site_address_with_mandatory_elements_payload(final String locationVCSiteKey,
                                                                                                     final String locationVCSiteValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-site-address.json");
-        if (locationVCSiteKey.trim().equals("Valid Data 100")) {
+        if (locationVCSiteKey.trim().equals("Valid Data 1000")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
                     generateStringForGivenLength(1000, locationVCSiteValue));
         }
@@ -511,13 +548,13 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     @Disabled("TODO - Raise a defect as these scenarios should be failing.....")
     @ParameterizedTest(name = "locationVCSiteAddress Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 1000,c"})
+    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 1001,c"})
     public void test_negative_response_for_location_vc_site_address_with_mandatory_elements_payload(final String locationVCSiteAddressKey,
                                                                                                     final String locationVCSiteAddressValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-site-address.json");
-        if (locationVCSiteAddressKey.trim().equals("Invalid Data 1000")) {
+        if (locationVCSiteAddressKey.trim().equals("Invalid Data 1001")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
-                    generateStringForGivenLength(1000, locationVCSiteAddressValue) + locationVCSiteAddressValue);
+                    generateStringForGivenLength(1001, locationVCSiteAddressValue));
         } else {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationVCSiteAddressValue);
         }
@@ -530,7 +567,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationVCSiteAddress: may only be 1000 characters long]", null));
     }
 
-    @ParameterizedTest(name = "locationVCSiteAddress Positive Tests Scenario : {0}")
+    @ParameterizedTest(name = "locationVCNumber Positive Tests Scenario : {0}")
     @CsvSource(value = {"Valid Data,site", "Valid Data,12345", "Valid Data,£(%%()%£", "Valid Data 20,c"})
     public void test_positive_response_for_location_vc_number_with_mandatory_elements_payload(final String locationVCSiteKey,
                                                                                               final String locationVCSiteValue) throws Exception {
@@ -552,13 +589,13 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     @Disabled("TODO - Raise a defect as these scenarios should be failing.....")
     @ParameterizedTest(name = "locationVCSiteAddress Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 20,c"})
+    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 21,c"})
     public void test_negative_response_for_location_vc_number_with_mandatory_elements_payload(final String locationVCSiteAddressKey,
                                                                                               final String locationVCSiteAddressValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-number.json");
         if (locationVCSiteAddressKey.trim().equals("Invalid Data 20")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
-                    generateStringForGivenLength(20, locationVCSiteAddressValue) + locationVCSiteAddressValue);
+                    generateStringForGivenLength(21, locationVCSiteAddressValue));
         } else {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationVCSiteAddressValue);
         }
@@ -593,13 +630,13 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     //@Disabled("TODO - Raise a defect as these scenarios should be failing.....")
     @ParameterizedTest(name = "locationVCContactPhoneNumber Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 20,c"})
+    @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 21,c"})
     public void test_negative_response_for_location_vc_contact_phone_with_mandatory_elements_payload(final String locationVCSiteAddressKey,
                                                                                                      final String locationVCSiteAddressValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-contact-phone.json");
         if (locationVCSiteAddressKey.trim().equals("Invalid Data 20")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
-                    generateStringForGivenLength(20, locationVCSiteAddressValue) + locationVCSiteAddressValue);
+                    generateStringForGivenLength(21, locationVCSiteAddressValue));
         } else {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationVCSiteAddressValue);
         }
@@ -615,7 +652,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @ParameterizedTest(name = "locationVCEmail Positive Tests Scenario : {0}")
     @CsvSource(value = {"Valid Data,xxx@hotmail.com", "Valid Data,test@yahoo.milton-keynes.sch.uk", "Valid Data 255,c"})
     public void test_positive_response_for_location_vc_email_with_mandatory_elements_payload(final String locationVCEmailKey,
-                                                                                                     final String locationVCEmailValue) throws Exception {
+                                                                                             final String locationVCEmailValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-contact-email.json");
         if (locationVCEmailKey.trim().equals("Valid Data 255")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
@@ -633,13 +670,13 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @ParameterizedTest(name = "locationVCEmail Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Invalid Data,xxxhotmail.com", "Invalid Data,test@yahoomilton-keynesschuk","Invalid Data 255,t"})
+    @CsvSource(value = {"Invalid Data,xxxhotmail.com", "Invalid Data,test@yahoomilton-keynesschuk", "Invalid Data 256,t"})
     public void test_negative_response_for_location_vc_email_with_mandatory_elements_payload(final String locationVCSEmailKey,
                                                                                              final String locationVCSEmailValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-location-vc-contact-email.json");
         if (locationVCSEmailKey.trim().equals("Invalid Data 255")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
-                    generateStringForGivenLength(255, locationVCSEmailValue) + locationVCSEmailValue);
+                    generateStringForGivenLength(256, locationVCSEmailValue));
         } else {
             generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(locationVCSEmailValue);
         }
