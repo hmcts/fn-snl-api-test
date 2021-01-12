@@ -588,7 +588,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @Disabled("TODO - Raise a defect as these scenarios should be failing.....")
-    @ParameterizedTest(name = "locationVCSiteAddress Positive Tests Scenario : {0}")
+    @ParameterizedTest(name = "locationVCNumber Positive Tests Scenario : {0}")
     @CsvSource(value = {"Invalid Data,''", "Invalid Data,' '", "Invalid Data 21,c"})
     public void test_negative_response_for_location_vc_number_with_mandatory_elements_payload(final String locationVCSiteAddressKey,
                                                                                               final String locationVCSiteAddressValue) throws Exception {
@@ -717,19 +717,19 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     private void generateLocationPayloadWithRandomLocationIdHMCTS(final String randomID) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + "/location/post/" + getInputPayloadFileName()), randomID));
     }
 
     private void generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(final String formatValue) throws IOException {
         final int randomId = new Random().nextInt(99999999);
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomId, formatValue));
+                getInputFileDirectory()) + "/location/post/" + getInputPayloadFileName()), randomId, formatValue));
     }
 
     private void generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace(final String token, final String value) throws IOException {
         final int randomId = new Random().nextInt(99999999);
         String formattedString = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomId, value);
+                getInputFileDirectory()) + "/location/post/" + getInputPayloadFileName()), randomId, value);
         this.setInputBodyPayload(replaceCharacterSequence(token, value, formattedString));
     }
 
