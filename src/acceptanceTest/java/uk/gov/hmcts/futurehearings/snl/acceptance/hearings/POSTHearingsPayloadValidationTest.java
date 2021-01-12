@@ -344,6 +344,70 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, errorDesc, null, null));
     }
 
+    @ParameterizedTest(name = "Case Sub Type non mandatory positive tests")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/case-sub-type-test-positive-values.csv", numLinesToSkip = 1)
+    @DisplayName("Successfully response for a payload with the case sub type")
+    public void test_successful_response_with_case_sub_type_non_mandatory_elements_payload(final String caseSubTypeKey, String caseSubTypeValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-subtype.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseSubTypeValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "Case Sub Type non mandatory negative tests")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL","case subtype min, 0", "case subtype max,94","case subtype, abc"}, nullValues = "NIL")
+    @DisplayName("Negative response for a payload with the case sub type")
+    public void test_negative_response_with_case_sub_type_non_mandatory_elements_payload(final String caseSubTypeKey, String caseSubTypeValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-subtype.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseSubTypeValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'caseSubType'",caseSubTypeValue);
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
+    }
+
+    /* work-in-progress hearing-request-non-mandatory-case-subtype.json  */
+
+    @ParameterizedTest(name = "Case comments non mandatory positive tests")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/case-comments-test-positive-values.csv", numLinesToSkip = 1)
+    @DisplayName("Successfully response for a payload with the case comments")
+    public void test_successful_response_with_case_comments_non_mandatory_elements_payload(final String caseCommentsKey, String caseCommentsValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-comments.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseCommentsValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "Case comments non mandatory negative tests")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/case-comments-test-negative-values.csv", numLinesToSkip = 1)
+    @DisplayName("Negative response for a payload with the case comments")
+    public void test_negative_response_with_case_comments_non_mandatory_elements_payload(final String caseCommentsKey, String caseCommentsValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-comments.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseCommentsValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        String errorDesc = MessageFormat.format("[$.hearingRequest._{0}: may only be 5000 characters long]", caseCommentsValue);
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
+    }
+
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTS() throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
