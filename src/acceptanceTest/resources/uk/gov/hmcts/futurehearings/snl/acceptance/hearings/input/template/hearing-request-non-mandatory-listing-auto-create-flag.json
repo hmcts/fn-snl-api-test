@@ -12,14 +12,14 @@
       "caseSubType": "79",
       "caseRegistered": "2015-12-11T19:28:35Z",
       "caseCourt": "1",
-      "caseComments": "%s",
+      "caseComments": "caseComments",
       "caseRelatedCaseIdHMCTS": [],
       "caseRestrictedFlag": true,
-      "caseInterpreterRequiredFlag": true,
+      "caseInterpreterRequiredFlag": false,
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
-      "listingAutoCreateFlag": true,
+      "listingAutoCreateFlag": 0,
       "listingPriority": "CRIT",
       "listingSessionType": "DS",
       "listingType": "DECNIS",

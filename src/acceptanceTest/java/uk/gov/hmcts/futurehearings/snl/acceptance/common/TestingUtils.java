@@ -23,9 +23,8 @@ import org.springframework.util.ResourceUtils;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestingUtils {
 
-    public static String readFileContents (final String path) throws IOException {
-
-        File file = ResourceUtils.getFile("classpath:"+path);
+    public static String readFileContents(final String path) throws IOException {
+        File file = ResourceUtils.getFile("classpath:" + path);
         //File is found
         log.debug("File Found : " + file.exists());
         return new String(Files.readAllBytes(Paths.get(file.toURI())));
@@ -38,13 +37,12 @@ public class TestingUtils {
             JSONAssert.assertEquals(output,
                     response.getBody().asString(), JSONCompareMode.STRICT);
         } catch (JSONException | IOException comparisonException) {
-            log.error("Payloads have not matched" , comparisonException);
+            log.error("Payloads have not matched", comparisonException);
             throw new AssertionError("Payloads have not matched");
         }
     }
 
     public static final Headers convertHeaderMapToRestAssuredHeaders(final Map<String, String> headerMap) {
-
         List<Header> listOfHeaders = new ArrayList<>();
         headerMap.forEach((key, value) -> {
             Header header = new Header(key, value);
@@ -53,7 +51,6 @@ public class TestingUtils {
         Headers headers = new Headers(listOfHeaders);
         return headers;
     }
-
     public static final String generateStringForGivenLength(int length, String character) {
 
         StringBuilder builder = new StringBuilder();
@@ -64,8 +61,8 @@ public class TestingUtils {
     }
 
     public static String replaceCharacterSequence(final String tokenToReplace,
-                                            final String valueToReplace,
-                                            final String targetStringForReplacement) throws IOException {
+                                                  final String valueToReplace,
+                                                  final String targetStringForReplacement) throws IOException {
         return targetStringForReplacement.replace(tokenToReplace, valueToReplace);
     }
 }
