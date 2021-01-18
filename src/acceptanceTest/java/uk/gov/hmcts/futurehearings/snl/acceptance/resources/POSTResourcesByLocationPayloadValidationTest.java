@@ -199,14 +199,14 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 snlVerificationDTO);
     }
 
-    @ParameterizedTest(name = "locationDescription Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Location Description,' '", "Location Description,'This is location description'"})
-    //TODO - LocationDescription should not accept empty and blank values.
-    public void test_positive_response_for_location_description_with_mandatory_elements_payload(final String locationDescriptionKey,
-                                                                                                final String locationDescriptionValue) throws Exception {
+    @ParameterizedTest(name = " Positive Tests Scenario : {0}")
+    @CsvSource(value = {"Location Description,'x – HMI Test This is location description'"})
+    //TODO -  should not accept empty and blank values. Data - "Location Description,' '",
+    public void test_positive_response_for_location_description_with_mandatory_elements_payload(final String Key,
+                                                                                                final String Value) throws Exception {
 
         this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
-        generatePayloadWithRandomHMCTSIDAndField(locationDescriptionValue,"/location/post/");
+        generatePayloadWithRandomHMCTSIDAndField(Value,"/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -216,8 +216,8 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    //TODO: LocationDescription accepts empty space and single space even though it is a mandatory field. Defect needs to be raised.
-    @ParameterizedTest(name = "locationDescription Negative tests")
+    //TODO:  accepts empty space and single space even though it is a mandatory field. Defect needs to be raised.
+    @ParameterizedTest(name = " Negative tests")
     @CsvSource(value = {"Invalid Data : Description Length 81, C"}, nullValues = "NIL")
     public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey,
                                                                                    final String locationDescriptionValue) throws Exception {

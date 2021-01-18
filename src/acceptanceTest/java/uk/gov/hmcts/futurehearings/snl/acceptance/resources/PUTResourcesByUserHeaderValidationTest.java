@@ -43,8 +43,6 @@ import org.springframework.test.context.ActiveProfiles;
 @IncludeTags("Put")
 class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTest {
 
-    //private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
-
     @Qualifier("CommonDelegate")
     @Autowired(required = true)
     private CommonDelegate commonDelegate;

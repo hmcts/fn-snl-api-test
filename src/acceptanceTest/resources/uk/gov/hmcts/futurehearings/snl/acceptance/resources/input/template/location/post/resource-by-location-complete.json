@@ -6,7 +6,7 @@
     },
     "location": {
       "locationIdHMCTS": "%s",
-      "locationDescription": "This is a NewCourt",
+      "locationDescription": "x – HMI Test SNL-QA",
       "locationAddress": "71 Agency Drive",
       "locationCluster": "KNT",
       "locationPostCode" : "SW7",

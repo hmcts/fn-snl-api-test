@@ -6,7 +6,7 @@
     },
     "location": {
       "locationIdHMCTS": "%s",
-      "locationDescription": "This is a New Court",
+      "locationDescription": "x – HMI Test SNL-QA",
       "locationCluster": "TV",
       "locationPrimaryFlag": true,
       "locationActiveFrom": "2002-02-31T10:00:30Z",

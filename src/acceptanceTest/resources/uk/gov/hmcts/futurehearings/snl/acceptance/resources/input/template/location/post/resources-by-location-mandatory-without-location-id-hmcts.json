@@ -5,7 +5,7 @@
       "timestamp": "1980-11-13T20:20:39+00:00"
     },
     "location": {
-      "locationIdHMCTS": "%s",
+      "locationDescription": "x – HMI Test SNL-QA",
       "locationCluster": "KNT",
       "locationActiveFrom": "2020-10-01T10:30:00Z",
       "locationPrimaryFlag": true
