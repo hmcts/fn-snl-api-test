@@ -6,23 +6,23 @@
     },
     "location": {
       "locationIdHMCTS": "%s",
-      "locationDescription": "This is a NewCourt",
-      "locationAddress": "71 Agency Drive",
+      "locationDescription": "This is a Court - Updated",
+      "locationAddress": "71 Agency Drive - Updated",
       "locationCluster": "KNT",
-      "locationPostCode" : "SW7",
+      "locationPostCode" : "SW7 1AB",
       "locationPrimaryFlag": true,
       "locationParentCode": "301",
       "locationActiveFrom": "2020-01-01T20:20:39+00:00",
       "locationActiveTo": "2099-01-01T20:20:39+00:00",
-      "locationSecurityGuardFlag": true,
+      "locationSecurityGuardFlag": false,
       "locationVideoConfFlag": true,
-      "locationSeatingCapacity": 35,
-      "locationRecordingEqFlag": true,
-      "locationVCSite": "site",
-      "locationVCSiteAddress": "siteadd",
+      "locationSeatingCapacity": 53,
+      "locationRecordingEqFlag": false,
+      "locationVCSite": "site - Updated",
+      "locationVCSiteAddress": "Site Address - Updated",
       "locationVCNumber": "34",
-      "locationVCContactPhone": "phone",
-      "locationVCEmail": "email"
+      "locationVCContactPhone": "Phone - Updated",
+      "locationVCEmail": "email@hotmail.com"
     }
   }
 }

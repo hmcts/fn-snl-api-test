@@ -6,13 +6,13 @@
     },
     "details": {
       "personIdHMCTS": "%s",
-      "personFirstName": "Jerry",
+      "personFirstName": "HMI-QA",
       "personRegistry": "KNT",
-      "personLastName": "Bond",
+      "personLastName": "HMI-QA",
       "personSalutation": "1234",
       "personRoleId": "127",
       "personVenueId": "386",
-      "personActiveDate": "2002-10-02",
+      "personActiveDate": "1999-10-02",
       "personInactiveDate": "2000-12-19"
     }
   }

@@ -1,6 +1,7 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.resources;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
+import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.replaceCharacterSequence;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.security.OAuthTokenGenerator.generateOAuthToken;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
@@ -9,6 +10,7 @@ import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonHeaderTes
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonPayloadTest;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.UUID;
 
 import io.restassured.RestAssured;
@@ -57,27 +59,39 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
         this.setAuthorizationToken(authorizationToken);
     }
 
-    final void generatePayloadWithRandomHMCTSID() throws IOException {
+    final void generatePayloadWithRandomHMCTSID(final String templatePath) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID));
     }
 
-    final String  generatePayloadWithRandomHMCTSID(int maxLength) throws IOException {
-        final String randomID = UUID.randomUUID().toString().substring(0,maxLength);
+    final String generatePayloadWithRandomHMCTSID(int maxLength, final String templatePath) throws IOException {
+        final String randomID = UUID.randomUUID().toString().substring(0, maxLength);
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID));
         return randomID;
     }
 
-    final void generatePayloadWithHMCTSID(final String randomID) throws IOException {
+    final void generatePayloadWithHMCTSID(final String randomID, final String templatePath) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID));
     }
 
-    final void generatePayloadWithRandomHMCTSIDAndField(final String formatValue) throws IOException {
+    final void generatePayloadWithHMCTSIDAndField(final String randomID, final String formatValue, final String templatePath) throws IOException {
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID, formatValue));
+    }
+
+    final void generatePayloadWithRandomHMCTSIDAndField(final String formatValue, final String templatePath) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID, formatValue));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID, formatValue));
+    }
+
+    final void generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace(final String token, final String value, final String templatePath) throws IOException {
+        final int randomId = new Random().nextInt(99999999);
+        String formattedString = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomId, value);
+        this.setInputBodyPayload(replaceCharacterSequence(token, value, formattedString));
     }
 }
