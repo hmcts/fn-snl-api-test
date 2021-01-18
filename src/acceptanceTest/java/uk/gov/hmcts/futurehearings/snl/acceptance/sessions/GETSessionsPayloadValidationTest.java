@@ -1,7 +1,7 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.sessions;
 
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
-import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createHeaderWithSourceSystemValue;
+import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -17,8 +17,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
@@ -30,7 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("acceptance")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SuppressWarnings("java:S2187")
-public class GETSessionsValidationTest extends SessionsValidationTest {
+public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationTest {
 
     private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
 
@@ -60,55 +58,27 @@ public class GETSessionsValidationTest extends SessionsValidationTest {
         this.setUrlParams(urlParams);
     }
 
-   /* @Test
-    @DisplayName("Successfully validated response with all the header values")
-    @Override
+    @Test
+    @DisplayName("Successfully validated response with all the header values - Query Param : requestSessionType=ADHOC")
     public void test_successful_response_with_a_complete_header() throws Exception {
 
-
-        super.test_successful_response_with_a_complete_header();
-    }*/
-
-    /*@Test
-    @DisplayName("Successfully validated response with mandatory header values")
-    public void test_successful_response_with_a_mandatory_header() throws Exception {
-
-        Map<String,String> urlParams = Map.of("requestSessionType","ADHOC");
-        this.setUrlParams(urlParams);
-        super.test_successful_response_with_a_mandatory_header();
-    }*/
-
-    @Test
-    @DisplayName("Successfully validated response with an empty payload")
-    @Override
-    public void test_successful_response_for_empty_json_body() throws Exception {
-        return;
-    }
-
-    /*
-    @Test
-    @DisplayName("Successfully validated response with all the header values and Error Http Status as No Query params were passed.")
-    void test_mandatory_query_parameter_not_provided () throws Exception {
-
-        DelegateDTO delegateDTO = super.buildDelegateDTO(getRelativeURL(),
-                createCompletePayloadHeader(getApiSubscriptionKey()),HttpStatus.BAD_REQUEST);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createCompletePayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST,null,null,null));
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "Source System Header invalid values - Param : {0} --> {1}")
-    @CsvSource(value = {"Null_Value, NIL", "Empty_Space,''", "Invalid_Source_System, SNL", "Invalid_Source_System, CfT",
-            "Invalid_Source_System, Anybody", "Invalid_Source_System, S&amp;L"}, nullValues = "NIL")
-    public void test_source_system_invalid_values(String sourceSystemKey, String sourceSystemVal) throws Exception {
-        log.debug("Inside the test_source_system_invalid_values() method :");
-        Map<String,String> urlParams = Map.of("requestSessionType","ADHOC");
-        this.setUrlParams(urlParams);
+    @Test
+    @DisplayName("Successfully validated response with mandatory header values - Query Param : requestSessionType=ADHOC")
+    public void test_successful_response_with_a_mandatory_header() throws Exception {
+
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createHeaderWithSourceSystemValue(getApiSubscriptionKey(), sourceSystemVal), HttpStatus.BAD_REQUEST);
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
-                getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
-    }*/
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
 }
