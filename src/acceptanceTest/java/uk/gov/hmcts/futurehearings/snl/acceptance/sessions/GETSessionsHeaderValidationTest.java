@@ -3,7 +3,7 @@ package uk.gov.hmcts.futurehearings.snl.acceptance.sessions;
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
-import uk.gov.hmcts.futurehearings.snl.acceptance.sessions.verify.GETSessionsValidationVerifier;
+import uk.gov.hmcts.futurehearings.snl.acceptance.sessions.verify.GETSessionsPayloadValidationVerifier;
 
 import java.util.Map;
 
@@ -44,7 +44,7 @@ public class GETSessionsHeaderValidationTest extends SessionsHeaderValidationTes
         this.setHttpMethod(HttpMethod.GET);
         this.setHttpSuccessStatus(HttpStatus.OK);
         this.setRelativeURLForNotFound(this.getRelativeURL().replace("sessions", "session"));
-        this.setSnlSuccessVerifier(new GETSessionsValidationVerifier());
+        this.setSnlSuccessVerifier(new GETSessionsPayloadValidationVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
         this.setInputPayloadFileName("empty-json-payload.json");
         TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
