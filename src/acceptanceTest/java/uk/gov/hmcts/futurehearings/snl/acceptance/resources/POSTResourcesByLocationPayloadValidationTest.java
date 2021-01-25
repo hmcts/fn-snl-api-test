@@ -83,7 +83,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @DisplayName("LocationIdHMCTS Positive tests")
     public void test_positive_response_with_mandatory_locationId_payload() throws Exception {
 
-        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
+        this.setInputPayloadFileName("resource-by-location-all-mandatory-location-id_hmcts.json");
         generatePayloadWithRandomHMCTSID("/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -99,36 +99,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     //TODO - LocationIdHMCTS Empty values should not be ingested in the System - Data - "Single Space,' '"
     public void test_positive_response_with_mandatory_locationId_payload(final String locationIdHMCTSKey, final String locationIdHMCTSValue) throws Exception {
 
-        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
-        generatePayloadWithHMCTSID(locationIdHMCTSValue,"/location/post/");
-        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
-        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        SNLVerificationDTO snlVerificationDTO = null;
-        switch (locationIdHMCTSValue) {
-            case "":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
-                break;
-            case " ":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
-                break;
-            default:
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: may only be 8 characters long]", null);
-                break;
-
-        }
-        commonDelegate.test_expected_response_for_supplied_header(
-                delegateDTO,
-                getSnlErrorVerifier(),
-                snlVerificationDTO);
-    }
-
-    @ParameterizedTest(name = "LocationIdHMCTS Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid Location id, C_FEFC242"}, nullValues = "NIL")
-    //TODO - LocationIdHMCTS Empty values should not be ingested in the System - Data - "Single Space,' '"
-    public void test_negative_response_with_mandatory_locationId_payload(final String locationIdHMCTSKey, final String locationIdHMCTSValue) throws Exception {
-
-        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
+        this.setInputPayloadFileName("resource-by-location-all-mandatory-location-id_hmcts.json");
         generatePayloadWithHMCTSID(locationIdHMCTSValue,"/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -222,7 +193,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     public void test_negative_response_with_mandatory_location_description_payload(final String locationDescriptionKey,
                                                                                    final String locationDescriptionValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
-        if (locationDescriptionKey.trim().equals("Invalid Data : Description Length 80")) {
+        if (locationDescriptionKey.trim().equals("Invalid Data : Description Length 81")) {
             generatePayloadWithRandomHMCTSIDAndField(
                     generateStringForGivenLength(81, locationDescriptionValue),"/location/post/");
         } else {
@@ -260,7 +231,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @Disabled("TODO - Review this Test post the confirmation of date formats for the payloads")
-    @ParameterizedTest(name = "locationActiveFrom Negative tests")
+    @ParameterizedTest(name = "locationActiveFrom Positive tests")
     @CsvSource({"Valid_Date_Format,2002-02-15T10:00:30:05+01:25",
             "Valid_Date_Format, 2002-02-01T10:00:30-05:00",
             "Valid_Date_Format, 2002-02-26T10:00:30.123Z"})
@@ -288,7 +259,8 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
             "Invalid_Date_Format,2002-02-31T10:00:30:05-01:75"
     }, nullValues = "NIL")
     //TODO Defect has to be raised around this area.
-    public void test_negative_response_with_mandatory_location_activeFrom_payload(final String locationActiveFromKey, final String locationActiveFromValue) throws Exception {
+    public void test_negative_response_with_mandatory_location_activeFrom_payload(final String locationActiveFromKey,
+                                                                                  final String locationActiveFromValue) throws Exception {
 
         this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
         generatePayloadWithRandomHMCTSIDAndField(locationActiveFromValue,"/location/post");
@@ -353,11 +325,12 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @Disabled("TODO - Review this Test post the confirmation of date formats for the payloads")
-    @ParameterizedTest(name = "locationActiveTo Negative tests")
+    @ParameterizedTest(name = "locationActiveTo Positive tests")
     @CsvSource({"Valid_Date_Format,2002-02-15T10:00:30:05+01:25",
             "Valid_Date_Format, 2002-02-01T10:00:30-05:00",
             "Valid_Date_Format, 2002-02-26T10:00:30.123Z"})
-    public void test_positive_response_with_mandatory_location_activeTo_payload(final String locationActiveFromKey, final String locationActiveFromValue) throws Exception {
+    public void test_positive_response_with_mandatory_location_activeTo_payload(final String locationActiveFromKey,
+                                                                                final String locationActiveFromValue) throws Exception {
 
         this.setInputPayloadFileName("resource-by-location-optional-activeTo.json");
         generatePayloadWithRandomHMCTSIDAndField(locationActiveFromValue,"/location/post/");

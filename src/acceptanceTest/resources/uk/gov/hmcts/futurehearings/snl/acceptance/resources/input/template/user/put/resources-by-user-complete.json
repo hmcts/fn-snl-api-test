@@ -6,13 +6,14 @@
     },
     "details": {
       "personIdHMCTS": "%s",
-      "personFirstName": "Jerry-Updated",
-      "personRegistry": "KNT",
-      "personLastName": "Bond-Updated",
+      "personFirstName": "x - SNL-QA-FN - Updated",
+      "personLastName": "x - SNL-QA-FN - Updated",
+      "personRegistry": "TV",
       "personSalutation": "1234",
+      "personContactEmail": "snlqa-updated@test.com",
       "personRoleId": "130",
       "personVenueId": "301",
-      "personActiveDate": "2021-10-02",
+      "personActiveDate": "1999-10-02",
       "personInactiveDate": "2000-12-19"
     }
   }
