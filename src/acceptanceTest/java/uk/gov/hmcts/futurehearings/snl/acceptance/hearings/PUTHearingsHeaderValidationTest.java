@@ -65,7 +65,6 @@ class PUTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
         this.setHttpSuccessStatus(HttpStatus.ACCEPTED);
         this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
-
         this.hearingId = makePostHearingAndFetchHearingId();
         this.hearingsApi_idRootContext = String.format(hearingsApi_idRootContext, hearingId);
         this.setRelativeURL(hearingsApi_idRootContext);

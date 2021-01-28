@@ -18,14 +18,14 @@ import org.springframework.http.MediaType;
 
 public class CommonHeaderHelper {
 
-    private static final String SNL_DESTINATION_SYSTEM = "S&L";
+    private static final String SNL_DESTINATION_SYSTEM = "SNL";
     private static final String DESTINATION_SYSTEM = SNL_DESTINATION_SYSTEM;
     public static final String CHARSET_UTF_8 = "; charset=UTF-8";
 
     public static final Map<String, String> createCompletePayloadHeader(final String subscriptionKey) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "no-cache",
                 null,
@@ -40,8 +40,8 @@ public class CommonHeaderHelper {
 
     public static final Map<String, String> createStandardPayloadHeader(final String subscriptionKey) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
@@ -55,8 +55,8 @@ public class CommonHeaderHelper {
     public static final Headers createStandardPayloadHeaderWithDuplicateValues(final String subscriptionKey,
                                                                                Map<String, String> duplicateHeaderValues) {
 
-        return buildHeaderWithDoubleValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithDoubleValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "no-cache",
                 null,
@@ -72,7 +72,7 @@ public class CommonHeaderHelper {
 
     public static final Map<String, String> createHeaderWithAllValuesNull() {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
                 null,
                 null,
                 null,
@@ -86,7 +86,7 @@ public class CommonHeaderHelper {
 
     public static final Map<String, String> createHeaderWithAllValuesEmpty() {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
                 "",
                 "",
                 "",
@@ -101,8 +101,8 @@ public class CommonHeaderHelper {
     public static final Map<String, String> createHeaderWithCorruptedHeaderKey(final String subscriptionKey,
                                                                                final List<String> headersToBeTruncated) {
 
-        return buildHeaderWithValuesWithKeysTruncated(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValuesWithKeysTruncated(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
@@ -117,8 +117,8 @@ public class CommonHeaderHelper {
     public static final Map<String, String> createHeaderWithRemovedHeaderKey(final String subscriptionKey,
                                                                              final List<String> headersToBeRemoved) {
 
-        return buildHeaderWithValuesWithKeysTruncated(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValuesWithKeysTruncated(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
@@ -133,8 +133,8 @@ public class CommonHeaderHelper {
     public static Map<String, String> createHeaderWithSourceSystemValue(final String subscriptionKey,
                                                                         final String sourceSystem) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
@@ -148,8 +148,8 @@ public class CommonHeaderHelper {
     public static Map<String, String> createHeaderWithDestinationSystemValue(final String subscriptionKey,
                                                                              final String destinationSystem) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
@@ -163,8 +163,8 @@ public class CommonHeaderHelper {
     public static Map<String, String> createHeaderWithRequestCreatedAtSystemValue(final String subscriptionKey,
                                                                                   final String requestCreatedAt) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 requestCreatedAt,
                 "2012-03-19T07:22:00Z",
@@ -178,8 +178,8 @@ public class CommonHeaderHelper {
     public static Map<String, String> createHeaderWithRequestProcessedAtSystemValue(final String subscriptionKey,
                                                                                     final String requestProcessedAt) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 requestProcessedAt,
@@ -193,8 +193,8 @@ public class CommonHeaderHelper {
     public static Map<String, String> createHeaderWithTransactionIdHMCTSAtSystemValue(final String subscriptionKey,
                                                                                  final String transactionIdHMCTS) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_JSON_VALUE + ";version=1.2",
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
+                MediaType.APPLICATION_JSON_VALUE,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
                 "2012-03-19T07:22:00Z",
@@ -208,7 +208,7 @@ public class CommonHeaderHelper {
     public static Map<String, String> createHeaderWithAcceptTypeAtSystemValue(final String subscriptionKey,
                                                                               final String acceptType) {
 
-        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE,
+        return buildHeaderWithValues(MediaType.APPLICATION_JSON_VALUE+CHARSET_UTF_8,
                 acceptType,
                 subscriptionKey,
                 "2012-03-19T07:22:00Z",
@@ -234,7 +234,7 @@ public class CommonHeaderHelper {
 
         Map<String, String> headers = convertToMapWithMandatoryHeaders(buildStandardSytemHeaderPart(
                 MediaType.APPLICATION_JSON_VALUE,
-                acceptType + "; version=1.2",
+                acceptType,
                 null,
                 null,
                 subscriptionKey,

@@ -3,30 +3,31 @@
     "meta": {
     },
     "_case": {
-      "caseIdHMCTS": "HMI/SW1666",
-      "caseListingRequestId": "%s",
-      "caseTitle": "Smith vs Best Company PL",
+      "caseIdHMCTS": "%s",
+      "caseTitle": "caseTitle",
       "caseJurisdiction": "FAM",
+      "caseListingRequestId": "",
       "caseSubType": "79",
       "caseRegistered": "2021-11-13T20:20:39+00:00",
       "caseCourt": "1",
-      "caseComments": "aliquip labore reprehenderit in Lorem voluptate esse.",
+      "caseComments": "Ut in irure Lorem",
       "caseRelatedCaseIdHMCTS": ["1","2"],
       "caseRestrictedFlag": true,
-      "caseInterpreterRequiredFlag": true
+      "caseInterpreterRequiredFlag": true,
+      "caseAdditionalSecurityFlag": false
     },
     "listing": {
       "listingCourt": "301",
       "listingAutoCreateFlag": true,
       "listingPriority": "CRIT",
       "listingSessionType": "DS",
-      "listingType": "DECNIS",
+      "listingType": "%s",
       "listingStartDate": "2020-11-13T09:30:00+00:00",
       "listingEndDate": "2020-11-13T10:00:00+00:00",
       "listingDuration": 30,
       "listingNumberAttendees": 6,
       "listingCluster": "TV",
-      "listingComments": "]n\"Proident velit eu aliquip ad aliquip labore reprehenderit in Lorem voluptate esse."
+      "listingComments": "Ut in irure Lorem est esse labore"
     }
   }
 }
