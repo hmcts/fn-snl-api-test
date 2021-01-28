@@ -62,7 +62,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
         this.setInputBodyPayload(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory()) +
-                "/" + getInputPayloadFileName()));
+                "/post/" + getInputPayloadFileName()));
     }
 
     @Test
@@ -80,10 +80,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "caseIDHMCTS Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''","Empty Space,' '","Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     @DisplayName("Negative validated response for case id hmcts tests")
     //TODO -  Check caseIDHMCTS length max and min
-    //TODO - Does not check for blank Spaces - Defect to be raised. Data - "Single Space,' '",.
+    //TODO - Does not check for blank Spaces - Defect to be raised. Data - "Single Space,' '", MCGIRRSD-1685.
     public void test_negative_response_with_case_id_hmcts_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
         final String errorMessage = personHMCTSIDKey.equalsIgnoreCase("Empty Space") ? "[$.hearingRequest._case.caseIdHMCTS: must be at least 1 characters long]" : "[$.hearingRequest._case.caseIdHMCTS: may only be 30 characters long]";
         this.setInputPayloadFileName("hearing-request-mandatory-case-id-hmcts-template.json");
@@ -113,24 +113,25 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "caseListingRequestId Negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid case listing requested id, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    //TODO - two tests failed Does not check for blank Spaces - Defect to be raised. Data - "Single Space,'"NO Space,''",
     @DisplayName("Negative validated response for case listing requested Id tests")
-    public void test_negative_response_with_case_listing_request_id_mandatory_elements_payload() throws Exception {
+    public void test_negative_response_with_case_listing_request_id_mandatory_elements_payload(final String caseListingRequestIDKey, String caseListingRequestIDValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-listing-request-id.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(UUID.randomUUID().toString().substring(0, 9));
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseListingRequestIDValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlSuccessVerifier(),
-                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
     }
 
     @Test
     @DisplayName("Successfully validated response for case title tests")
     public void test_successful_response_with_case_title_mandatory_elements_payload() throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-title.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField("Title of the Case");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField("Title of the Case");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -150,7 +151,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         SNLVerificationDTO snlVerificationDTO = caseTitleKey.equals("Invalid Case Title")
                 ? new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.hearingRequest._case.caseTitle: may only be 500 characters long]", null)
                 : new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null);
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseTitleValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseTitleValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -165,7 +166,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the Case Jurisdiction")
     public void test_successful_response_with_case_jurisdiction_mandatory_elements_payload(final String caseJurisdictionKey, String caseJurisdictionValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-jurisdiction.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseJurisdictionValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseJurisdictionValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -180,7 +181,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative validated response for Jurisdiction tests")
     public void test_negative_response_with_case_jurisdiction_mandatory_elements_payload(final String caseJurisdictionKey, String caseJurisdictionValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-jurisdiction.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseJurisdictionValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseJurisdictionValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -195,7 +196,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the Case Court")
     public void test_successful_response_with_case_court_mandatory_elements_payload(final String caseCourtKey, String caseCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-court.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseCourtValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -210,7 +211,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative validated response for caseCourt tests")
     public void test_negative_response_with_case_court_mandatory_elements_payload(final String caseCourtKey, final String caseCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-court.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseCourtValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -221,13 +222,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered positive tests")
-    @CsvSource(value = {"Valid Time,2015-12-11T19:28:30.45Z"}, nullValues = "NIL")
+    @CsvSource(value = {"Valid Time,2015-12-11T19:28:30+00:00"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the Case registered")
     //TODO - The Time formats for payload is pending confirmation from McGirr
     public void test_successful_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey,
                                                                                          String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseRegisteredValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseRegisteredValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -242,7 +243,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the Case registered")
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseRegisteredValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseRegisteredValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -258,7 +259,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the listing Court")
     public void test_successful_response_with_listing_court_mandatory_elements_payload(final String listingCourtKey, String listingCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-court.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingCourtValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -273,7 +274,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the listing Court")
     public void test_negative_response_with_listing_court_mandatory_elements_payload(final String listingCourtKey, String listingCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-court.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingCourtValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -289,7 +290,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the listing Priority")
     public void test_successful_response_with_listing_priority_mandatory_elements_payload(final String listingPriorityKey, String listingPriorityValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-priority.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingPriorityValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingPriorityValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -304,7 +305,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the listing Priority")
     public void test_negative_response_with_listing_priority_mandatory_elements_payload(final String listingPriorityKey, String listingPriorityValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-priority.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingPriorityValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingPriorityValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -346,14 +347,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, errorDesc, null, null));
     }
 
-    /* In-progress*/
     //Depends on Session Type, hearing type, PPS="protected party settlement" check all the fields
     @ParameterizedTest(name = "listingType positive tests")
     @CsvSource(value = {"listingType, DECNIS"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingType")
     public void test_successful_response_with_listing_type_mandatory_elements_payload(final String listingTypeKey, String listingTypeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-type.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingTypeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -368,7 +368,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the listingType ")
     public void test_negative_response_with_listing_type_mandatory_elements_payload(final String listingTypeKey, String listingTypeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-type.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingTypeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -384,7 +384,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the case sub type")
     public void test_successful_response_with_case_sub_type_complete_elements_payload(final String caseSubTypeKey, String caseSubTypeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-subtype.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseSubTypeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseSubTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -399,7 +399,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the case sub type")
     public void test_negative_response_with_case_sub_type_complete_elements_payload(final String caseSubTypeKey, String caseSubTypeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-subtype.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(caseSubTypeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseSubTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -416,10 +416,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     public void test_successful_response_with_case_comments_complete_elements_payload(final String caseCommentsKey, String caseCommentsValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-comments.json");
         if (caseCommentsKey.trim().equals("Valid entityLastName 5000")) {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(
                     generateStringForGivenLength(5000, caseCommentsValue));
         } else {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(caseCommentsValue);
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseCommentsValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -436,10 +436,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     public void test_negative_response_with_case_comments_complete_elements_payload(final String caseCommentsKey, String caseCommentsValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-comments.json");
         if (caseCommentsKey.trim().equals("InValid entityLastName 5001")) {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(
                     generateStringForGivenLength(5001, caseCommentsValue));
         } else {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(caseCommentsValue);
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(caseCommentsValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -532,11 +532,11 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listingStartDate non mandatory positive tests")
-    @CsvSource(value = {"listingStartDate, 2015-12-11T19:28:35Z"})
+    @CsvSource(value = {"listingStartDate, 2015-12-11T19:28:35+00:00"})
     @DisplayName("Successfully response for a payload with the listingStartDate")
     public void test_successful_response_with_listing_start_date_complete_elements_payload(final String listingStartDateKey, String listingStartDateValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-start-date.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingStartDateValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingStartDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -546,13 +546,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 2 tests failed bug raised: MCGIRRSD-1987*/
+    /* 3 tests failed bug raised: MCGIRRSD-1987*/
     @ParameterizedTest(name = "listingStartDate non mandatory negative tests")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listingStartDate")
     public void test_negative_response_with_listing_start_date_complete_elements_payload(final String listingStartDateKey, String listingStartDateValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-start-date.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingStartDateValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingStartDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -579,7 +579,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 2 tests failed bug raised: MCGIRRSD-1987*/
+    /* 3 tests failed bug raised: MCGIRRSD-1987*/
     @ParameterizedTest(name = "listingEndDate non mandatory negative tests")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listingEndDate")
@@ -623,7 +623,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the listingCluster")
     public void test_successful_response_with_listing_cluster_payload(final String listingClusterKey, String listingClusterValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-cluster.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingClusterValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingClusterValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -638,7 +638,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the listingCluster")
     public void test_negative_response_with_listing_cluster_payload(final String listingClusterKey, String listingClusterValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-cluster.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(listingClusterValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(listingClusterValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -671,7 +671,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the entityHmiId")
     public void test_successful_response_with_entity_hmi_id_payload(final String entityHmiIdKey, String entityHmiIdValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-hmi-id.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityHmiIdValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityHmiIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -683,12 +683,12 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     //Doubt chek the excel sheet
     @ParameterizedTest(name = "entityTypeCode non mandatory positive tests")
-    //Test Failed: When i user type code as ORG   "errorDesc": "entityTypeCode/entityClassCode ORG/PERSON",
+    //Test Failed: When entity type code as ORG   "errorDesc": "entityTypeCode/entityClassCode ORG/PERSON",
     @CsvSource(value = {"entityTypeCode, IND", "entityTypeCode, ORG"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityTypeCodeValue")
     public void test_successful_response_with_entity_type_code_payload(final String entityTypeCodeKey, String entityTypeCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-type-code.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityTypeCodeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityTypeCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -697,13 +697,12 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
-
     @ParameterizedTest(name = "entityTypeCode non mandatory negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "entityTypeCode, ABC"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTypeCode")
     public void test_negative_response_with_entity_type_code_payload(final String entityTypeCodeKey, String entityTypeCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-type-code.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityTypeCodeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityTypeCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -720,7 +719,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the entityRoleCode")
     public void test_successful_response_with_entity_role_code_payload(final String entityRoleCodeKey, String entityRoleCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-role-code.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityRoleCodeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityRoleCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -735,7 +734,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the entityRoleCode")
     public void test_negative_response_with_entity_role_code_payload(final String entityRoleCodeKey, String entityRoleCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-role-code.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityRoleCodeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityRoleCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -753,7 +752,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the entityClassCode")
     public void test_successful_response_with_entity_class_code_payload(final String entityClassCodeKey, String entityClassCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-class-code.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityClassCodeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityClassCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -768,7 +767,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Negative response for a payload with the entityClassCode")
     public void test_negative_response_with_entity_class_code_payload(final String entityClassCodeKey, String entityClassCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-class-code.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityClassCodeValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityClassCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -785,7 +784,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the entityTitle")
     public void test_successful_response_with_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-title.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityTitleValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityTitleValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -802,12 +801,11 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     public void test_negative_response_with_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-title.json");
         if (entityTitleKey.trim().equals("Invalid entityTitle  16 chars")) {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(
                     generateStringForGivenLength(16, entityTitleValue));
         } else {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(entityTitleValue);
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityTitleValue);
         }
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityTitleValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -823,7 +821,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the entityFirstName")
     public void test_successful_response_with_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-first-name.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityFirstNameValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityFirstNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -839,10 +837,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     public void test_negative_response_with_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-first-name.json");
         if (entityFirstNameKey.trim().equals("Invalid entityFirstName 101")) {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(
                     generateStringForGivenLength(101, entityFirstNameValue));
         } else {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(entityFirstNameValue);
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityFirstNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -855,11 +853,11 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityLastName non mandatory positive tests")
-    @CsvSource(value = {"entityLastName, testFirstName"}, nullValues = "NIL")
+    @CsvSource(value = {"entityLastName, testLastName"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityLastName")
     public void test_successful_response_with_entity_last_name_payload(final String entityLastNameKey, String entityLastNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-last-name.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityLastNameValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityLastNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -876,10 +874,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     public void test_negative_response_with_entity_last_name_payload(final String entityLastNameKey, String entityLastNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-last-name.json");
         if (entityLastNameKey.trim().equals("Invalid entityLastName 731")) {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(
                     generateStringForGivenLength(731, entityLastNameValue));
         } else {
-            generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(entityLastNameValue);
+            generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityLastNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -897,7 +895,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @DisplayName("Successfully response for a payload with the entityCompanyName")
     public void test_successful_response_with_entity_company_name_payload(final String entityCompanyNameKey, String entityCompanyNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-company-name.json");
-        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(entityCompanyNameValue);
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityCompanyNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -931,31 +929,37 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTS() throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID.substring(0, 29)));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29),caseListingRequestID.substring(0,9)));
     }
 
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTS(final String randomID) throws IOException {
+        final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID,caseListingRequestID.substring(0, 9)));
     }
 
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(final String formatValue) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID.substring(0, 29), formatValue));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29), formatValue));
     }
 
-    private void generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(final int formatValue) throws IOException {
+
+    private void generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(final String formatValue) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID.substring(0, 29), formatValue));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29),caseListingRequestID.substring(0,9), formatValue));
     }
+
 
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndTwoField(final String formatValue1, final String formatValue2) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID.substring(0, 29), formatValue1, formatValue2));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29),caseListingRequestID.substring(0,9),formatValue1, formatValue2));
     }
 
     public static String createString(int length, char value) {
@@ -966,15 +970,16 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     private void generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace(final String token, final String value) throws IOException {
         final int randomId = new Random().nextInt(99999999);
+        final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         String formattedString = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomId, value);
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomId, caseListingRequestID.substring(0,9),value);
         this.setInputBodyPayload(replaceCharacterSequence(token, value, formattedString));
     }
 
     private void generateLocationPayloadWithRandomHMCTSIDAndFieldValueFormat(final String formatValue) throws IOException {
         final int randomId = new Random().nextInt(99999999);
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomId, formatValue));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomId, formatValue));
     }
 
 }

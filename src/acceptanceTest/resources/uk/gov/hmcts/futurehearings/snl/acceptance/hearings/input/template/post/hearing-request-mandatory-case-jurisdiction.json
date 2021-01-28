@@ -1,0 +1,20 @@
+{
+  "hearingRequest": {
+    "meta": {
+    },
+    "_case": {
+      "caseIdHMCTS": "%s" ,
+      "caseListingRequestId" : "%s",
+      "caseTitle": "Gill Vs Jill",
+      "caseJurisdiction": "%s",
+      "caseCourt": "9",
+      "caseRegistered": "2015-12-11T19:28:30+00:00"
+    },
+    "listing": {
+      "listingCourt": "301",
+      "listingPriority": "CRIT",
+      "listingSessionType": "DS",
+      "listingType": "DECNIS"
+    }
+  }
+}
