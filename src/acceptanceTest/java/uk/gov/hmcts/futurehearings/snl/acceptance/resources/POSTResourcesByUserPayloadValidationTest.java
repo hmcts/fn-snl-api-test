@@ -65,7 +65,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
         generatePayloadWithRandomHMCTSID("/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -80,7 +80,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-complete.json");
         generatePayloadWithRandomHMCTSID("/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -95,7 +95,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
         generatePayloadWithHMCTSID(personHMCTSIDValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
         switch (personHMCTSIDValue) {
@@ -123,7 +123,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
         generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -138,7 +138,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
         generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -153,7 +153,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-last-name.json");
         generatePayloadWithRandomHMCTSIDAndField(personLastNameValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -169,7 +169,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
         generatePayloadWithRandomHMCTSIDAndField(personLastNameValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -186,7 +186,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-registry.json");
         generatePayloadWithRandomHMCTSIDAndField(personRegistryValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -202,7 +202,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-registry.json");
         generatePayloadWithRandomHMCTSIDAndField(personRegistryValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -219,7 +219,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
         generatePayloadWithRandomHMCTSIDAndField(personSalutationValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -235,7 +235,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
         generatePayloadWithRandomHMCTSIDAndField(personSalutationValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -251,7 +251,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
         generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -266,7 +266,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
         generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -282,7 +282,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-venue-id.json");
         generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -298,7 +298,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
         generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -314,7 +314,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-active-date.json");
         generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -333,7 +333,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-active-date.json");
         generatePayloadWithRandomHMCTSIDAndField(personActiveDateValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -349,7 +349,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-inactive-date.json");
         generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -368,7 +368,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName("resources-by-username-mandatory-person-inactive-date.json");
         generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue,"/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -388,7 +388,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         this.setInputPayloadFileName(userPayloadTestScenarioFileName);
         generatePayloadWithRandomHMCTSID("/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,

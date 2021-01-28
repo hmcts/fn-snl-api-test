@@ -88,7 +88,7 @@ class PUTResourcesByLocationHeaderValidationTest extends ResourcesHeaderValidati
                 .targetURL(resourcesByLocationRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory()) +
                         "/" + getInputPayloadFileName()), randomId))
-                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                .standardHeaderMap(createCompletePayloadHeader())
                 .headers(null)
                 .params(getUrlParams())
                 .httpMethod(HttpMethod.POST)

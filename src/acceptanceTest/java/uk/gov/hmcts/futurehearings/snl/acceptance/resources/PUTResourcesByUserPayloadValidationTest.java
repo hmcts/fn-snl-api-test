@@ -75,7 +75,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
         this.setInputPayloadFileName("resources-by-user-complete.json");
         generatePayloadWithHMCTSID(personIdHMCTS, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -100,7 +100,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
         this.setInputPayloadFileName("resources-by-user-general-template.json");
         generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -211,7 +211,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
         this.setInputPayloadFileName("resources-by-user-general-template.json");
         generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/location/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -227,7 +227,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 .targetURL(resourcesByUserRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory()) +
                         "/user/post/" + getInputPayloadFileName()), randomString))
-                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                .standardHeaderMap(createCompletePayloadHeader())
                 .headers(null)
                 .params(getUrlParams())
                 .httpMethod(HttpMethod.POST)

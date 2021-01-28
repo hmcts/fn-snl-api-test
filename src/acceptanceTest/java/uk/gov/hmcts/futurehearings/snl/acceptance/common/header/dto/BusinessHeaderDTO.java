@@ -19,6 +19,5 @@ public class BusinessHeaderDTO {
     private String sourceSystem;
     private String requestCreatedAt;
     private String requestProcessedAt;
-    private String requestType;
     private String transactionIdHMCTS;
 }

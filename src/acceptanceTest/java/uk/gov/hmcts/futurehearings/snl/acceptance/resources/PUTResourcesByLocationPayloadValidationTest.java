@@ -77,7 +77,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
         this.setInputPayloadFileName("resource-by-location-complete.json");
         generatePayloadWithHMCTSID(locationIdHMCTS, "/location/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -106,7 +106,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
         this.setInputPayloadFileName("resource-by-location-general-template.json");
         generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/location/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -127,7 +127,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
         this.setInputPayloadFileName("resource-by-location-general-template.json");
         generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/location/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
         switch (locationTemplateKey) {
@@ -197,7 +197,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
             generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"key\"" + " : 0", "\"" + locationTemplateKey + "\"" + ":" + Boolean.parseBoolean(locationTemplateValue), "/location/put/");
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -213,7 +213,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
                 .targetURL(resourcesByLocationRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory()) +
                         "/location/post/" + getInputPayloadFileName()), randomId))
-                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                .standardHeaderMap(createCompletePayloadHeader())
                 .headers(null)
                 .params(getUrlParams())
                 .httpMethod(HttpMethod.POST)

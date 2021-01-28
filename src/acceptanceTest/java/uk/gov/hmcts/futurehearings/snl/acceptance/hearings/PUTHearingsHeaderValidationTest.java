@@ -91,7 +91,7 @@ class PUTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
                 .targetURL(hearingsApiRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
                         "/" + getInputPayloadFileName()), randomId))
-                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                .standardHeaderMap(createCompletePayloadHeader())
                 .headers(null)
                 .params(getUrlParams())
                 .httpMethod(HttpMethod.POST)

@@ -7,16 +7,15 @@ import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
+import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.sessions.dto.SessionsVerificationDTO;
-import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.sessions.verify.GETSessionsPayloadValidationVerifier;
 
 import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -69,7 +68,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
         Map<String, String> urlParams = Map.of("requestSessionType", "ADHOC");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createCompletePayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createCompletePayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         commonDelegate.test_expected_response_for_supplied_header(
@@ -84,7 +83,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
         Map<String, String> urlParams = Map.of("requestSessionType", "ADHOC");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
@@ -100,7 +99,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
         Map<String, String> urlParams = Map.of("requestSessionType", value);
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType(value);
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
@@ -117,7 +116,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestDuration", "360");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestDuration("360");
@@ -137,7 +136,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestDuration", value);
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
                 this.getSnlSuccessVerifier(),
                 new SNLVerificationDTO(HttpStatus.OK, null, null, null));
@@ -153,7 +152,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestJudgeType", value);
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestJudgeType( value);
@@ -172,7 +171,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestLocationId", "301");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestLocationID("301");
@@ -190,7 +189,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                                                 "requestLocationId",value);
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType(value);
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
@@ -207,7 +206,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestStartDate", "2020-12-09T10:00:00Z");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestStartDate("2020-12-09T10:00:00Z");
@@ -227,7 +226,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestStartDate", value);
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestStartDate(value);
@@ -245,7 +244,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestEndDate", "2020-12-09T10:00:00Z");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestEndDate("2020-12-09T10:00:00Z");
@@ -265,7 +264,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestEndDate", value);
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestEndDate(value);
@@ -284,7 +283,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestEndDate", "2020-12-09T10:00:00Z");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestStartDate("2020-12-01T10:00:00Z");
@@ -304,7 +303,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestLocationId", "360");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(),
                 null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
@@ -326,7 +325,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 "requestEndDate", "2020-12-09T10:00:00Z");
         this.setUrlParams(urlParams);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
         sessionsVerificationDTO.requestSessionType("ADHOC");
         sessionsVerificationDTO.requestDuration("360");
