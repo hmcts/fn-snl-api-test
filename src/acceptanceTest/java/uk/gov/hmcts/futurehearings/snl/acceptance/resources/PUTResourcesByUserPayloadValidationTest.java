@@ -72,7 +72,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
     @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
     public void test_successful_response_with_mandatory_elements_payload() throws Exception {
 
-        this.setInputPayloadFileName("resources-by-user-complete.json");
+        this.setInputPayloadFileName("resources-by-username-complete.json");
         generatePayloadWithHMCTSID(personIdHMCTS, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
@@ -88,17 +88,16 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
             "personFirstName,x – HMI Test - Updated",
             "personLastName,x – HMI Test - Updated",
             "personRegistry,KNT",
-            "personSalutation,1234",
             "personContactEmail,snlqa-updated@test.com",
             "personRoleId,130",
             "personVenueId,301",
             "personActiveDate,1999-10-02",
             "personInactiveDate,2000-12-19"
     }, nullValues = "NIL")
-    public void test_positive_response_for_general_updated_payload(final String locationTemplateKey,
-                                                                   final String locationTemplateValue) throws Exception {
+    public void test_positive_response_for_general_updated_payload(final String userTemplateKey,
+                                                                   final String userTemplateValue) throws Exception {
         this.setInputPayloadFileName("resources-by-user-general-template.json");
-        generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/user/put/");
+        generatePayloadWithHMCTSIDAndField(userTemplateKey, userTemplateValue, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());

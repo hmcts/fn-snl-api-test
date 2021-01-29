@@ -3,7 +3,6 @@
     "meta": {
     },
     "location": {
-      "locationIdHMCTS": "%s",
       "locationDescription": "x – HMI Test - Updated",
       "locationAddress": "71 Agency Drive - Updated",
       "locationCluster": "KNT",

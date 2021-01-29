@@ -60,7 +60,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
     @BeforeAll
     public void initialiseValues() throws Exception {
         super.initialiseValues();
-        this.setInputPayloadFileName("resource-by-location-all-mandatory.json");
+        this.setInputPayloadFileName("resource-by-location-all-mandatory-location-id-hmcts.json");
         locationIdHMCTS = String.valueOf(makePostResourcesByLocationAndFetchLocationId());
         this.setRelativeURL(String.format(resourcesByLocation_idRootContext, locationIdHMCTS));
         this.setHttpMethod(HttpMethod.PUT);
@@ -87,7 +87,6 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
 
     @ParameterizedTest(name = "Update Positive Tests for Singular Fields : {0} - {1}")
     @CsvSource(value = {
-            "locationIdHMCTS,update", //TODO - Clarify if this is a Defect or not as Id's should not be updated on itself.
             "locationDescription,x – HMI Test - Updated",
             "locationCluster,KNT",
             "locationCluster,TV",
