@@ -1,0 +1,54 @@
+{
+  "hearingRequest": {
+    "meta": {
+    },
+    "_case": {
+      "caseIdHMCTS": "%s",
+      "caseListingRequestId": "%s",
+      "caseTitle": "Smith vs Best Company PL",
+      "caseJurisdiction": "FAM",
+      "caseSubType": "79",
+      "caseRegistered": "2015-12-11T19:28:35Z",
+      "caseCourt": "1",
+      "caseComments": "caseComments",
+      "caseRelatedCaseIdHMCTS": [],
+      "caseRestrictedFlag": true,
+      "caseInterpreterRequiredFlag": false,
+      "caseAdditionalSecurityFlag": false
+    },
+    "listing": {
+      "listingAutoCreateFlag": false,
+      "listingPriority": "CRIT",
+      "listingSessionType": "DS",
+      "listingType": "DECNIS",
+      "listingStartDate": "2015-12-11T09:28:35Z",
+      "listingEndDate": "2015-12-11T19:28:35Z",
+      "listingNumberAttendees": 6,
+      "listingCluster": "TV",
+      "listingDuration": 30,
+      "listingCourt": "301"
+    },
+    "entities": [
+      {
+        "entityHmiId": "1234",
+        "entityTypeCode": "IND",
+        "entityRoleCode": "%s",
+        "entitySubType": {
+          "entityClassCode": "PERSON",
+          "entityTitle": "Mr",
+          "entityFirstName": "Joe",
+          "entityLastName": "Bloggs"
+        }
+      },
+      {
+        "entityHmiId": "12345",
+        "entityTypeCode": "ORG",
+        "entityRoleCode": "DEF",
+        "entitySubType": {
+          "entityClassCode": "ORG",
+          "entityCompanyName": "Company X"
+        }
+      }
+    ]
+  }
+}
