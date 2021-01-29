@@ -74,20 +74,20 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
     }
-//
-//    @Test
-//    @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
-//    public void test_successful_response_with_all_mandatory_elements_payload() throws Exception {
-//        this.setInputPayloadFileName("update-hearing-request-complete.json");
-//        generateHearingsByHearingsPayloadWithRandomCaseIdHMCTS("/put/",caseHMCTSId);
-//        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-//                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
-//        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-//        commonDelegate.test_expected_response_for_supplied_header(
-//                delegateDTO,
-//                getSnlSuccessVerifier(),
-//                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
-//    }
+
+    @Test
+    @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
+    public void test_successful_response_with_all_mandatory_elements_payload() throws Exception {
+        this.setInputPayloadFileName("update-hearing-request-complete.json");
+        generatePayloadWithRandomHMCTSID("/put/",caseHMCTSId);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
 
 
     @DisplayName("Successful Update CaseTitle Positive Tests for Single Field")
@@ -782,12 +782,12 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     }
 
     @ParameterizedTest(name = "update entityClassCode non mandatory positive tests")
-     //Test failing :  "errorDesc" : "entityTypeCode/entityClassCode IND/ORG"
+    //Test failing :  "errorDesc" : "entityTypeCode/entityClassCode IND/ORG"
     @CsvSource(value = {"entityClassCode, PERSON", "entityClassCode, ORG"}, nullValues = "NIL")
     @DisplayName("Update successfully response for a payload with the entityClassCode")
     public void test_successful_response_by_updating_entity_class_code_payload(final String entityClassCodeKey, String entityClassCodeValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-class-code-template.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityClassCodeValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityClassCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -802,7 +802,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Update Negative response for a payload with the entityClassCode")
     public void test_negative_response_by_updating_entity_class_code_payload(final String entityClassCodeKey, String entityClassCodeValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-class-code-template.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityClassCodeValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityClassCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -819,7 +819,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Update successfully response for a payload with the entityTitle")
     public void test_successful_response_by_updating_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-title.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityTitleValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityTitleValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -837,9 +837,9 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     public void test_negative_response_by_updating_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-title.json");
         if (entityTitleKey.trim().equals("Invalid entityTitle  16 chars")) {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,generateStringForGivenLength(16, entityTitleValue));
+            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, generateStringForGivenLength(16, entityTitleValue));
         } else {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityTitleValue);
+            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityTitleValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -856,7 +856,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Update successfully response for a payload with the entityFirstName")
     public void test_successful_response_by_updating_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-first-name.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityFirstNameValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityFirstNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -871,12 +871,12 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Update Negative response for a payload with the entityTitle")
     public void test_negative_response_by_updating_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-first-name.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityFirstNameValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityFirstNameValue);
         if (entityFirstNameKey.trim().equals("Invalid entityFirstName 101")) {
             this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-first-name.json");
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,generateStringForGivenLength(101, entityFirstNameValue));
+            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, generateStringForGivenLength(101, entityFirstNameValue));
         } else {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityFirstNameValue);
+            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityFirstNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -893,7 +893,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Update successfully response for a payload with the entityLastName")
     public void test_successful_response_by_updating_entity_last_name_payload(final String entityLastNameKey, String entityLastNameValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-last-name.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityLastNameValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityLastNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -913,7 +913,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,
                     generateStringForGivenLength(731, entityLastNameValue));
         } else {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityLastNameValue);
+            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityLastNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -931,7 +931,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Update successfully response for a payload with the entityCompanyName")
     public void test_successful_response_by_updating_entity_company_name_payload(final String entityCompanyNameKey, String entityCompanyNameValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-company-name.json");
-        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityCompanyNameValue);
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityCompanyNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -950,7 +950,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,
                     generateStringForGivenLength(2001, entityCompanyNameValue));
         } else {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId,entityCompanyNameValue);
+            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityCompanyNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
@@ -965,8 +965,6 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     private int[] makePostHearingAndFetchRandomIdAndCaseListingId() throws Exception {
         int randomId = new Random().nextInt(99999999);
         int caseListingRequestId = new Random().nextInt(8888);
-        System.out.println("this is random Id " + randomId);
-        System.out.println("this is random Id " + caseListingRequestId);
         DelegateDTO delegateDTO = DelegateDTO.builder()
                 .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
                 .targetURL(hearingsApiRootContext)
@@ -1001,6 +999,12 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomId, formatValue));
     }
+
+    private void generatePayloadWithRandomHMCTSID(final String templatePath, final String formatValue) throws IOException {
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()),formatValue));
+    }
+
 
     final void generatePayloadWithUpdatedField(final String formatKey, final String formatValue, final String templatePath) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
