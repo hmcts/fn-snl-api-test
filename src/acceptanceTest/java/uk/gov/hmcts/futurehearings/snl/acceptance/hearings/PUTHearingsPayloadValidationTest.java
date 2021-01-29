@@ -81,7 +81,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-complete.json");
         generatePayloadWithRandomHMCTSID("/put/",caseHMCTSId);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -102,7 +102,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, generateStringForGivenLength(499, caseTitleTemplateValue));
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -125,7 +125,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseTitleTemplateValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = caseTitleTemplateKey.equals("CaseTitle501Chars")
                 ? new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.hearingRequest._case.caseTitle: may only be 500 characters long]", null)
@@ -145,7 +145,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-jurisdiction-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseJurisdictionTemplateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -161,7 +161,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-jurisdiction-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseJurisdictionValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
         switch (caseJurisdictionKey) {
@@ -193,7 +193,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-court-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -208,7 +208,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-court-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         SNLVerificationDTO snlVerificationDTO = null;
         switch (caseCourtKey) {
@@ -251,7 +251,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-registered-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseRegisteredValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -267,7 +267,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-registered-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseRegisteredValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("[$.hearingRequest._case.caseRegistered: {0} is an invalid date-time]", caseRegisteredValue);
         SNLVerificationDTO snlVerificationDTO = null;
@@ -293,7 +293,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-court-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -308,7 +308,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-court-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingCourtValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingCourt'", listingCourtValue);
         SNLVerificationDTO snlVerificationDTO = null;
@@ -336,7 +336,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-priority-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingPriorityValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -351,7 +351,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-priority-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingPriorityValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingPriority'", listingPriorityValue);
         SNLVerificationDTO snlVerificationDTO = null;
@@ -378,7 +378,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-session-type-template.json");
         generatePayloadUpdateWithThreeField("/put/", caseHMCTSId, listingSessionTypeValue, listingTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -393,7 +393,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-session-type-template.json");
         generatePayloadUpdateWithThreeField("/put/", caseHMCTSId, listingSessionTypeValue, listingTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingType'", listingTypeValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -409,7 +409,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-type-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -424,7 +424,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-listing-type-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingType'", listingTypeValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -440,7 +440,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-case-sub-type-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseSubTypeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'caseSubType'", caseSubTypeValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -460,7 +460,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseCommentsValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -479,7 +479,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseCommentsValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("[$.hearingRequest._{0}: may only be 5000 characters long]", caseCommentsValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -500,7 +500,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithFieldTokenReplace(caseHMCTSId, "\"caseRestrictedFlag\": 0", "\"caseRestrictedFlag\":" + false, "/put/", caseRestrictedFlagValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -520,7 +520,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithFieldTokenReplace(caseHMCTSId, "\"caseInterpreterRequiredFlag\": 0", "\"caseInterpreterRequiredFlag\":" + false, "/put/", caseInterpreterRequiredFlagValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -540,7 +540,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithFieldTokenReplace(caseHMCTSId, "\"caseAdditionalSecurityFlag\": 0", "\"caseAdditionalSecurityFlag\":" + false, "/put/", caseAdditionalSecurityFlagValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -560,7 +560,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithFieldTokenReplace(caseHMCTSId, "\"listingAutoCreateFlag\": 0", "\"listingAutoCreateFlag\":" + false, "/put/", listingAutoCreateFlagValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -575,7 +575,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-start-date.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingStartDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -591,7 +591,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-start-date.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingStartDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("[$.hearingRequest.listing.listingStartDate: {0} is an invalid date-time]", listingStartDateValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -608,7 +608,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         //Checking startDate<=endDate
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingEndDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -625,7 +625,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         //Checking startDate<=endDate
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingEndDateValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("[$.hearingRequest.listing.listingStartDate: {0} is an invalid date-time]", listingEndDateValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -643,7 +643,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-number-attendees-template.json");
         generatePayloadWithFieldTokenReplace(caseHMCTSId, "\"listingNumberAttendees\": 0", "\"listingNumberAttendees\":" + Integer.parseInt(listingNumberOfAttendeesValue), "/put/", listingNumberOfAttendeesValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -658,7 +658,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-cluster.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingClusterValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -673,7 +673,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-cluster.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, listingClusterValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingCluster'", listingClusterValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -691,7 +691,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-duration-template.json");
         generatePayloadWithFieldTokenReplace(caseHMCTSId, "\"listingDuration\": 0", "\"listingDuration\":" + Integer.parseInt(listingDurationValue), "/put/", listingDurationValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -707,7 +707,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-id-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityHmiIdValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -724,7 +724,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-type-coded-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityTypeCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -739,7 +739,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-type-coded-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityTypeCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTypeCode'", entityTypeCodeValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -757,7 +757,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-role-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityRoleCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -772,7 +772,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-role-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityRoleCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityRoleCode'", entityRoleCodeValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -789,7 +789,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-class-code-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityClassCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -804,7 +804,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-class-code-template.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityClassCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityClassCode'", entityClassCodeValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -821,7 +821,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-title.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityTitleValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -842,7 +842,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityTitleValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTitle'", entityTitleValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -858,7 +858,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-first-name.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityFirstNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -879,7 +879,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityFirstNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTitle'", entityFirstNameValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -895,7 +895,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-last-name.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityLastNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -916,7 +916,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityLastNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTitle'", entityLastNameValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -933,7 +933,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-company-name.json");
         generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityCompanyNameValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
@@ -953,7 +953,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
             generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityCompanyNameValue);
         }
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(getApiSubscriptionKey()), getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityCompanyName'", entityCompanyNameValue);
         commonDelegate.test_expected_response_for_supplied_header(
@@ -970,7 +970,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 .targetURL(hearingsApiRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
                         "/template/put/" + getInputPayloadFileName()), randomId, caseListingRequestId))
-                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                .standardHeaderMap(createCompletePayloadHeader())
                 .headers(null)
                 .params(getUrlParams())
                 .httpMethod(HttpMethod.POST)
