@@ -1,0 +1,9 @@
+{
+  "locationRequest": {
+    "meta": {
+    },
+    "location": {
+      "%s" : "%s"
+    }
+  }
+}

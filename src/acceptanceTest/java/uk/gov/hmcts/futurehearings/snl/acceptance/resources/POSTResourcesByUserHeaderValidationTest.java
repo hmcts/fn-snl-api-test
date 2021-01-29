@@ -50,13 +50,13 @@ class POSTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationT
         super.initialiseValues();
         this.setRelativeURL(resourcesByUserRootContext);
         this.setHttpMethod(HttpMethod.POST);
-        this.setInputPayloadFileName("resources-by-username-complete.json");
+        this.setInputPayloadFileName("resources-by-user-mandatory-ui-based.json");
         this.setHttpSuccessStatus(HttpStatus.CREATED);
         this.setRelativeURLForNotFound(this.getRelativeURL().replace("resources", "resource"));
         this.setSnlSuccessVerifier(new SNLCommonSuccessVerifier());
         this.setSnlErrorVerifier(new SNLCommonErrorVerifier());
-        this.setInputBodyPayload(TestingUtils.readFileContents(String.format(INPUT_FILE_PATH, getInputFileDirectory()) +
-                "/" + getInputPayloadFileName()));
+        this.setInputBodyPayload(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + "/user/post/" + getInputPayloadFileName()));
     }
 
     @Test
@@ -112,11 +112,6 @@ class POSTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationT
         super.test_request_processed_at_with_valid_values(requestProcessedAtKey, requestProcessedAtVal);
     }
 
-    private void generateResourcesByUserPayloadWithRandomHMCTSId() throws IOException {
-        final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
-        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID));
-    }
     //This test is for a Standard Header but a Payload for Non JSON Type is to be tested.
     //Confirmed by Product Owner that this should be a Success Scenario.
     /*@Test

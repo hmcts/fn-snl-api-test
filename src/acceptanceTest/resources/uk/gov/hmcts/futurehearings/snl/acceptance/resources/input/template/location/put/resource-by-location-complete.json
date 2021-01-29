@@ -1,0 +1,25 @@
+{
+  "locationRequest": {
+    "meta": {
+    },
+    "location": {
+      "locationDescription": "x – HMI Test - Updated",
+      "locationAddress": "71 Agency Drive - Updated",
+      "locationCluster": "KNT",
+      "locationPostCode" : "SW7 1AB",
+      "locationPrimaryFlag": true,
+      "locationParentCode": "301",
+      "locationActiveFrom": "2020-01-01T20:20:39+00:00",
+      "locationActiveTo": "2099-01-01T20:20:39+00:00",
+      "locationSecurityGuardFlag": false,
+      "locationVideoConfFlag": true,
+      "locationSeatingCapacity": 53,
+      "locationRecordingEqFlag": false,
+      "locationVCSite": "site - Updated",
+      "locationVCSiteAddress": "Site Address - Updated",
+      "locationVCNumber": "34",
+      "locationVCContactPhone": "Phone - Updated",
+      "locationVCEmail": "email@hotmail.com"
+    }
+  }
+}

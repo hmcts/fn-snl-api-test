@@ -15,7 +15,6 @@ import lombok.experimental.Accessors;
 @ToString
 @EqualsAndHashCode
 public class SystemHeaderDTO {
-    private String subscriptionKey;
     private String accept;
     private String contentType;
     private String contentEncoding;

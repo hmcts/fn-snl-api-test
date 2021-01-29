@@ -1,0 +1,13 @@
+{
+  "userRequest": {
+    "meta": {
+    },
+    "details": {
+      "personIdHMCTS": "%s",
+      "personFirstName": "Joe",
+      "personLastName": "Bond",
+      "personRegistry": "KNT",
+      "personRoleId": "%s"
+    }
+  }
+}

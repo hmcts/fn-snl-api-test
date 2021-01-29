@@ -25,34 +25,29 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class PayloadHeaderDTOFactory {
 
-    public static final SystemHeaderDTO buildStandardSytemHeaderPart(final String contentType,
-                                                                     final String accept,
-                                                                     final String authorization,
-                                                                     final String contentEncoding,
-                                                                     final String subscriptionKey,
-                                                                     final String cacheControl) {
+    public static final SystemHeaderDTO buildStandardSystemHeaderPart(final String contentType,
+                                                                      final String accept,
+                                                                      final String authorization,
+                                                                      final String contentEncoding,
+                                                                      final String cacheControl) {
         return SystemHeaderDTO.builder()
                 .contentType(contentType)
                 .accept(accept)
                 .authorization(authorization)
                 .contentEncoding(contentEncoding)
-                .cacheControl(cacheControl)
-                .subscriptionKey(subscriptionKey).build();
+                .cacheControl(cacheControl).build();
     }
 
     public static final BusinessHeaderDTO buildStandardBusinessHeaderPart(final String requestCreatedAt,
                                                                           final String requestProcessedAt,
                                                                           final String sourceSystem,
                                                                           final String destinationSystem,
-                                                                          final String requestType,
-                                                                          final String transactionIdHMCTS
-                                                                            ) {
+                                                                          final String transactionIdHMCTS) {
         return BusinessHeaderDTO.builder()
                 .requestCreatedAt(requestCreatedAt)
                 .requestProcessedAt(requestProcessedAt)
                 .sourceSystem(sourceSystem)
                 .destinationSystem(destinationSystem)
-                .requestType(requestType)
                 .transactionIdHMCTS(transactionIdHMCTS)
                 .build();
     }
@@ -61,8 +56,6 @@ public class PayloadHeaderDTOFactory {
                                                                           final BusinessHeaderDTO businessHeaderDTO,
                                                                           final Map<String, String> mapAddedHeaderValues) {
         List<Header> listOfHeaders = new ArrayList<Header>();
-        Header subscriptionKeyHeader = new Header("Subscription-Key", systemHeaderDTO.subscriptionKey());
-        listOfHeaders.add(subscriptionKeyHeader);
         Header contentTypeHeader =  new Header("Content-Type", systemHeaderDTO.contentType());
         listOfHeaders.add(contentTypeHeader);
         Header acceptHeader =  new Header("Accept", systemHeaderDTO.accept());
@@ -75,8 +68,6 @@ public class PayloadHeaderDTOFactory {
         listOfHeaders.add(requestCreatedAtHeader);
         Header requestProcessedAtHeader =  new Header("Request-Processed-At", businessHeaderDTO.requestProcessedAt());
         listOfHeaders.add(requestProcessedAtHeader);
-        Header requestTypeHeader =  new Header("Request-Type", businessHeaderDTO.requestType());
-        listOfHeaders.add(requestTypeHeader);
         Header transactionIdHMCTS =  new Header("transactionIdHMCTS", businessHeaderDTO.transactionIdHMCTS());
         listOfHeaders.add(transactionIdHMCTS);
         mapAddedHeaderValues.forEach((key, value) -> {
@@ -91,14 +82,12 @@ public class PayloadHeaderDTOFactory {
                                                                                       final BusinessHeaderDTO businessHeaderDTO,
                                                                                       final Map<String, String> mapAddedHeaderValues) {
         final Multimap<String, String> headerAsMultiMap = ArrayListMultimap.create();
-        headerAsMultiMap.put("Subscription-Key", systemHeaderDTO.subscriptionKey());
         headerAsMultiMap.put("Content-Type", systemHeaderDTO.contentType());
         headerAsMultiMap.put("Accept", systemHeaderDTO.accept());
         headerAsMultiMap.put("Source-System", businessHeaderDTO.sourceSystem());
         headerAsMultiMap.put("Destination-System", businessHeaderDTO.destinationSystem());
         headerAsMultiMap.put("Request-Created-At", businessHeaderDTO.requestCreatedAt());
         headerAsMultiMap.put("Request-Processed-At", businessHeaderDTO.requestProcessedAt());
-        headerAsMultiMap.put("Request-Type", businessHeaderDTO.requestType());
         headerAsMultiMap.put("transactionIdHMCTS", businessHeaderDTO.transactionIdHMCTS());
         mapAddedHeaderValues.forEach((key, value) -> {
             headerAsMultiMap.put(key, value);
@@ -109,14 +98,12 @@ public class PayloadHeaderDTOFactory {
     public static final Map<String, String> convertToMapWithMandatoryHeaders(final SystemHeaderDTO systemHeaderDTO,
                                                                              final BusinessHeaderDTO businessHeaderDTO) {
         final Map<String, String> headerMap = new HashMap<>();
-        headerMap.put("Subscription-Key", systemHeaderDTO.subscriptionKey());
         headerMap.put("Content-Type", systemHeaderDTO.contentType());
         headerMap.put("Accept", systemHeaderDTO.accept());
         headerMap.put("Source-System", businessHeaderDTO.sourceSystem());
         headerMap.put("Destination-System", businessHeaderDTO.destinationSystem());
         headerMap.put("Request-Created-At", businessHeaderDTO.requestCreatedAt());
         headerMap.put("Request-Processed-At", businessHeaderDTO.requestProcessedAt());
-        headerMap.put("Request-Type", businessHeaderDTO.requestType());
         headerMap.put("transactionIdHMCTS", businessHeaderDTO.transactionIdHMCTS());
         return headerMap;
     }

@@ -1,0 +1,13 @@
+{
+  "locationRequest": {
+    "meta": {
+    },
+    "location": {
+      "locationIdHMCTS": "%s",
+      "locationDescription": "x – HMI Test SNL-QA",
+      "locationCluster": "TV",
+      "locationPrimaryFlag": true,
+      "locationActiveFrom": "%s"
+    }
+  }
+}

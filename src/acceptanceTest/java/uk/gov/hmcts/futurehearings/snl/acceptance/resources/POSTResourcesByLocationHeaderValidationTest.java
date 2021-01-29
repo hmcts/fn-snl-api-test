@@ -115,7 +115,7 @@ class POSTResourcesByLocationHeaderValidationTest extends ResourcesHeaderValidat
     private void generateResourcesByLocationPayloadWithRandomHMCTSId() throws IOException {
         final int randomId = new Random().nextInt(99999);
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomId));
+                getInputFileDirectory()) + "/location/post/" + getInputPayloadFileName()), randomId));
     }
     //This test is for a Standard Header but a Payload for Non JSON Type is to be tested.
     //Confirmed by Product Owner that this should be a Success Scenario.

@@ -1,0 +1,15 @@
+{
+  "userRequest": {
+    "meta": {
+    },
+    "details": {
+      "personIdHMCTS": "%s",
+      "personFirstName": "x - SNL-QA-FN",
+      "personLastName": "x - SNL-QA-FN",
+      "personRegistry": "KNT",
+      "personContactEmail": "snlqa@test.com",
+      "personActiveDate": "1980-11-13",
+      "personInactiveDate": "1981-11-13"
+    }
+  }
+}

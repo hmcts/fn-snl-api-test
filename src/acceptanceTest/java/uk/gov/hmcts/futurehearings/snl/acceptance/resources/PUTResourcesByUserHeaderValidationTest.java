@@ -43,8 +43,6 @@ import org.springframework.test.context.ActiveProfiles;
 @IncludeTags("Put")
 class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTest {
 
-    //private static final String INPUT_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
-
     @Qualifier("CommonDelegate")
     @Autowired(required = true)
     private CommonDelegate commonDelegate;
@@ -72,7 +70,7 @@ class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTe
         this.setRelativeURL(resourcesByUser_idRootContext);
         this.setRelativeURLForNotFound(this.getRelativeURL().replace("resources", "resource"));
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory())
-                + "/" + getInputPayloadFileName()), resourcesUserId));
+                + "/user/put/" + getInputPayloadFileName()), resourcesUserId));
     }
 
     private Integer makePostResourcesByUserAndFetchUserId() throws Exception {
@@ -82,8 +80,8 @@ class PUTResourcesByUserHeaderValidationTest extends ResourcesHeaderValidationTe
                 .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
                 .targetURL(resourcesByUserRootContext)
                 .inputPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH, getInputFileDirectory()) +
-                        "/" + getInputPayloadFileName()), randomId))
-                .standardHeaderMap(createCompletePayloadHeader(getApiSubscriptionKey()))
+                        "/user/post/" + getInputPayloadFileName()), randomId))
+                .standardHeaderMap(createCompletePayloadHeader())
                 .headers(null)
                 .params(getUrlParams())
                 .httpMethod(HttpMethod.POST)

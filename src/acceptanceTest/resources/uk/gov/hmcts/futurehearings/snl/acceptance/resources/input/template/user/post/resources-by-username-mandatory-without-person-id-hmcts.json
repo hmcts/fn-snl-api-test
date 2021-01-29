@@ -1,0 +1,11 @@
+{
+  "userRequest": {
+    "meta": {
+    },
+    "details": {
+      "personFirstName": "James",
+      "personLastName": "Bond",
+      "personRegistry": "KNT"
+    }
+  }
+}

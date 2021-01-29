@@ -1,0 +1,16 @@
+{
+  "userRequest": {
+    "meta": {
+    },
+    "details": {
+      "personIdHMCTS": "%s",
+      "personFirstName": "HMI-QA",
+      "personRegistry": "KNT",
+      "personLastName": "HMI-QA",
+      "personRoleId": "127",
+      "personVenueId": "386",
+      "personActiveDate": "1999-10-02",
+      "personInactiveDate": "2000-12-19"
+    }
+  }
+}

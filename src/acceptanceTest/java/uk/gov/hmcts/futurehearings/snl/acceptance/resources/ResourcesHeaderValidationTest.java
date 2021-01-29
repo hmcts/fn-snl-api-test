@@ -4,7 +4,11 @@ import static io.restassured.config.EncoderConfig.encoderConfig;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.security.OAuthTokenGenerator.generateOAuthToken;
 
 import uk.gov.hmcts.futurehearings.snl.Application;
+import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.test.SNLCommonHeaderTest;
+
+import java.io.IOException;
+import java.util.UUID;
 
 import io.restassured.RestAssured;
 import lombok.extern.slf4j.Slf4j;
@@ -52,5 +56,11 @@ public abstract class ResourcesHeaderValidationTest extends SNLCommonHeaderTest 
                 token_password,
                 HttpStatus.OK);
         this.setAuthorizationToken(authorizationToken);
+    }
+
+    public void generateResourcesByUserPayloadWithRandomHMCTSId() throws IOException {
+        final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + "/user/post/" + getInputPayloadFileName()), randomID));
     }
 }

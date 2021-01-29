@@ -1,0 +1,12 @@
+{
+  "locationRequest": {
+    "meta": {
+    },
+    "location": {
+      "locationIdHMCTS": "%s",
+      "locationCluster": "KNT",
+      "locationActiveFrom": "2020-10-01T10:30:00Z",
+      "locationPrimaryFlag": true
+    }
+  }
+}
