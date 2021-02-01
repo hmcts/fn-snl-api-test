@@ -1,6 +1,7 @@
 package uk.gov.hmcts.futurehearings.snl.acceptance.common.test;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
+import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.replaceCharacterSequence;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createHeaderWithAcceptTypeAtSystemValue;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createHeaderWithAllValuesEmpty;
@@ -15,12 +16,12 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHea
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeaderWithDuplicateValues;
 
+import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.dto.DelegateDTO;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificationDTO;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 import io.restassured.RestAssured;
 import lombok.Getter;
@@ -155,13 +156,15 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
                 getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "9999", "Expected header 'Destination-System'='SNL'", null));
     }
-
+// fix these tests error: 'caseListingRequestId' = '605' already exists
     @ParameterizedTest(name = "Request Created At System Header With Valid Date Format - Param : {0} --> {1}")
     @CsvSource({"Valid_Date_Format, 2012-03-19T07:22:00Z",
             "Valid_Date_Format, 2002-10-02T15:00:00-10:00",
             "Valid_Date_Format, 2002-10-02T15:00:00+05:00",
             "Valid_Date,2099-10-02T15:00:00Z"})
     public void test_request_created_at_with_valid_values(String requestCreatedAtKey, String requestCreatedAtVal) throws Exception {
+        this.setInputPayloadFileName("hearing-request-standard.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(UUID.randomUUID().toString().substring(0, 9));
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestCreatedAtSystemValue(requestCreatedAtVal),
                 getHttpMethod(),
@@ -320,9 +323,12 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
             "Valid_Date_Format,2002-10-02T15:00:00Z",
             "Valid_Date,2099-10-02T15:00:00Z"
     })
+
+    // fix these tests :
     //TODO - The placement of a futuristic Date be it positive or negative is to be decided upoun the outcome of MCGIRRSD-1776
     public void test_request_processed_at_with_valid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
-
+        this.setInputPayloadFileName("hearing-request-standard.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(UUID.randomUUID().toString().substring(0, 9));
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestProcessedAtSystemValue(requestProcessedAtVal),
                 getHttpMethod(),
@@ -397,4 +403,12 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
                 new SNLVerificationDTO(HttpStatus.NOT_ACCEPTABLE, "9999", "HTTP 406 Not Acceptable", null));
 
     }
+
+    private void generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(final String formatValue) throws IOException {
+        final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        final String INPUT_TEMPLATE_FILE_PATH = "uk/gov/hmcts/futurehearings/snl/acceptance/%s/input";
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + "/" + getInputPayloadFileName()), randomID.substring(0, 29), formatValue));
+    }
+
 }
