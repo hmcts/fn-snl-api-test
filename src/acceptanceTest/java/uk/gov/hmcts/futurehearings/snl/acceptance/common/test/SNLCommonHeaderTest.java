@@ -156,7 +156,7 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
                 getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "9999", "Expected header 'Destination-System'='SNL'", null));
     }
-// fix these tests error: 'caseListingRequestId' = '605' already exists
+
     @ParameterizedTest(name = "Request Created At System Header With Valid Date Format - Param : {0} --> {1}")
     @CsvSource({"Valid_Date_Format, 2012-03-19T07:22:00Z",
             "Valid_Date_Format, 2002-10-02T15:00:00-10:00",
@@ -323,8 +323,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
             "Valid_Date_Format,2002-10-02T15:00:00Z",
             "Valid_Date,2099-10-02T15:00:00Z"
     })
-
-    // fix these tests :
     //TODO - The placement of a futuristic Date be it positive or negative is to be decided upoun the outcome of MCGIRRSD-1776
     public void test_request_processed_at_with_valid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
         this.setInputPayloadFileName("hearing-request-standard.json");
