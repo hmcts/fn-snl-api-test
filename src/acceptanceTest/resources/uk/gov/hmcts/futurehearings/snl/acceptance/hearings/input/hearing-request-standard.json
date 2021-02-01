@@ -3,8 +3,8 @@
     "meta": {
     },
     "_case": {
-      "caseIdHMCTS": "HMI/SW1666",
-      "caseListingRequestId": "605",
+      "caseIdHMCTS": "%s" ,
+      "caseListingRequestId" : "%s",
       "caseTitle": "Smith vs Best Company PL",
       "caseJurisdiction": "FAM",
       "caseSubType": "79",
