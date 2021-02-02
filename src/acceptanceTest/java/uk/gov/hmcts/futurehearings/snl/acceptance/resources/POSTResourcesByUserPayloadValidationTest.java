@@ -34,7 +34,7 @@ import org.springframework.test.context.ActiveProfiles;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SelectClasses(POSTResourcesByUserHeaderValidationTest.class)
 @IncludeTags("Post")
-@Disabled("Disabled the test as test users were getting created in the UAT environment")
+//@Disabled("Disabled the test as test users were getting created in the UAT environment")
 public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadValidationTest {
 
     @Qualifier("CommonDelegate")
@@ -63,7 +63,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_successful_response_with_mandatory_elements_payload() throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
-        generatePayloadWithRandomHMCTSID("/user/post/");
+        generatePayloadWithHMCTSID("hmctsqa@hmcts.net", "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -88,12 +88,29 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @ParameterizedTest(name = "Negative Extra Field in Payload Scenario : {0}")
+    @CsvSource(value = {"Mr,Mr", "Miss,Miss", "TRY,TRY"}, nullValues = "NIL")
+    public void test_negative_response_for_extra_element_in_payload(final String personSalutationKey,
+                                                                    final String personSalutationValue) throws Exception {
+
+        this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
+        generatePayloadWithRandomHMCTSIDAndField(personSalutationValue, "/user/post/");
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personSalutation: is not defined in the schema and the schema does not allow additional properties]", null));
+    }
+
     @ParameterizedTest(name = "PersonHMCTSID Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid_Source_System, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Not An Email id,testing", "Invalid_Source_System, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @Disabled("TODO Defect MCGIRRSD-2193 - Switched this test off as Empty and Blanks are not allowed....")
     public void test_negative_response_with_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
-        generatePayloadWithHMCTSID(personHMCTSIDValue,"/user/post/");
+        generatePayloadWithHMCTSID(personHMCTSIDValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -121,7 +138,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_for_person_first_name_with_mandatory_elements_payload(final String personFirstNameKey, final String personFirstNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
-        generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue,"/user/post/");
+        generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -133,10 +150,11 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
 
     @ParameterizedTest(name = "PersonFirstName Positive Tests Scenario : {0}")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "max_length_first_name,123TEETING!£$^&*(_ajkfhbabgk+_)(*%876dfk123TEETING!£$^&*(_ajkfhbabgk+_)(*%876dfk"}, nullValues = "NIL")
+    @Disabled("TODO - Based on Defect MCGIRRSD-2193 mandatory values should not be taking in Blanks Empty and Nulls.")
     public void test_positive_response_for_person_first_name_with_mandatory_elements_payload(final String personFirstNameKey, final String personFirstNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
-        generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue,"/user/post/");
+        generatePayloadWithRandomHMCTSIDAndField(personFirstNameValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -151,7 +169,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_for_person_last_name_with_mandatory_elements_payload(final String personFirstNameKey, final String personLastNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-last-name.json");
-        generatePayloadWithRandomHMCTSIDAndField(personLastNameValue,"/user/post/");
+        generatePayloadWithRandomHMCTSIDAndField(personLastNameValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -163,11 +181,12 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
 
     @ParameterizedTest(name = "PersonLastName Positive Tests Scenario : {0}")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "max_length_first_name,123TEETING!£$^&*(_ajkfhbabgk+_"}, nullValues = "NIL")
+    @Disabled("TODO - Based on Defect MCGIRRSD-2193 mandatory values should not be taking in Blanks Empty and Nulls.")
     public void test_positive_response_for_person_last_name_with_mandatory_elements_payload(final String personLastNameKey,
                                                                                             final String personLastNameValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-first-name.json");
-        generatePayloadWithRandomHMCTSIDAndField(personLastNameValue,"/user/post/");
+        generatePayloadWithRandomHMCTSIDAndField(personLastNameValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -178,13 +197,13 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     }
 
     @ParameterizedTest(name = "PersonRegistry Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Valid LOV Value,KNT","Valid LOV Value,TV"}, nullValues = "NIL")
-    //TODO - Confirm that only these 2 values are valid LOV Values for this field.
+    @CsvSource(value = {"Valid LOV Value,KNT", "Valid LOV Value,TV"}, nullValues = "NIL")
+    //Confirmed with Ola that this are the only acceptable values that the Registry will accept.
     public void test_positive_response_for_person_registry_with_mandatory_elements_payload(final String personRegistryKey,
                                                                                            final String personRegistryValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-registry.json");
-        generatePayloadWithRandomHMCTSIDAndField(personRegistryValue,"/user/post/");
+        generatePayloadWithRandomHMCTSIDAndField(personRegistryValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -200,7 +219,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                                                                                            final String personRegistryValue) throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-registry.json");
-        generatePayloadWithRandomHMCTSIDAndField(personRegistryValue,"/user/post/");
+        generatePayloadWithRandomHMCTSIDAndField(personRegistryValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -211,45 +230,16 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                         "'" + personRegistryValue + "' is not a valid value for field 'personRegistry'", null));
     }
 
-    @ParameterizedTest(name = "PersonRegistry Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Mr,Mr","Miss,Miss","TRY,TRY"}, nullValues = "NIL")
-    public void test_positive_response_for_person_salutation_with_mandatory_elements_payload(final String personSalutationKey,
-                                                                                           final String personSalutationValue) throws Exception {
-
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
-        generatePayloadWithRandomHMCTSIDAndField(personSalutationValue,"/user/post/");
-        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
-        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        commonDelegate.test_expected_response_for_supplied_header(
-                delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
-    }
-
-    @ParameterizedTest(name = "PersonRegistry Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Mr,Mr","Miss,Miss","TRY,TRY"}, nullValues = "NIL")
-    public void test_negative_response_for_person_salutation_with_mandatory_elements_payload(final String personSalutationKey,
-                                                                                             final String personSalutationValue) throws Exception {
-
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-salutation.json");
-        generatePayloadWithRandomHMCTSIDAndField(personSalutationValue,"/user/post/");
-        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
-        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        commonDelegate.test_expected_response_for_supplied_header(
-                delegateDTO,
-                getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
-    }
-
+    //Getting the LOV Values from the MCGirr Spreadsheet - Other LOV's tab
     @ParameterizedTest(name = "PersonRoleID Positive Tests Scenario : {0} - {1}")
-    @CsvSource(value = {"Valid LOV Value,33","Valid LOV Value,100","Valid LOV Value,152"}, nullValues = "NIL")
+    @CsvSource(value = {"Valid LOV Value,100", "Valid LOV Value,152"}, nullValues = "NIL")
+    //TODO - Raise a Defect as "Valid LOV Value,33,34 onwards" is failing the Test.
+    //TODO - All the respective LOV's should be tested in the PUT User Tests...
     public void test_positive_response_for_person_role_id_with_mandatory_elements_payload(final String personRoleIdKey,
-                                                                                             final String personRoleIdValue) throws Exception {
+                                                                                          final String personRoleIdValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
-        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-role-id.json");
+        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -260,27 +250,36 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     }
 
     @ParameterizedTest(name = "PersonRoleID Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Empty Space,''","Null Value,NIL","Invalid LOV Value,32","Invalid LOV Value,153"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Null Value,NIL", "Invalid LOV Value,32", "Invalid LOV Value,153"}, nullValues = "NIL")
     public void test_negative_response_for_person_role_id_with_mandatory_elements_payload(final String personRoleIdKey,
                                                                                           final String personRoleIdValue) throws Exception {
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
-        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-role-id.json");
+        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        SNLVerificationDTO snlVerificationDTO = null;
+        if ( personRoleIdKey.trim().equals("Null Value")) {
+            snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personRoleId: may only be 3 characters long]", null);
+        } else {
+            snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'"+personRoleIdValue+"' is not a valid value for field 'personRoleId'", null);
+        }
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                snlVerificationDTO);
     }
 
+    //Getting the LOV Values from the MCGirr Spreadsheet - Hearing LOV's Locations Section
     @ParameterizedTest(name = "PersonVenueID Positive Tests Scenario : {0} - {1}")
-    @CsvSource(value = {"Valid LOV Value,300","Valid LOV Value,100","Valid LOV Value,152"}, nullValues = "NIL")
+    @CsvSource(value = {"Valid LOV Value,300", "Valid LOV Value,350", "Valid LOV Value,386"}, nullValues = "NIL")
+    //TODO - Clarify if the Source of the LOV's is Correct.
+    //TODO - All the respective LOV's should be tested in the PUT User Tests...
     public void test_positive_response_for_person_venue_id_with_mandatory_elements_payload(final String personVenueIdKey,
-                                                                                          final String personVenueIdValue) throws Exception {
+                                                                                           final String personVenueIdValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-venue-id.json");
-        generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-venue-id.json");
+        generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -290,29 +289,37 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name = "PersonVenueID Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Empty Space,''","Null Value,NIL","Invalid LOV Value,299","Invalid LOV Value,387"}, nullValues = "NIL")
+    @ParameterizedTest(name = "PersonVenueID Negative Tests Scenario : {0}")
+    @CsvSource(value = {"Empty Space,''", "Null Value,NIL", "Invalid LOV Value,299", "Invalid LOV Value,387"}, nullValues = "NIL")
+    //TODO - Clarify the Source of this LOV...At present we are using the Location Area of the Hearings LOV tab of the Spreadsheet....
+    //TODO - Raise a Defect based on the Length of the Element on the Schema.
     public void test_negative_response_for_person_venue_id_with_mandatory_elements_payload(final String personVenueIdKey,
-                                                                                          final String personVenueIdValue) throws Exception {
+                                                                                           final String personVenueIdValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-role-id.json");
-        generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-venue-id.json");
+        generatePayloadWithRandomHMCTSIDAndField(personVenueIdValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        /*SNLVerificationDTO snlVerificationDTO = null;
+        if ( personVenueIdKey.trim().equals("Null Value")) {
+            snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personVenueId: may only be 3 characters long]", null);
+        } else {
+            snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'"+personVenueIdValue+"' is not a valid value for field 'personVenueId'", null);
+        }*/
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'"+personVenueIdValue+"' is not a valid value for field 'personVenueId'", null));
     }
 
     @ParameterizedTest(name = "PersonActiveDate Positive Tests Scenario : {0} - {1}")
     @CsvSource(value = {"Valid Person Active Date Value,2002-10-02"}, nullValues = "NIL")
     public void test_positive_response_for_person_active_date_with_mandatory_elements_payload(final String personRoleIdKey,
-                                                                                           final String personRoleIdValue) throws Exception {
+                                                                                              final String personRoleIdValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-active-date.json");
-        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-active-date.json");
+        generatePayloadWithRandomHMCTSIDAndField(personRoleIdValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -330,24 +337,24 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_negative_response_for_person_active_date_with_mandatory_elements_payload(final String personActiveDateKey,
                                                                                               final String personActiveDateValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-active-date.json");
-        generatePayloadWithRandomHMCTSIDAndField(personActiveDateValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-active-date.json");
+        generatePayloadWithRandomHMCTSIDAndField(personActiveDateValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personActiveDate: "+personActiveDateValue+" is an invalid date]", null));
     }
 
     @ParameterizedTest(name = "PersonInactiveDate Positive Tests Scenario : {0} - {1}")
     @CsvSource(value = {"Valid Person Inactive Date Value, 2002-10-02"}, nullValues = "NIL")
     public void test_positive_response_for_person_inactive_date_with_mandatory_elements_payload(final String personInactiveDateKey,
-                                                                                              final String personInactiveDateValue) throws Exception {
+                                                                                                final String personInactiveDateValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-inactive-date.json");
-        generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-inactive-date.json");
+        generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -363,28 +370,29 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
             "Invalid Person Inactive Date Value,2002-02-31",
             "Invalid Person Inactive Date Value,2002-04-57"}, nullValues = "NIL")
     public void test_negative_response_for_person_inactive_date_with_mandatory_elements_payload(final String personInactiveDateKey,
-                                                                                              final String personInactiveDateValue) throws Exception {
+                                                                                                final String personInactiveDateValue) throws Exception {
 
-        this.setInputPayloadFileName("resources-by-username-mandatory-person-inactive-date.json");
-        generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue,"/user/post/");
+        this.setInputPayloadFileName("resources-by-username-optional-person-inactive-date.json");
+        generatePayloadWithRandomHMCTSIDAndField(personInactiveDateValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personInactiveDate: "+personInactiveDateValue+" is an invalid date]", null));
     }
 
     @ParameterizedTest(name = "Mandatory Fields not available Negative Tests Scenario : {0} - {1}")
     @CsvSource(value = {
-            "Checking Payload without the Person Id HMCTS, resources-by-username-mandatory-without-person-id-hmcts.json",
-            "Checking Payload without the Person First Name, resources-by-username-mandatory-without-person-first-name.json",
-            "Checking Payload without the Person Last Name, resources-by-username-mandatory-without-person-last-name.json",
-            "Checking Payload without the Person Registry, resources-by-username-mandatory-without-person-registry.json"
+            "Checking Payload without the Person Id HMCTS, resources-by-username-mandatory-without-person-id-hmcts.json,personIdHMCTS",
+            "Checking Payload without the Person First Name, resources-by-username-mandatory-without-person-first-name.json,personFirstName",
+            "Checking Payload without the Person Last Name, resources-by-username-mandatory-without-person-last-name.json,personLastName",
+            "Checking Payload without the Person Registry, resources-by-username-mandatory-without-person-registry.json,personRegistry"
     }, nullValues = "NIL")
     public void test_negative_response_mandatory_elements_payload(final String userPayloadTestScenarioDescription,
-                                                                                                final String userPayloadTestScenarioFileName) throws Exception {
+                                                                  final String userPayloadTestScenarioFileName,
+                                                                  final String userSchemaElement) throws Exception {
         this.setInputPayloadFileName(userPayloadTestScenarioFileName);
         generatePayloadWithRandomHMCTSID("/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -393,7 +401,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details."+userSchemaElement+": is missing but it is required]", null));
     }
 }
 

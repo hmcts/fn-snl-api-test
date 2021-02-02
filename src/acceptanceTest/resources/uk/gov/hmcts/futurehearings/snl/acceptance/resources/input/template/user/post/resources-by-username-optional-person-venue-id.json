@@ -4,11 +4,14 @@
     },
     "details": {
       "personIdHMCTS": "%s",
-      "personFirstName": "Joe",
-      "personLastName": "Bond",
+      "personFirstName": "x-HMCTS-QA",
+      "personLastName": "x-HMCTS-QA",
       "personRegistry": "KNT",
       "personRoleId": "127",
-      "personVenueId": "%s"
+      "personVenueId": "%s",
+      "personContactEmail": "snlqa@test.com",
+      "personActiveDate": "1980-11-13",
+      "personInactiveDate": "1981-11-13"
     }
   }
 }

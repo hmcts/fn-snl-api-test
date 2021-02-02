@@ -5,8 +5,11 @@
     "details": {
       "personIdHMCTS": "%s",
       "personFirstName": "%s",
-      "personLastName": "Bond",
-      "personRegistry": "KNT"
+      "personLastName": "x-HMCTS-QA",
+      "personRegistry": "KNT",
+      "personContactEmail": "snlqa@test.com",
+      "personActiveDate": "1980-11-13",
+      "personInactiveDate": "1981-11-13"
     }
   }
 }

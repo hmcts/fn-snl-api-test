@@ -4,8 +4,8 @@
     },
     "details": {
       "personIdHMCTS": "%s",
-      "personFirstName": "Joe",
-      "personLastName": "Bond",
+      "personFirstName": "x-HMCTS-QA",
+      "personLastName": "x-HMCTS-QA",
       "personRegistry": "KNT",
       "personRoleId": "127",
       "personVenueId": "300",

@@ -7,9 +7,8 @@
       "personFirstName": "x - SNL-QA-FN",
       "personRegistry": "KNT",
       "personLastName": "x - SNL-QA-FN",
-      "personRoleId": "127",
-      "personVenueId": "386",
-      "personActiveDate": "2002-10-02",
+      "personContactEmail": "snlqa@test.com",
+      "personActiveDate": "1980-11-13",
       "personInactiveDate": "%s"
     }
   }

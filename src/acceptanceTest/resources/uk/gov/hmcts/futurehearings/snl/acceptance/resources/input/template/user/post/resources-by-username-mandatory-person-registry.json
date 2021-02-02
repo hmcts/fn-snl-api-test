@@ -6,7 +6,10 @@
       "personIdHMCTS": "%s",
       "personFirstName": "Joe",
       "personLastName": "Bloggs",
-      "personRegistry": "%s"
+      "personRegistry": "%s",
+      "personContactEmail": "snlqa@test.com",
+      "personActiveDate": "1980-11-13",
+      "personInactiveDate": "1981-11-13"
     }
   }
 }

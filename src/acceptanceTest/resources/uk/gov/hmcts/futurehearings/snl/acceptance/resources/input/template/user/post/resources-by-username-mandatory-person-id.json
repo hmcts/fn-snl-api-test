@@ -4,9 +4,12 @@
     },
     "details": {
       "personIdHMCTS": "%s",
-      "personFirstName": "Jerry",
-      "personLastName": "Bond",
-      "personRegistry": "KNT"
+      "personFirstName": "x-HMCTS-QA",
+      "personLastName": "x-HMCTS-QA",
+      "personRegistry": "KNT",
+      "personContactEmail": "snlqa@test.com",
+      "personActiveDate": "1980-11-13",
+      "personInactiveDate": "1981-11-13"
     }
   }
 }
