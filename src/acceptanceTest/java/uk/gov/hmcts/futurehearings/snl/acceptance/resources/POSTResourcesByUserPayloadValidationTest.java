@@ -234,7 +234,6 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     @ParameterizedTest(name = "PersonRoleID Positive Tests Scenario : {0} - {1}")
     @CsvSource(value = {"Valid LOV Value,100", "Valid LOV Value,152"}, nullValues = "NIL")
     //TODO - Raise a Defect as "Valid LOV Value,33,34 onwards" is failing the Test.
-    //TODO - All the respective LOV's should be tested in the PUT User Tests...
     public void test_positive_response_for_person_role_id_with_mandatory_elements_payload(final String personRoleIdKey,
                                                                                           final String personRoleIdValue) throws Exception {
 
@@ -274,7 +273,6 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     @ParameterizedTest(name = "PersonVenueID Positive Tests Scenario : {0} - {1}")
     @CsvSource(value = {"Valid LOV Value,300", "Valid LOV Value,350", "Valid LOV Value,386"}, nullValues = "NIL")
     //TODO - Clarify if the Source of the LOV's is Correct.
-    //TODO - All the respective LOV's should be tested in the PUT User Tests...
     public void test_positive_response_for_person_venue_id_with_mandatory_elements_payload(final String personVenueIdKey,
                                                                                            final String personVenueIdValue) throws Exception {
 

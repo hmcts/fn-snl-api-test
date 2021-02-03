@@ -71,7 +71,6 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
     @Test
     @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
     public void test_successful_response_with_mandatory_elements_payload() throws Exception {
-
         this.setInputPayloadFileName("resources-by-username-complete.json");
         generatePayloadWithHMCTSID(personIdHMCTS, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -81,6 +80,43 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 delegateDTO,
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @Test
+    @DisplayName("Update person role id and validated response for a payload with all the mandatory required fields")
+    //TODO: Add more to the ranges after fix of MCGIRRSD-2339
+    public void test_update_positive_response_for_person_role_id_lov_ranges_with_mandatory_elements_payload() throws Exception {
+        this.setInputPayloadFileName("resources-by-username-optional-person-role-id.json");
+        for (int personID = 100; personID < 153; personID++) {
+            generatePayloadWithHMCTSID(String.valueOf(personID), "/user/put/");
+            DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                    createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+            log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+            commonDelegate.test_expected_response_for_supplied_header(
+                    delegateDTO,
+                    getSnlSuccessVerifier(),
+                    new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+        }
+
+    }
+
+    //Getting the LOV Values from the MCGirr Spreadsheet - Hearing LOV's Locations Section
+    //TODO - Clarify if the Source of the LOV's is Correct.
+    @Test
+    @DisplayName("Update PersonVenueID and validated response for a payload with all the mandatory required fields ")
+    //Starting personVenueID range with 301 because we have created user with personVenueId with 300
+    public void test_update_positive_response_for_person_venue_id_lov_ranges_with_mandatory_elements_payload() throws Exception {
+        this.setInputPayloadFileName("resources-by-username-optional-person-venue-id.json");
+        for (int personVenueID = 301; personVenueID < 386; personVenueID++) {
+            generatePayloadWithHMCTSID(String.valueOf(personVenueID), "/user/put/");
+            DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                    createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+            log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+            commonDelegate.test_expected_response_for_supplied_header(
+                    delegateDTO,
+                    getSnlSuccessVerifier(),
+                    new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+        }
     }
 
     @ParameterizedTest(name = "Update Positive Tests for Singular Fields : {0} - {1}")
@@ -114,8 +150,8 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
             "personFirstName,''", "personFirstName,' '", "personFirstName,C",
             "personLastName,''", "personLastName,' '", "personLastName,C",
             "personRegistry,''", "personRegistry,' '", "personRegistry,Z", "personRegistry,BR", "personRegistry,RGB", "personRegistry,C_FE",
-            "personContactEmail,''", "personContactEmail,' '", "personContactEmail,'xxxtest.com'","personContactEmail,'x'",
-            "personActiveDate,''", "personActiveDate,' '", "personActiveDate,'13-11-1988'","personActiveDate,'13-NOV-1988'","personActiveDate,'1988-02-31'"
+            "personContactEmail,''", "personContactEmail,' '", "personContactEmail,'xxxtest.com'", "personContactEmail,'x'",
+            "personActiveDate,''", "personActiveDate,' '", "personActiveDate,'13-11-1988'", "personActiveDate,'13-NOV-1988'", "personActiveDate,'1988-02-31'"
     }, nullValues = "NIL")
     public void test_negative_response_for_general_updated_payload(final String locationTemplateKey,
                                                                    String locationTemplateValue) throws Exception {
