@@ -10,7 +10,7 @@
       "locationPrimaryFlag": true,
       "locationParentCode": "301",
       "locationActiveFrom": "2020-01-01T20:20:39+00:00",
-      "locationActiveTo": "2099-01-01T20:20:39+00:00",
+      "locationActiveTo": "2020-01-31T20:20:39+00:00",
       "locationSecurityGuardFlag": false,
       "locationVideoConfFlag": true,
       "locationSeatingCapacity": 53,
