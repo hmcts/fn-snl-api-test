@@ -77,6 +77,12 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
                 getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID));
     }
 
+    final void generatePayloadWithHMCTSIDAndValue(final String randomID,final String value, final String templatePath) throws IOException {
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID, value));
+    }
+
+
     final void generatePayloadWithHMCTSIDAndField(final String randomID, final String formatValue, final String templatePath) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID, formatValue));
