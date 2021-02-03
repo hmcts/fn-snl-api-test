@@ -4,9 +4,9 @@
     },
     "details": {
       "personIdHMCTS": "%s",
-      "personFirstName": "HMI-QA",
+      "personFirstName": "x-HMI-QA",
       "personRegistry": "KNT",
-      "personLastName": "HMI-QA",
+      "personLastName": "x-HMI-QA",
       "personRoleId": "127",
       "personVenueId": "386",
       "personActiveDate": "1999-10-02",
