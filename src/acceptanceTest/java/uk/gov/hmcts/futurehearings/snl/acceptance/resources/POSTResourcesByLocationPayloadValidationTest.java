@@ -4,6 +4,7 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.gen
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.replaceCharacterSequence;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 
+import org.junit.jupiter.params.provider.CsvFileSource;
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.delegate.CommonDelegate;
@@ -13,6 +14,7 @@ import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonE
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Random;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +69,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @Test
     @DisplayName("Successfully validated response for a payload including optional fields")
     public void test_successful_response_with_optional_elements_payload() throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-complete.json");
         generatePayloadWithRandomHMCTSID(8, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -82,7 +83,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @Test
     @DisplayName("LocationIdHMCTS Positive tests")
     public void test_positive_response_with_mandatory_locationId_payload() throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-all-mandatory-location-id-hmcts.json");
         generatePayloadWithRandomHMCTSID(8, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -98,7 +98,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @CsvSource(value = {"Empty Space,''", "Invalid Location id, C_FEFC242"}, nullValues = "NIL")
     //TODO - LocationIdHMCTS Empty values should not be ingested in the System - Data - "Single Space,' '" - MCGIRRSD-2194
     public void test_negative_response_with_mandatory_locationId_payload(final String locationIdHMCTSKey, final String locationIdHMCTSValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-all-mandatory-location-id-hmcts.json");
         generatePayloadWithHMCTSID(locationIdHMCTSValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -127,7 +126,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @CsvSource(value = {"Location Cluster,'TV'", "Location Cluster,'KNT'"})
     public void test_positive_response_for_location_cluster_with_mandatory_elements_payload(final String locationClusterKey,
                                                                                             final String locationClusterValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-mandatory-cluster.json");
         generatePayloadWithRandomHMCTSIDAndField(8, locationClusterValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -173,7 +171,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @CsvSource(value = {"Location Description,'x – HMI Test This is location description'"})
     public void test_positive_response_for_location_description_with_mandatory_elements_payload(final String locationDescriptionKey,
                                                                                                 final String locationDescriptionValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
         generatePayloadWithRandomHMCTSIDAndField(8, locationDescriptionValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -212,7 +209,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @CsvSource(value = {"Location Primary Flag, true", "Location Primary Flag, false"})
     public void test_positive_response_for_location_primary_flag_with_mandatory_elements_payload(final String locationPrimaryFlagKey,
                                                                                                  final String locationPrimaryFlagValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-mandatory-primary-flag.json");
         if (locationPrimaryFlagValue.trim().equals("true")) {
             generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationPrimaryFlag\": 0", "\"locationPrimaryFlag\":" + true, "/location/post/");
@@ -232,7 +228,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @CsvSource(value = {"Invalid Value Int,0", "Invalid Value Float,1.0", "Invalid Value Negative Int,-1", "Invalid Value Negative Float,-1.4"})
     public void test_negative_response_for_location_primary_flag_with_mandatory_elements_payload(final String locationPrimaryFlagKey,
                                                                                                  final String locationPrimaryFlagValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-mandatory-primary-flag.json");
         SNLVerificationDTO snlVerificationDTO = null;
         switch (locationPrimaryFlagKey) {
@@ -262,7 +257,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
             "Valid_Date_Format, 2002-02-01T10:00:30-05:00"})
     public void test_positive_response_with_mandatory_location_activeFrom_payload(final String locationActiveFromKey,
                                                                                   final String locationActiveFromValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
         generatePayloadWithRandomHMCTSIDAndField(8, locationActiveFromValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -274,40 +268,30 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @Disabled("TODO- Manually test this scenario and see if these issues are happening in Postman")
+
     @ParameterizedTest(name = "locationActiveFrom Negative tests")
-    @CsvSource(value = {"Null_Value,NIL", "Empty_Space, ", "Invalid_Value, value",
-            "Invalid_Date_Format, 2002-02-31T1000:30-05:00",
-            "Invalid_Date_Format, 2002-02-31T10:00-30-05:00",
-            "Invalid_Date_Format, 2002-10-02T15:00:00*05Z",
-            "Invalid_Date_Format, 2002-10-02 15:00?0005Z",
-            "Invalid_Date_Format, 2002-10-02T15:00:00",
-            "Invalid_Date_Format,2002-02-31T10:00:30:05-01:75"
-    }, nullValues = "NIL")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     //TODO Defect has to be raised around this area.
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     public void test_negative_response_with_mandatory_location_activeFrom_payload(final String locationActiveFromKey,
                                                                                   final String locationActiveFromValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
-        generatePayloadWithRandomHMCTSIDAndField(8, locationActiveFromValue, "/location/post");
+        generatePayloadWithRandomHMCTSIDAndField(8, locationActiveFromValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        SNLVerificationDTO snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
-                "'" + locationActiveFromValue + "' is not a valid value for field 'locationActiveFromr'",
-                null);
-
+        String errorDesc = MessageFormat.format("[$.locationRequest.location.locationActiveFrom: {0} is an invalid date-time]", locationActiveFromValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                snlVerificationDTO);
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
+
 
     @ParameterizedTest(name = "locationPostCode Positive Tests Scenario : {0}")
     @CsvSource(value = {"Valid Location PostCode,'HA2 0NB'", "Valid Location PostCode,'SW7'", "Valid Location PostCode,'SW78LU'"})
     public void test_positive_response_for_location_postcode_with_optional_elements_payload(final String locationPostCodeKey,
                                                                                             final String locationPostCodeValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-optional-postcode.json");
         generatePayloadWithRandomHMCTSIDAndField(locationPostCodeValue, "/location/post");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -325,7 +309,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     @CsvSource(value = {"Invalid Data PostCode Max Value, C"}, nullValues = "NIL")
     public void test_negative_response_with_optional_location_postcode_payload(final String locationPostCodeKey,
                                                                                final String locationPostCodeValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-optional-postcode.json");
         if (locationPostCodeKey.trim().equals("Invalid Data PostCode Max Value")) {
             generatePayloadWithRandomHMCTSIDAndField(
@@ -357,7 +340,6 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
             "Valid_Date_Format, 2002-02-26T10:00:30.123Z"})
     public void test_positive_response_with_mandatory_location_activeTo_payload(final String locationActiveFromKey,
                                                                                 final String locationActiveFromValue) throws Exception {
-
         this.setInputPayloadFileName("resource-by-location-optional-activeTo.json");
         generatePayloadWithRandomHMCTSIDAndField(locationActiveFromValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -369,34 +351,24 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @Disabled("Disabling this tests as locationActiveTo is throwing exceptions from McGirr with an HTTPStatus Error of 500 for invalid date format.")
+    /* 3 tests failed bug raised: MCGIRRSD-1987*/
     @ParameterizedTest(name = "locationActiveTo Negative tests")
-    @CsvSource(value = {"Null_Value,NIL", "Empty_Space, ", "Invalid_Value, value",
-            "Invalid_Date_Format, 2002-02-31T1000:30-05:00",
-            "Invalid_Date_Format, 2002-02-31T10:00-30-05:00",
-            "Invalid_Date_Format, 2002-10-02T15:00:00*05Z",
-            "Invalid_Date_Format, 2002-10-02 15:00?0005Z",
-            "Invalid_Date_Format, 2002-10-02T15:00:00",
-            "Invalid_Date_Format,2002-02-31T10:00:30:05-01:75"
-    }, nullValues = "NIL")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     //TODO Defect has to be raised around this area.
-    public void test_negative_response_with_mandatory_location_activeTo_payload(final String locationActiveFromKey,
-                                                                                final String locationActiveFromValue) throws Exception {
-
+    public void test_negative_response_with_mandatory_location_activeTo_payload(final String locationActiveToKey,
+                                                                                final String locationActiveToValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-activeTo.json");
-        generatePayloadWithRandomHMCTSIDAndField(locationActiveFromValue, "/location/post/");
+        generatePayloadWithRandomHMCTSIDAndField(8, locationActiveToValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        SNLVerificationDTO snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
-                "'" + locationActiveFromValue + "' is not a valid value for field 'locationActiveFromr'",
-                null);
-
+        String errorDesc = MessageFormat.format("[$.locationRequest.location.locationActiveTo: {0} is an invalid date-time]", locationActiveToValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                snlVerificationDTO);
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
+
 
     @ParameterizedTest(name = "locationSecurityGuardFlag Positive Tests Scenario : {0}")
     @CsvSource(value = {"Location Security Guard Flag, true", "Location Security Guard Flag, false"})
@@ -417,6 +389,33 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @ParameterizedTest(name = "locationSecurityGuardFlag Negative Tests Scenario : {0}")
+    @CsvSource(value = {"Invalid Value Int,0", "Invalid Value Float,1.0", "Invalid Value Negative Int,-1", "Invalid Value Negative Float,-1.4"})
+    public void test_negative_response_for_location_security_guard_flag_with_mandatory_elements_payload(final String locationSecurityGuardFlagKey,
+                                                                                                        final String locationSecurityGuardFlagValue) throws Exception {
+        this.setInputPayloadFileName("resource-by-location-optional-location-security-guard-flag.json");
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (locationSecurityGuardFlagKey) {
+            case "Invalid Value Int":
+            case "Invalid Value Negative Int":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationSecurityGuardFlag: integer found, boolean expected]", null);
+                generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationSecurityGuardFlag\": 0", "\"locationSecurityGuardFlag\":" + Integer.parseInt(locationSecurityGuardFlagValue), "/location/post/");
+                break;
+            case "Invalid Value Float":
+            case "Invalid Value Negative Float":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationSecurityGuardFlag: number found, boolean expected]", null);
+                generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationSecurityGuardFlag\": 0", "\"locationSecurityGuardFlag\":" + Float.parseFloat(locationSecurityGuardFlagValue), "/location/post/");
+                break;
+        }
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
+    }
+
     @ParameterizedTest(name = "locationVideoConfFlag Positive Tests Scenario : {0}")
     @CsvSource(value = {"Location Video Config Flag,true", "Location Security Guard Flag,false"})
     public void test_positive_response_for_location_video_conf_flag_with_mandatory_elements_payload(final String locationVideoConfFlagKey,
@@ -434,6 +433,33 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 delegateDTO,
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+    @ParameterizedTest(name = "locationVideoConfFlag Negative Tests Scenario : {0}")
+    @CsvSource(value = {"Invalid Value Int,0", "Invalid Value Float,1.0", "Invalid Value Negative Int,-1", "Invalid Value Negative Float,-1.4"})
+    public void test_negative_response_for_location_video_conf_flag_with_mandatory_elements_payload(final String locationVideoConfFlagFlagKey,
+                                                                                                    final String locationVideoConfFlagFlagValue) throws Exception {
+        this.setInputPayloadFileName("resource-by-location-optional-location-video-conf-flag.json");
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (locationVideoConfFlagFlagKey) {
+            case "Invalid Value Int":
+            case "Invalid Value Negative Int":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationVideoConfFlag: integer found, boolean expected]", null);
+                generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationVideoConfFlag\": 0", "\"locationVideoConfFlag\":" + Integer.parseInt(locationVideoConfFlagFlagValue), "/location/post/");
+                break;
+            case "Invalid Value Float":
+            case "Invalid Value Negative Float":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationSecurityGuardFlag: number found, boolean expected]", null);
+                generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationVideoConfFlag\": 0", "\"locationSecurityGuardFlag\":" + Float.parseFloat(locationVideoConfFlagFlagValue), "/location/post/");
+                break;
+        }
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
     }
 
     @ParameterizedTest(name = "locationSeatingCapacity Positive Tests Scenario : {0}")
@@ -486,6 +512,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
+    //TODO: ADD locationRecordingEquivalentFlag Negative Tests Scenario
 
     @ParameterizedTest(name = "locationVCSite Positive Tests Scenario : {0}")
     @CsvSource(value = {"Valid Data,site", "Valid Data,12345", "Valid Data,£(%%()%£", "Valid Data 255,c"})

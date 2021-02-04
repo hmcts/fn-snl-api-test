@@ -80,7 +80,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "caseIDHMCTS Negative tests")
-    @CsvSource(value = {"Empty Space,''","Empty Space,' '","Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Empty Space,' '", "Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     @DisplayName("Negative validated response for case id hmcts tests")
     //TODO -  Check caseIDHMCTS length max and min
     //TODO - Does not check for blank Spaces - Defect to be raised. Data - "Single Space,' '", MCGIRRSD-1685.
@@ -239,7 +239,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered Negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the Case registered")
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
@@ -546,9 +546,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 3 tests failed bug raised: MCGIRRSD-1987*/
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     @ParameterizedTest(name = "listingStartDate non mandatory negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listingStartDate")
     public void test_negative_response_with_listing_start_date_complete_elements_payload(final String listingStartDateKey, String listingStartDateValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-start-date.json");
@@ -579,9 +579,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 3 tests failed bug raised: MCGIRRSD-1987*/
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     @ParameterizedTest(name = "listingEndDate non mandatory negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listingEndDate")
     public void test_negative_response_with_listing_end_date_complete_elements_payload(final String listingEndDateKey, String listingEndDateValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-end-date.json");
@@ -697,6 +697,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
+
     @ParameterizedTest(name = "entityTypeCode non mandatory negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "entityTypeCode, ABC"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTypeCode")
@@ -931,13 +932,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29),caseListingRequestID.substring(0,9)));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29), caseListingRequestID.substring(0, 9)));
     }
 
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTS(final String randomID) throws IOException {
         final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID,caseListingRequestID.substring(0, 9)));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID, caseListingRequestID.substring(0, 9)));
     }
 
     private void generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(final String formatValue) throws IOException {
@@ -951,7 +952,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29),caseListingRequestID.substring(0,9), formatValue));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29), caseListingRequestID.substring(0, 9), formatValue));
     }
 
 
@@ -959,7 +960,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29),caseListingRequestID.substring(0,9),formatValue1, formatValue2));
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomID.substring(0, 29), caseListingRequestID.substring(0, 9), formatValue1, formatValue2));
     }
 
     public static String createString(int length, char value) {
@@ -972,7 +973,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         final int randomId = new Random().nextInt(99999999);
         final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         String formattedString = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomId, caseListingRequestID.substring(0,9),value);
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomId, caseListingRequestID.substring(0, 9), value);
         this.setInputBodyPayload(replaceCharacterSequence(token, value, formattedString));
     }
 
