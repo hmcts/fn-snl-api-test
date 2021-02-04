@@ -79,7 +79,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
     public void test_successful_response_with_all_mandatory_elements_payload() throws Exception {
         this.setInputPayloadFileName("update-hearing-request-complete.json");
-        generatePayloadWithRandomHMCTSID("/put/",caseHMCTSId);
+        generatePayloadWithRandomHMCTSID("/put/", caseHMCTSId);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -260,7 +260,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     }
 
     @ParameterizedTest(name = "Update case registered field Negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv.csv", numLinesToSkip = 1)
     //Check three tests failed with time formats : 2015-12-11T09:28:30 ,2015-12-11T09:28:30.45, 2015-10-11T10:28:35Z
     @DisplayName("Update Negative validated response for Case registered field")
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
@@ -583,9 +583,9 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 3 tests failed bug raised: MCGIRRSD-1987*/
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     @ParameterizedTest(name = "Update listingStartDate non mandatory negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Update Negative response for a payload with the listingStartDate")
     public void test_negative_response_by_updating_listing_start_date_complete_elements_payload(final String listingStartDateKey, String listingStartDateValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-start-date.json");
@@ -616,9 +616,9 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 3 tests failed bug raised: MCGIRRSD-1987*/
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     @ParameterizedTest(name = "Update listingEndDate non mandatory negative tests")
-    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/case-registered-test-negative-values.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Update Negative response for a payload with the listingEndDate")
     public void test_negative_response_by_updating_listing_end_date_complete_elements_payload(final String listingEndDateKey, String listingEndDateValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-listing-end-date.json");
@@ -1002,7 +1002,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
 
     private void generatePayloadWithRandomHMCTSID(final String templatePath, final String formatValue) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + templatePath + getInputPayloadFileName()),formatValue));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), formatValue));
     }
 
 
