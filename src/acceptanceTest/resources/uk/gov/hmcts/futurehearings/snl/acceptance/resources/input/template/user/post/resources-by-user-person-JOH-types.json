@@ -1,0 +1,16 @@
+
+{
+  "userRequest": {
+    "meta": {
+    },
+    "details": {
+      "personIdHMCTS": "%s",
+      "personFirstName": "x-HMCTS-QA",
+      "personLastName": "x-HMCTS-QA",
+      "personRegistry": "KNT",
+      "personActiveDate": "1980-11-13",
+      "personInactiveDate": "1981-11-13",
+      "personJOHTypes": ["personJOHTypes"]
+    }
+  }
+}
