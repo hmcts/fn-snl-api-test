@@ -351,10 +351,11 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    /* 3 tests failed bug raised: MCGIRRSD-1987*/
+
     @ParameterizedTest(name = "locationActiveTo Negative tests")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     //TODO Defect has to be raised around this area.
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     public void test_negative_response_with_mandatory_location_activeTo_payload(final String locationActiveToKey,
                                                                                 final String locationActiveToValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-activeTo.json");
@@ -512,7 +513,33 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
-    //TODO: ADD locationRecordingEquivalentFlag Negative Tests Scenario
+
+    @ParameterizedTest(name = "locationRecordingEquivalentFlag Negative Tests Scenario : {0}")
+    @CsvSource(value = {"Invalid Value Int,0", "Invalid Value Float,1.0", "Invalid Value Negative Int,-1", "Invalid Value Negative Float,-1.4"})
+    public void test_negative_response_for_location_equivalent_flag(final String locationRecordingEqFlagKey,
+                                                                    final String locationRecordingEqFlagValue) throws Exception {
+        this.setInputPayloadFileName("resource-by-location-optional-location-recording-equivalent-flag.json");
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (locationRecordingEqFlagKey) {
+            case "Invalid Value Int":
+            case "Invalid Value Negative Int":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationRecordingEqFlag: integer found, boolean expected]", null);
+                generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationRecordingEqFlag\": 0", "\"locationRecordingEqFlag\":" + Integer.parseInt(locationRecordingEqFlagValue), "/location/post/");
+                break;
+            case "got Invalid Value Float":
+            case "Invalid Value Negative Float":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationRecordingEqFlag: number found, boolean expected]", null);
+                generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationRecordingEqFlag\": 0", "\"locationRecordingEqFlag\":" + Float.parseFloat(locationRecordingEqFlagValue), "/location/post/");
+                break;
+        }
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                snlVerificationDTO);
+    }
 
     @ParameterizedTest(name = "locationVCSite Positive Tests Scenario : {0}")
     @CsvSource(value = {"Valid Data,site", "Valid Data,12345", "Valid Data,£(%%()%£", "Valid Data 255,c"})
