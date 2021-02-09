@@ -9,7 +9,7 @@
       "locationPrimaryFlag": true,
       "locationActiveFrom": "2020-01-01T20:20:39+00:00",
       "locationActiveTo": "2020-01-31T20:20:39+00:00",
-      "locationPostCode" : "%s"
+      "locationIdCaseHQ": "email"
     }
   }
 }

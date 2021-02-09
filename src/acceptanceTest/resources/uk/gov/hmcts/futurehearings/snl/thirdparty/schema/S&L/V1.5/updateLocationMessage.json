@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://www.gov.uk/createLocationMessage.json",
+  "$id": "http://www.gov.uk/updateLocationMessage.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -15,11 +15,6 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "locationIdHMCTS": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 8
-            },
             "locationDescription": {
               "type": "string",
               "maxLength": 80
@@ -85,16 +80,10 @@
             }
           },
           "required": [
-            "locationIdHMCTS",
-            "locationDescription",
-            "locationCluster",
-            "locationActiveFrom",
-            "locationPrimaryFlag"
           ]
         }
       },
       "required": [
-        "meta",
         "location"
       ]
     }

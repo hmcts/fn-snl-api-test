@@ -120,6 +120,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
             "locationCluster,''", "locationCluster,' '", "locationCluster,Z", "locationCluster,BR", "locationCluster,RGB", "locationCluster,C_FE",
             "locationDescription,''", "locationDescription,' '", "locationDescription,'CCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvbbCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvccMMMBVBGTFHK'",
             "locationActiveFrom,''", "locationActiveFrom,' '", "locationActiveFrom,'CCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvbbCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvccMMMBVBGTFHK'",
+            "locationIdCaseHQ,'TestVal'" //Test to update a Non Existant Field
     }, nullValues = "NIL")
     public void test_negative_response_for_general_updated_payload(final String locationTemplateKey,
                                                                    final String locationTemplateValue) throws Exception {

@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://www.gov.uk/updateHearingMessage.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hearingRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "meta": {
+          "$ref": "reusable.json#/definitions/meta"
+        },
+        "_case": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "caseTitle": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "caseJurisdiction": {
+              "type": "string",
+              "maxLength": 4
+            },
+            "caseCourt": {
+              "type": "string",
+              "maxLength": 8
+            },
+            "caseComments": {
+              "type": "string",
+              "maxLength": 5000
+            },
+            "caseAdditionalSecurityFlag": {
+              "type": "boolean"
+            },
+            "caseRestrictedFlag": {
+              "type": "boolean"
+            },
+            "caseInterpreterRequiredFlag": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+          ]
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "reusable.json#/definitions/entity",
+                "required": [
+                ]
+              }
+            ]
+          }
+        },
+        "listing": {
+          "allOf": [
+            { "$ref": "reusable.json#/definitions/listing" },
+            {
+              "properties": {
+                "amendReasonCode": {
+                  "type": "string",
+                  "maxLength": 8
+                }
+              },
+              "required": []
+            }
+          ]
+        }
+      },
+      "required": [
+        "_case"
+      ]
+    }
+  },
+  "required": [
+    "hearingRequest"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://www.gov.uk/locationRequest.json",
+  "$id": "http://www.gov.uk/createLocationMessage.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -45,11 +45,11 @@
             },
             "locationActiveFrom": {
               "type": "string",
-              "format": "datetime"
+              "format": "date-time"
             },
             "locationActiveTo": {
               "type": "string",
-              "format": "datetime"
+              "format": "date-time"
             },
             "locationSecurityGuardFlag": {
               "type": "boolean"
@@ -85,11 +85,15 @@
             }
           },
           "required": [
+            "locationIdHMCTS",
+            "locationDescription",
+            "locationCluster",
+            "locationActiveFrom",
+            "locationPrimaryFlag"
           ]
         }
       },
       "required": [
-        "meta",
         "location"
       ]
     }

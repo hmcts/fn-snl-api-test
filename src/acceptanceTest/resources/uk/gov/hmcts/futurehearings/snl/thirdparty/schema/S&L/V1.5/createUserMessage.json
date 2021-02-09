@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://www.gov.uk/userRequest.json",
+  "$id": "http://www.gov.uk/createUserMessage.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -32,10 +32,6 @@
               "type": "string",
               "maxLength": 30
             },
-            "personSalutation": {
-              "type": "string",
-              "maxLength": 4
-            },
             "personRoleId": {
               "type": "string",
               "maxLength": 3
@@ -60,7 +56,22 @@
               "type": "string",
               "format": "date"
             },
-            "personOfficeTypes": {
+            "personPositionTitle": {
+              "type": "string",
+              "maxLength": 3
+            },
+            "personPositionFrom": {
+              "type": "string",
+              "format": "date"
+            },
+            "personAuthorisedSessionTypes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 10
+              }
+            },
+            "personJOHTypes": {
               "type": "array",
               "items": {
                 "type": "object",
@@ -93,11 +104,14 @@
             }
           },
           "required": [
+            "personIdHMCTS",
+            "personRegistry",
+            "personFirstName",
+            "personLastName"
           ]
         }
       },
       "required": [
-        "meta",
         "details"
       ]
     }

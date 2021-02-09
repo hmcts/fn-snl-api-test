@@ -20,7 +20,8 @@
       "locationVCSiteAddress": "siteadd",
       "locationVCNumber": "34",
       "locationVCContactPhone": "phone",
-      "locationVCEmail": "email"
+      "locationVCEmail": "email",
+      "locationIdCaseHQ": "email"
     }
   }
 }
