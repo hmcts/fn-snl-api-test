@@ -20,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -91,6 +92,24 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 sessionsVerificationDTO);
     }
 
+    @ParameterizedTest(name = "Parameterized for the request session type")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/valid-person-authorised-session-types.csv", numLinesToSkip = 1)
+    @DisplayName("Successfully validated response with mandatory header values - Query Param : requestSessionType=ADHOC")
+    public void test_successful_response_for_various_request_session_types(final String key, final String value) throws Exception {
+
+        Map<String, String> urlParams = Map.of("requestSessionType", value);
+        this.setUrlParams(urlParams);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
+        sessionsVerificationDTO.requestSessionType("ADHOC");
+        commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
+                new SNLCommonSuccessVerifier(),
+                sessionsVerificationDTO);
+    }
+
+
+
     @DisplayName("Negative response with mandatory header values Param : {0} --> {1}")
     @ParameterizedTest(name = "caseIDHMCTS Negative tests")
     @CsvSource(value = {"Empty Space,''", "Blank Value Space,' '", "Invalid Look Up,HOC"}, nullValues = "NIL")
@@ -142,7 +161,7 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 new SNLVerificationDTO(HttpStatus.OK, null, null, null));
     }
 
-    @ParameterizedTest(name = "Valid Request Judge Type")
+    @ParameterizedTest(name = "Valid Request Session Types")
     @DisplayName("Successfully validated response with mandatory header values - Query Param : {0} --> {1}")
     @CsvSource(value = {"Valid Values,PUBLAW", "Valid Values,DJCC"}, nullValues = "NIL")
     public void test_successful_response_with_a_mandatory_header_and_request_judge_type(final String key, final String value) throws Exception {
@@ -161,9 +180,47 @@ public class GETSessionsPayloadValidationTest extends SessionsPayloadValidationT
                 sessionsVerificationDTO);
     }
 
+    @ParameterizedTest(name = "Valid Request Judge Types")
+    @DisplayName("Successfully validated response with mandatory header values and Request Judge Types - Query Param : {0} --> {1}")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/request-judge-type-values.csv", numLinesToSkip = 1)
+    public void test_successful_response_with_various_request_judge_types(final String key, final String value) throws Exception {
+
+        Map<String, String> urlParams = Map.of(
+                "requestSessionType", "ADHOC",
+                "requestJudgeType", value);
+        this.setUrlParams(urlParams);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
+        sessionsVerificationDTO.requestSessionType("ADHOC");
+        sessionsVerificationDTO.requestJudgeType( value);
+        commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
+                getSnlSuccessVerifier(),
+                sessionsVerificationDTO);
+    }
+
+    @ParameterizedTest(name = "Valid Request Session Types and Request Judge Types")
+    @DisplayName("Successfully validated response with mandatory header values Request Session Type and Request Judge Type- Query Param : {0} --> {1}")
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/request-session-types-and-request-judge-type-values.csv", numLinesToSkip = 1)
+    public void test_successful_response_with_a_request_session_and_type_request_judge_type(final String key, final String value) throws Exception {
+
+        Map<String, String> urlParams = Map.of(
+                "requestSessionType", key,
+                "requestJudgeType", value);
+        this.setUrlParams(urlParams);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        SessionsVerificationDTO sessionsVerificationDTO = new SessionsVerificationDTO(getHttpSuccessStatus(), null, null, null);
+        sessionsVerificationDTO.requestSessionType(key);
+        sessionsVerificationDTO.requestJudgeType( value);
+        commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
+                getSnlSuccessVerifier(),
+                sessionsVerificationDTO);
+    }
+
     @Test
     @DisplayName("Successfully validated response with mandatory header values - Query Param : requestSessionType=ADHOC, requestLocationId=301")
-    //TODO - Riase a Defect only working for Room Id's and not for any Venue Id's....
+    //TODO - Raise a Defect only working for Room Id's and not for any Venue Id's....
     public void test_successful_response_with_a_mandatory_header_and_request_location_id() throws Exception {
 
         Map<String, String> urlParams = Map.of(
