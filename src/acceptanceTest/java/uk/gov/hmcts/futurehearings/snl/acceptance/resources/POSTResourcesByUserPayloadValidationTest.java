@@ -237,7 +237,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
 
     //Getting the LOV Values from the MCGirr Spreadsheet - Other LOV's tab
     @ParameterizedTest(name = "PersonRoleID Positive Tests Scenario : {0} - {1}")
-    @CsvSource(value = {"Valid LOV Value,100", "Valid LOV Value,152"}, nullValues = "NIL")
+    @CsvSource(value = {"Valid LOV Value,033","Valid LOV Value,055","Valid LOV Value,078","Valid LOV Value,100", "Valid LOV Value,152"}, nullValues = "NIL")
     //TODO - Raised a Defect as "Valid LOV Value,33,34 onwards" is failing the Test. McGirrSD-2339
     public void test_positive_response_for_person_role_id_with_mandatory_elements_payload(final String personRoleIdKey,
                                                                                           final String personRoleIdValue) throws Exception {
