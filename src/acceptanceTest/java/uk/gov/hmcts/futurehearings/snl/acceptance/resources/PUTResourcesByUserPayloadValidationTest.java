@@ -4,6 +4,7 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.gen
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 
+import org.junit.jupiter.params.provider.CsvFileSource;
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.RestClientTemplate;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -82,13 +83,12 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @Test
+    @ParameterizedTest(name= "Update person role id and validated response")
     @DisplayName("Update person role id and validated response for a payload with all the mandatory required fields")
-    //TODO: Add more to the ranges after fix of MCGIRRSD-2339
-    public void test_update_positive_response_for_person_role_id_lov_ranges_with_mandatory_elements_payload() throws Exception {
+    @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/resources/input/template/user/put/valid_person_role_id.csv", numLinesToSkip = 1)
+    public void test_update_positive_response_for_person_role_id_lov_ranges_with_mandatory_elements_payload(final String roleIDDesc, String roleID ) throws Exception {
         this.setInputPayloadFileName("resources-by-username-optional-person-role-id.json");
-        for (int personID = 100; personID < 153; personID++) {
-            generatePayloadWithHMCTSID(String.valueOf(personID), "/user/put/");
+            generatePayloadWithHMCTSID(String.valueOf(roleID), "/user/put/");
             DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                     createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
             log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -96,9 +96,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                     delegateDTO,
                     getSnlSuccessVerifier(),
                     new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
-        }
-
-    }
+           }
 
     //Getting the LOV Values from the MCGirr Spreadsheet - Hearing LOV's Locations Section
     //TODO - Clarify if the Source of the LOV's is Correct.
