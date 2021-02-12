@@ -2,6 +2,7 @@ package uk.gov.hmcts.futurehearings.snl.acceptance.hearings;
 
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createCompletePayloadHeader;
 
+import io.restassured.module.jsv.JsonSchemaValidator;
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.RestClientTemplate;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -100,6 +101,8 @@ class PUTHearingsHeaderValidationTest extends HearingsHeaderValidationTest {
                 delegateDTO.authorizationToken(),
                 delegateDTO.inputPayload(), delegateDTO.targetURL(),
                 delegateDTO.params(), delegateDTO.status(), delegateDTO.httpMethod());
+
+
         log.debug("POST Response : " + response.getBody().asString());
         return randomId;
     }
