@@ -136,11 +136,55 @@
 				}
 			},
 			"required": [
-				"entityHmiId",
-				"entityRoleCode",
-				"entityTypeCode",
-				"entitySubType"
+				"entityHmiId"
 			]
-		}
+		},
+    "listing": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "listingAutoCreateFlag": {
+          "type": "boolean"
+        },
+        "listingStartDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "listingEndDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "listingDuration": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "listingSessionType": {
+          "type": "string",
+          "maxLength": 10
+        },
+        "listingType": {
+          "type": "string"
+        },
+        "listingPriority": {
+          "type": "string"
+        },
+        "listingNumberAttendees": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "listingCluster": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "listingCourt": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "listingComments": {
+          "type": "string"
+        }
+      },
+      "required": []
+    }
 	}
 }

@@ -151,7 +151,8 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
             "personLastName,''", "personLastName,' '", "personLastName,C",
             "personRegistry,''", "personRegistry,' '", "personRegistry,Z", "personRegistry,BR", "personRegistry,RGB", "personRegistry,C_FE",
             "personContactEmail,''", "personContactEmail,' '", "personContactEmail,'xxxtest.com'", "personContactEmail,'x'",
-            "personActiveDate,''", "personActiveDate,' '", "personActiveDate,'13-11-1988'", "personActiveDate,'13-NOV-1988'", "personActiveDate,'1988-02-31'"
+            "personActiveDate,''", "personActiveDate,' '", "personActiveDate,'13-11-1988'", "personActiveDate,'13-NOV-1988'", "personActiveDate,'1988-02-31'",
+            "PersonSalutation,'Miss'" //Test to update a Non Existant Field
     }, nullValues = "NIL")
     public void test_negative_response_for_general_updated_payload(final String locationTemplateKey,
                                                                    String locationTemplateValue) throws Exception {

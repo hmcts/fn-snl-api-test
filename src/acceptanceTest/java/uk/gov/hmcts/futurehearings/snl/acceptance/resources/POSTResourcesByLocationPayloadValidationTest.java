@@ -743,24 +743,43 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationVCEmail: may only be 255 characters long]", null));
     }
 
-    @ParameterizedTest(name = "Mandatory Fields not available Negative Tests Scenario : {0} - {1}")
+    @ParameterizedTest(name = "Schema Validation Checks for Unwanted Fields")
     @CsvSource(value = {
-            "Checking Payload without the Location Id HMCTS, resources-by-location-mandatory-without-location-id-hmcts.json",
-            "Checking Payload without the Location Cluster HMCTS, resources-by-location-mandatory-without-location-cluster.json",
-            "Checking Payload without the Location Description HMCTS, resources-by-location-mandatory-without-location-description.json",
-            "Checking Payload without the Location Active From HMCTS, resources-by-location-mandatory-without-location-active-from.json",
-            "Checking Payload without the Location Primary Flag HMCTS, resources-by-location-mandatory-without-location-primary-flag.json"
+            "Checking Payload without an extra parameter (locationIdCaseHQ)in a mandatory payload, resource-by-location-all-mandatory-location-id-hmcts-extra-field.json",
+            "Checking Payload without an extra parameter (locationIdCaseHQ)in a complete payload, resource-by-location-complete-extra-field.json"
     }, nullValues = "NIL")
-    public void test_negative_response_mandatory_elements_payload(final String locationPayloadTestScenarioDescription,
+    public void test_negative_response_payload_with_extra_fields(final String locationPayloadTestScenarioDescription,
                                                                   final String locationPayloadTestScenarioFileName) throws Exception {
         this.setInputPayloadFileName(locationPayloadTestScenarioFileName);
-        generatePayloadWithRandomHMCTSID("/location/post/");
+        generatePayloadWithRandomHMCTSID(8,"/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdCaseHQ: is not defined in the schema and the schema does not allow additional properties]", null));
+    }
+
+    @ParameterizedTest(name = "Mandatory Fields not available Negative Tests Scenario : {0} - {1}")
+    @CsvSource(value = {
+            "Checking Payload without the Location Id HMCTS, resources-by-location-mandatory-without-location-id-hmcts.json,locationIdHMCTS",
+            "Checking Payload without the Location Cluster HMCTS, resources-by-location-mandatory-without-location-cluster.json,locationCluster",
+            "Checking Payload without the Location Description HMCTS, resources-by-location-mandatory-without-location-description.json,locationDescription",
+            "Checking Payload without the Location Active From HMCTS, resources-by-location-mandatory-without-location-active-from.json,locationActiveFrom",
+            "Checking Payload without the Location Primary Flag HMCTS, resources-by-location-mandatory-without-location-primary-flag.json,locationPrimaryFlag"
+    }, nullValues = "NIL")
+    public void test_negative_response_mandatory_elements_payload(final String locationPayloadTestScenarioDescription,
+                                                                  final String locationPayloadTestScenarioFileName,
+                                                                  final String userSchemaElement) throws Exception {
+        this.setInputPayloadFileName(locationPayloadTestScenarioFileName);
+        generatePayloadWithRandomHMCTSID(8,"/location/post/");
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location." + userSchemaElement + ": is missing but it is required]", null));
     }
 }

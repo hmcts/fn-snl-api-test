@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://www.gov.uk/deleteHearingMessage.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "_cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cancellationReasonCode": {
+          "type": "string",
+          "maxLength": 8
+        }
+      },
+      "required": [
+        "cancellationReasonCode"
+      ]
+    }
+  },
+  "required": [
+    "_cancel"
+  ]
+}

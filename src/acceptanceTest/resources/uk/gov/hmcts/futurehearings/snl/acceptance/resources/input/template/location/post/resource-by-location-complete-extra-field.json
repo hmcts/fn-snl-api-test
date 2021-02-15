@@ -1,0 +1,27 @@
+{
+  "locationRequest": {
+    "meta": {
+    },
+    "location": {
+      "locationIdHMCTS": "%s",
+      "locationDescription": "x–HMI Test SNL-QA-LocationV",
+      "locationAddress": "71 Agency Drive",
+      "locationCluster": "KNT",
+      "locationPostCode" : "SW7",
+      "locationPrimaryFlag": true,
+      "locationParentCode": "301",
+      "locationActiveFrom": "2005-01-01T20:20:39+00:00",
+      "locationActiveTo": "2005-01-31T20:20:39+00:00",
+      "locationSecurityGuardFlag": true,
+      "locationVideoConfFlag": true,
+      "locationSeatingCapacity": 35,
+      "locationRecordingEqFlag": true,
+      "locationVCSite": "site",
+      "locationVCSiteAddress": "siteadd",
+      "locationVCNumber": "34",
+      "locationVCContactPhone": "phone",
+      "locationVCEmail": "email",
+      "locationIdCaseHQ": "email"
+    }
+  }
+}

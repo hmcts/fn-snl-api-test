@@ -27,10 +27,6 @@
               "type": "string",
               "maxLength": 30
             },
-            "personSalutation": {
-              "type": "string",
-              "maxLength": 4
-            },
             "personRoleId": {
               "type": "string",
               "maxLength": 3
@@ -55,7 +51,22 @@
               "type": "string",
               "format": "date"
             },
-            "personOfficeTypes": {
+            "personPositionTitle": {
+              "type": "string",
+              "maxLength": 3
+            },
+            "personPositionFrom": {
+              "type": "string",
+              "format": "date"
+            },
+            "personAuthorisedSessionTypes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 10
+              }
+            },
+            "personJOHTypes": {
               "type": "array",
               "items": {
                 "type": "object",
@@ -92,7 +103,6 @@
         }
       },
       "required": [
-        "meta",
         "details"
       ]
     }
