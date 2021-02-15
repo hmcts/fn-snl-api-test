@@ -747,10 +747,15 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
-    //tests failing we need to check the combinations
     @ParameterizedTest(name = "update entityRoleCode non mandatory positive tests")
-    //REP and WIT not working => Is there any combinations ?
-    @CsvSource(value = {"entityRoleCode, DEF", "entityRoleCode, APL", "entityRoleCode, REP", "entityRoleCode, WIT","entityRoleCode, CHI","entityRoleCode, PET","entityRoleCode, APP","entityRoleCode, OTH"}, nullValues = "NIL")
+    @CsvSource(value = {"entityRoleCode, OTH", // Claimant
+            "entityRoleCode, RES", // Respondent
+            "entityRoleCode, APL", // Appellant
+            "entityRoleCode, APP", // Applicant
+            "entityRoleCode, CHI", // CHILD
+            "entityRoleCode, DEF", // Defendant
+            "entityRoleCode, PET", // Petitioner
+    }, nullValues = "NIL")
     @DisplayName("Update successfully response for a payload with the entityRoleCode")
     public void test_successful_response_by_updating_entity_role_code_payload(final String entityRoleCodeKey, String entityRoleCodeValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-role-template.json");
@@ -975,16 +980,6 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
-
-
-
-
-
-
-
-
-
-
 
 
     private int[] makePostHearingAndFetchRandomIdAndCaseListingId() throws Exception {

@@ -668,7 +668,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @ParameterizedTest(name = "entityHmiId non mandatory positive tests")
     //EntityId we need to check the Acceptance criteria
     //TODO: Negative test required for entityHmiId filed
-    @CsvSource(value = {"entityHmiId, 1", "entityHmiId, 5000", "entityHmiId, 29","entityHmiId, 15"}, nullValues = "NIL")
+    @CsvSource(value = {"entityHmiId, 1", "entityHmiId, 5000", "entityHmiId, 29", "entityHmiId, 15"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityHmiId")
     public void test_successful_response_with_entity_hmi_id_payload(final String entityHmiIdKey, String entityHmiIdValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-hmi-id.json");
@@ -719,15 +719,14 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @ParameterizedTest(name = "entityRoleCode non mandatory positive tests")
     //REP and WIT not working Is there any combinations
     //TODO: Raise defect and create .csv
-    @CsvSource(value = {"entityRoleCode, DEF", // Defendant
-                        "entityRoleCode, APL", // Appellant
-                        "entityRoleCode, REP", // Representative NOT WORKING
-                        "entityRoleCode, WIT", // Witness NOT WORKING
-                        "entityRoleCode, CHI", // CHILD
-                        "entityRoleCode, PET", // Petitioner
-                        "entityRoleCode, APP", // Applicant
-                        "entityRoleCode, RES", // Respondent
-                        "entityRoleCode, OTH"}, nullValues = "NIL")
+    @CsvSource(value = {"entityRoleCode, OTH", // Claimant
+            "entityRoleCode, RES", // Respondent
+            "entityRoleCode, APL", // Appellant
+            "entityRoleCode, APP", // Applicant
+            "entityRoleCode, CHI", // CHILD
+            "entityRoleCode, DEF", // Defendant
+            "entityRoleCode, PET", // Petitioner
+    }, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityRoleCode")
     public void test_successful_response_with_entity_role_code_payload(final String entityRoleCodeKey, String entityRoleCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-role-code.json");
@@ -845,7 +844,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityFirstName non mandatory negative tests")
-    @CsvSource(value = {"Invalid entityFirstName 101,t","Empty Space,''", "Single Space,' '", "NIL,NIL"}, nullValues = "NIL")
+    @CsvSource(value = {"Invalid entityFirstName 101,t", "Empty Space,''", "Single Space,' '", "NIL,NIL"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTitle")
     public void test_negative_response_with_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-first-name.json");
@@ -864,6 +863,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
+
     //TODO: entityFirstName Max length value should be 730
     @ParameterizedTest(name = "entityLastName non mandatory positive tests")
     @CsvSource(value = {"entityLastName, testLastName"}, nullValues = "NIL")
@@ -895,7 +895,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("[$.hearingRequest.entities[0].entitySubType.'{0}': may only be 730 characters long",entityLastNameValue);
+        String errorDesc = MessageFormat.format("[$.hearingRequest.entities[0].entitySubType.'{0}': may only be 730 characters long", entityLastNameValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
