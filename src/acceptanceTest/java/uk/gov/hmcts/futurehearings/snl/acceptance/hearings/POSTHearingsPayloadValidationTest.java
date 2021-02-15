@@ -471,6 +471,61 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @Test
+    @DisplayName("Negative response for a payload with invalid Case restricted flag")
+    public void test_negative_response_with_invalid_case_restricted_flag_complete_elements_payload() throws IOException {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-restricted-flag.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                        "[$.hearingRequest._case.caseRestrictedFlag: integer found, boolean expected]",
+                        null));
+    }
+    @Test
+    @DisplayName("Negative response for a payload with invalid Case interpreter restricted flag")
+    public void test_negative_response_with_invalid_case_interpreter_restricted_flag_complete_elements_payload() throws IOException {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-interpreter-restricted-flag.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                        "[$.hearingRequest._case.caseInterpreterRequiredFlag: integer found, boolean expected]",
+                        null));
+    }
+
+    @Test
+    @DisplayName("Negative response for a payload with invalid Case additional security flag")
+    public void test_negative_response_with_invalid_case_additional_security_flag_complete_elements_payload() throws IOException {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-case-additional-security-flag.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                        "[$.hearingRequest._case.caseAdditionalSecurityFlag: integer found, boolean expected]",
+                        null));
+    }
+
+    @Test
+    @DisplayName("Negative response for a payload with invalid listing auto create flag")
+    public void test_negative_response_with_invalid_case_listing_auto_create_flag_complete_elements_payload() throws IOException {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-listing-auto-create-flag.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                        "[$.hearingRequest.listing.listingAutoCreateFlag: integer found, boolean expected]",
+                        null));
+    }
+
     @ParameterizedTest(name = "Case Interpreter Required Flag non mandatory positive tests")
     @CsvSource(value = {"Case Interpreter Required, true", "Case Interpreter Required, false"})
     //TODO - Negative tests required
