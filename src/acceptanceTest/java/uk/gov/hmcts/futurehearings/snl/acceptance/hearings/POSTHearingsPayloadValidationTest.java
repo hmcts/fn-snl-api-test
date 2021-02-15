@@ -4,6 +4,7 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.gen
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils.replaceCharacterSequence;
 
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -20,10 +21,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.platform.suite.api.IncludeTags;
@@ -222,9 +219,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered positive tests")
-    @CsvSource(value = {"Valid Time,2015-12-11T19:28:30+00:00"}, nullValues = "NIL")
+    @CsvSource(value = {"Valid Time,2015-12-11T19:28:30+00:00", "Valid Time,2015-12-11T19:28:30Z",}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the Case registered")
-    //TODO - The Time formats for payload is pending confirmation from McGirr
     public void test_successful_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey,
                                                                                          String caseRegisteredValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-registered.json");
@@ -270,7 +266,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listing Court Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "InValid Court,0", "Valid Court,299", "Valid Court,500", "Valid Court,-318"})
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "InValid Court,0", "InValid Court,299", "InValid Court,500", "InValid Court,-318"})
     @DisplayName("Negative response for a payload with the listing Court")
     public void test_negative_response_with_listing_court_mandatory_elements_payload(final String listingCourtKey, String listingCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-court.json");
@@ -286,7 +282,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listing Priority positive tests")
-    @CsvSource(value = {"Listing priority, CRIT", "Listing priority, HIGH", "Listing priority, NORM"}, nullValues = "NIL")
+    @CsvSource(value = {"Listing priority, CRIT", "Listing priority, HIGH", "Listing priority, PEND", "Listing priority, NORM"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listing Priority")
     public void test_successful_response_with_listing_priority_mandatory_elements_payload(final String listingPriorityKey, String listingPriorityValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-listing-priority.json");
@@ -317,6 +313,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listing Session Type positive tests")
+    //TODO: check the combinations again as ADHOC session type seems to have more listing types assigned to it
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/listing-session-type-test-positive-values.csv", numLinesToSkip = 1)
     @DisplayName("Successfully response for a payload with the listing session type")
     public void test_successful_response_with_listing_session_type_mandatory_elements_payload(final String listingSessionTypeKey, String listingSessionTypeValue, String listingTypeValue) throws Exception {
@@ -347,7 +344,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, errorDesc, null, null));
     }
 
-    //Depends on Session Type, hearing type, PPS="protected party settlement" check all the fields
+    //Depends on Session Type, listing type(Hearing type)
+    //Combination test of listing type and session type covered in test_successful_response_with_listing_session_type_mandatory_elements_payload
     @ParameterizedTest(name = "listingType positive tests")
     @CsvSource(value = {"listingType, DECNIS"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingType")
@@ -379,6 +377,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
+    //TODO: awaiting resolution of MCGIRRSD-1491 to see if a combination test is required between jurisdiction,service,case type and case sub type
     @ParameterizedTest(name = "Case Sub Type non mandatory positive tests")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/hearings/data/case-sub-type-test-positive-values.csv", numLinesToSkip = 1)
     @DisplayName("Successfully response for a payload with the case sub type")
@@ -394,6 +393,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    //TODO: May need to be refactored based on the above combination tests
     @ParameterizedTest(name = "Case Sub Type non mandatory negative tests")
     @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "case subtype min, 0", "case subtype max,94", "case subtype, abc"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the case sub type")
@@ -453,7 +453,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "Case Restricted Flag non mandatory positive tests")
     @CsvSource(value = {"Case Restricted Flag, true", "Case Restricted Flag, false"})
-    //TODO - Negative testing of this scenario has to be done manually as Rest Assured is failing on the client side for incompatible datatypes against no string fields....
+    //TODO - Negative tests required
     @DisplayName("Successfully response for a payload with the Case restricted flag")
     public void test_successful_response_with_case_restricted_flag_complete_elements_payload(final String caseRestrictedFlagKey, String caseRestrictedFlagValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-restricted-flag.json");
@@ -473,7 +473,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "Case Interpreter Required Flag non mandatory positive tests")
     @CsvSource(value = {"Case Interpreter Required, true", "Case Interpreter Required, false"})
-    //TODO - Negative testing of this scenario has to be done manually as Rest Assured is failing on the client side for incompatible datatypes against no string fields....
+    //TODO - Negative tests required
     @DisplayName("Successfully response for a payload with the Case Interpreter Required")
     public void test_successful_response_with_case_interpreter_required_flag_complete_elements_payload(final String caseInterpreterRequiredFlagKey, String caseInterpreterRequiredFlagValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-interpreter-restricted-flag.json");
@@ -493,7 +493,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "Case Additional Security Flag non mandatory positive tests")
     @CsvSource(value = {"Case Additional Security, true", "Case Additional Security, false"})
-    //TODO - Negative testing of this scenario has to be done manually as Rest Assured is failing on the client side for incompatible datatypes against no string fields....
+    //TODO - Negative tests required
     @DisplayName("Successfully response for a payload with the Case Additional Security flag")
     public void test_successful_response_with_case_additional_security_flag_complete_elements_payload(final String caseAdditionalSecurityFlagKey, String caseAdditionalSecurityFlagValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-additional-security-flag.json");
@@ -513,7 +513,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "listingAutoCreateFlag non mandatory positive tests")
     @CsvSource(value = {"listingAutoCreateFlag, true", "listingAutoCreateFlag, false"})
-    //TODO - Negative testing of this scenario has to be done manually as Rest Assured is failing on the client side for incompatible datatypes against no string fields....
+    //TODO - Negative tests required
     @DisplayName("Successfully response for a payload with the listingAutoCreateFlag")
     public void test_successful_response_with_listing_auto_create_flag_complete_elements_payload(final String listingAutoCreateFlagKey, String listingAutoCreateFlagValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-auto-create-flag.json");
@@ -532,7 +532,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listingStartDate non mandatory positive tests")
-    @CsvSource(value = {"listingStartDate, 2015-12-11T19:28:35+00:00"})
+    @CsvSource(value = {"listingStartDate, 2015-12-11T19:28:35+00:00", "listingStartDate, 2015-12-11T19:28:35Z"})
     @DisplayName("Successfully response for a payload with the listingStartDate")
     public void test_successful_response_with_listing_start_date_complete_elements_payload(final String listingStartDateKey, String listingStartDateValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-start-date.json");
@@ -546,7 +546,6 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
     @ParameterizedTest(name = "listingStartDate non mandatory negative tests")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listingStartDate")
@@ -618,6 +617,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    //TODO: listingNumberOfAttendees required -1 test
     @ParameterizedTest(name = "listingCluster non mandatory positive tests")
     @CsvSource(value = {"listingCluster, TV", "entityClassCode, KNT"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingCluster")
@@ -650,7 +650,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "listingDuration non mandatory positive tests")
-    //Listing duration default 30min and there is no min limit.
+    //Listing duration default 30min and there is no min and max limit: enquiry raised to dunsi and satyen
     @CsvSource(value = {"listingDuration, 30", "listingDuration, 5000", "listingDuration, 29", "listingDuration, 1"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingDuration")
     public void test_successful_response_with_listing_Duration_elements_payload(final String listingDurationsKey, String listingDurationValue) throws Exception {
@@ -667,7 +667,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "entityHmiId non mandatory positive tests")
     //EntityId we need to check the Acceptance criteria
-    @CsvSource(value = {"entityHmiId, 1", "entityHmiId, 5000", "entityHmiId, 29"}, nullValues = "NIL")
+    //TODO: Negative test required for entityHmiId filed
+    @CsvSource(value = {"entityHmiId, 1", "entityHmiId, 5000", "entityHmiId, 29","entityHmiId, 15"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityHmiId")
     public void test_successful_response_with_entity_hmi_id_payload(final String entityHmiIdKey, String entityHmiIdValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-hmi-id.json");
@@ -681,7 +682,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    //Doubt chek the excel sheet
+
+    //Needs to test entityTypeCode and entityClass Code combinations and one for negative combinations
     @ParameterizedTest(name = "entityTypeCode non mandatory positive tests")
     //Test Failed: When entity type code as ORG   "errorDesc": "entityTypeCode/entityClassCode ORG/PERSON",
     @CsvSource(value = {"entityTypeCode, IND", "entityTypeCode, ORG"}, nullValues = "NIL")
@@ -716,7 +718,16 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "entityRoleCode non mandatory positive tests")
     //REP and WIT not working Is there any combinations
-    @CsvSource(value = {"entityRoleCode, DEF", "entityRoleCode, APL", "entityRoleCode, REP", "entityRoleCode, WIT"}, nullValues = "NIL")
+    //TODO: Raise defect and create .csv
+    @CsvSource(value = {"entityRoleCode, DEF", // Defendant
+                        "entityRoleCode, APL", // Appellant
+                        "entityRoleCode, REP", // Representative NOT WORKING
+                        "entityRoleCode, WIT", // Witness NOT WORKING
+                        "entityRoleCode, CHI", // CHILD
+                        "entityRoleCode, PET", // Petitioner
+                        "entityRoleCode, APP", // Applicant
+                        "entityRoleCode, RES", // Respondent
+                        "entityRoleCode, OTH"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityRoleCode")
     public void test_successful_response_with_entity_role_code_payload(final String entityRoleCodeKey, String entityRoleCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-role-code.json");
@@ -748,7 +759,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
 
     @ParameterizedTest(name = "entityClassCode non mandatory positive tests")
-    //ORG Is failing check the doc
+    //ORG Is failing check the doc, will be covered along with entity type code combination tests
     @CsvSource(value = {"entityClassCode, PERSON", "entityClassCode, ORG"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityClassCode")
     public void test_successful_response_with_entity_class_code_payload(final String entityClassCodeKey, String entityClassCodeValue) throws Exception {
@@ -781,7 +792,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "entityTitle non mandatory positive tests")
     //Test passed with Mrsssssss and InvalidTitle
-    @CsvSource(value = {"entityTitle, Mr", "entityTitle, Mrs", "entityTitle, Mrsssssss", "entityTitle, InvalidTitle",}, nullValues = "NIL")
+    @CsvSource(value = {"entityTitle, Mr", "entityTitle, Mrs", "entityTitle, Mrsssssss", "entityTitle, MsssssssssMsssssssssMsssssssssMsssssssssq",}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityTitle")
     public void test_successful_response_with_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-title.json");
@@ -797,13 +808,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
 
     @ParameterizedTest(name = "entityTitle non mandatory negative tests")
     //This test is passing because it is not checking max length, without value it is accepting (Not mandatory)
-    @CsvSource(value = {"Invalid entityTitle  16 chars,t"}, nullValues = "NIL")
+    @CsvSource(value = {"Invalid entityTitle  41 chars,t"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTitle")
     public void test_negative_response_with_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-title.json");
-        if (entityTitleKey.trim().equals("Invalid entityTitle  16 chars")) {
+        if (entityTitleKey.trim().equals("Invalid entityTitle  41 chars")) {
             generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(
-                    generateStringForGivenLength(16, entityTitleValue));
+                    generateStringForGivenLength(41, entityTitleValue));
         } else {
             generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityTitleValue);
         }
@@ -817,6 +828,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
+    //TODO: entityFirstName Max length value should be 100
     @ParameterizedTest(name = "entityFirstName non mandatory positive tests")
     @CsvSource(value = {"entityFirstName, testFirstName"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityFirstName")
@@ -833,7 +845,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityFirstName non mandatory negative tests")
-    @CsvSource(value = {"Invalid entityFirstName 101,t"}, nullValues = "NIL")
+    @CsvSource(value = {"Invalid entityFirstName 101,t","Empty Space,''", "Single Space,' '", "NIL,NIL"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTitle")
     public void test_negative_response_with_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-first-name.json");
@@ -852,7 +864,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
-
+    //TODO: entityFirstName Max length value should be 730
     @ParameterizedTest(name = "entityLastName non mandatory positive tests")
     @CsvSource(value = {"entityLastName, testLastName"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityLastName")
@@ -869,7 +881,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityLastName non mandatory negative tests")
-    //This test is failing because it is not checking max length
+    //This test is failing because it is having clash with entityCompanyName: is missing but it is required,
     @CsvSource(value = {"Invalid entityLastName 731,t"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityLastName")
     public void test_negative_response_with_entity_last_name_payload(final String entityLastNameKey, String entityLastNameValue) throws Exception {
@@ -883,10 +895,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTitle'", entityLastNameValue);
+        String errorDesc = MessageFormat.format("[$.hearingRequest.entities[0].entitySubType.'{0}': may only be 730 characters long",entityLastNameValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -906,6 +918,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @Disabled
     @ParameterizedTest(name = "entityCompanyName non mandatory negative tests")
     @CsvSource(value = {"Invalid entityCompanyName 2001,t"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityCompanyName")

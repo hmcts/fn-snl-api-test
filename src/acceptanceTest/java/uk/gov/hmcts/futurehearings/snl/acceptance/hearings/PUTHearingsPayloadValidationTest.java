@@ -634,7 +634,6 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", null, null));
     }
 
-
     // No negative tests because we don't know the AC
     @ParameterizedTest(name = "update listingNumberOfAttendees non mandatory positive tests")
     @CsvSource(value = {"listingNumberOfAttendees, 1", "listingNumberOfAttendees, 10000"}, nullValues = "NIL")
@@ -750,8 +749,8 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
 
     //tests failing we need to check the combinations
     @ParameterizedTest(name = "update entityRoleCode non mandatory positive tests")
-    //REP and WIT not working Is there any combinations
-    @CsvSource(value = {"entityRoleCode, DEF", "entityRoleCode, APL", "entityRoleCode, REP", "entityRoleCode, WIT"}, nullValues = "NIL")
+    //REP and WIT not working => Is there any combinations ?
+    @CsvSource(value = {"entityRoleCode, DEF", "entityRoleCode, APL", "entityRoleCode, REP", "entityRoleCode, WIT","entityRoleCode, CHI","entityRoleCode, PET","entityRoleCode, APP","entityRoleCode, OTH"}, nullValues = "NIL")
     @DisplayName("Update successfully response for a payload with the entityRoleCode")
     public void test_successful_response_by_updating_entity_role_code_payload(final String entityRoleCodeKey, String entityRoleCodeValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-role-template.json");
@@ -961,6 +960,32 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 getSnlSuccessVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
+
+    @ParameterizedTest(name = "Update hearings with cancel reasons positive tests")
+    @CsvSource(value = {"entityCompanyName, entityCompanyName"}, nullValues = "NIL")
+    @DisplayName("Update successfully response for a payload with the cancel reasons")
+    public void test_successful_response_by_updating_cancel_reasons_payload(final String entityCompanyNameKey, String entityCompanyNameValue) throws Exception {
+        this.setInputPayloadFileName("update-hearing-request-non-mandatory-entity-company-name.json");
+        generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, entityCompanyNameValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     private int[] makePostHearingAndFetchRandomIdAndCaseListingId() throws Exception {
         int randomId = new Random().nextInt(99999999);
