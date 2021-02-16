@@ -772,8 +772,6 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityRoleCode non mandatory positive tests")
-    //REP and WIT not working Is there any combinations
-    //TODO: Raise defect and create .csv
     @CsvSource(value = {"entityRoleCode, OTH", // Claimant
             "entityRoleCode, RES", // Respondent
             "entityRoleCode, APL", // Appellant

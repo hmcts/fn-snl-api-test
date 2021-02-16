@@ -3,7 +3,7 @@
     "meta": {
     },
     "_case": {
-      "caseTitle": "%s",
+      "caseTitle": "650",
       "caseJurisdiction": "FAM",
       "caseCourt": "1",
       "caseComments": "Ut in irure Lorem",
@@ -23,7 +23,7 @@
       "listingNumberAttendees": 6,
       "listingCluster": "TV",
       "listingComments": "Ut in irure Lorem est esse labore",
-      "amendReasonCode":  "CASE_NR"
+      "amendReasonCode":  "%s"
     }
   }
 }
