@@ -737,6 +737,23 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @ParameterizedTest(name = "entityHmiId non mandatory negative tests")
+    @CsvSource(value = {"entityHmiId, 1234567890123456"}, nullValues = "NIL")
+    @DisplayName("Unsuccessful response for a payload with invalid entityHmiId")
+    public void test_unsuccessful_responses_with_entity_hmi_id_payload(final String entityHmiIdKey, String entityHmiIdValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-entity-hmi-id.json");
+        generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndCaseListingRequestIDAndField(entityHmiIdValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                        "[$.hearingRequest.entities[0].entityHmiId: may only be 15 characters long]" ,
+                        null));
+    }
+
 
     //Needs to test entityTypeCode and entityClass Code combinations and one for negative combinations
     @ParameterizedTest(name = "entityTypeCode non mandatory positive tests")
