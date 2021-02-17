@@ -181,8 +181,9 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     @ParameterizedTest(name = "Update Amend reason code Negative Tests for Single Field")
     @CsvSource(value = {"amendCodeKey,''",
                         "amendCodeKey,' '",
-                        "amendCodeKey,'hello'",
-                        "amendCodeKey,'PART_SETt'"}, nullValues = "NIL")
+                        "amendCodeKey, pend",
+                        "amendCodeKey, CASE_PR",
+                        "amendCodeKey, PART_SETt"}, nullValues = "NIL")
     public void test_negative_response_for_invalid_amend_reason_code_payload(final String amendCodeTemplateKey,
                                                                              final String amendCodeTemplateValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-with-mandatory-amend-code.json");
