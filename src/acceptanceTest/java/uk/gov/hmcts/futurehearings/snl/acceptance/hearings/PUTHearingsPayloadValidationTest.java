@@ -112,29 +112,101 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
     }
 
     @DisplayName("caseTitle update negative tests for single field")
-    @ParameterizedTest(name = "Update Case tilte Nagative Tests for Single Field")
-    @CsvSource(value = {"CaseTitle501Chars,t"}, nullValues = "NIL")
-    // TODO: we need to test with "Empty Space,''", "Single Space,' '"
-    //TODO - Raised Defect created by Venkata (MCGIRRSD-1683) around blank case titles. - Data "Empty Space,''", "Single Space,' '",
+    @Disabled
+    @ParameterizedTest(name = "Update Case title Nagative Tests for Single Field")
+    @CsvSource(value = {"caseTitle,''", "caseTitle,' '","caseTitle, t"}, nullValues = "NIL")
+// TODO: we need to test with "Empty Space,''", "Single Space,' '"
+//TODO - Raised Defect created by Venkata (MCGIRRSD-1683) around blank case titles. - Data "Empty Space,''", "Single Space,' '",
     public void test_Negative_response_by_updating_invalid_case_title_elements_payload(final String caseTitleTemplateKey,
                                                                                        final String caseTitleTemplateValue) throws Exception {
         this.setInputPayloadFileName("update-hearing-request-case-title-template.json");
-        if (caseTitleTemplateKey.trim().equals("CaseTitle501Chars")) {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, generateStringForGivenLength(501, caseTitleTemplateValue));
-        } else {
-            generatePayloadWithRandomCaseIdHMCTS("/put/", caseHMCTSId, caseTitleTemplateValue);
+        this.setInputFileDirectory("hearings");
+
+        SNLVerificationDTO snlVerificationDTO = null;
+
+        switch (caseTitleTemplateValue) {
+                    case "":
+                        generatePayloadWithFieldValueFormat("/put/", caseTitleTemplateValue);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
+                                "'' is not a valid value for field 'caseTitle'", null);
+                        break;
+                    case " ":
+                        generatePayloadWithFieldValueFormat("/put/", caseTitleTemplateValue);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
+                                "' ' is not a valid value for field 'caseTitle'", null);
+                        break;
+
+                      case "t":
+                          generatePayloadWithFieldValueFormat("/put/", generateStringForGivenLength(501, caseTitleTemplateValue));
+                          snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                                  "[$.hearingRequest._case.caseTitle: may only be 500 characters long]", null);
+                          break;
         }
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(), createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+
+        commonDelegate.test_expected_response_for_supplied_header
+                (delegateDTO,
+                 getSnlErrorVerifier(),
+                 snlVerificationDTO);
+    }
+
+    @DisplayName("Positive tests for Amend reason codes field")
+    @Disabled
+    @ParameterizedTest(name = "Positive tests for Amend reason codes field")
+    @CsvSource(value= {
+            "amendCodeKey,CASE_NR",
+            "amendCodeKey,INEFFTV",
+            "amendCodeKey,PART_NA",
+            "amendCodeKey,PART_SET",
+            "amendCodeKey,PPND_LOR",
+            "amendCodeKey,WDN_VAC",
+            "amendCodeKey,LIST_ERR",
+            "amendCodeKey, PEND"})
+
+    public void test_positive_response_for_valid_amend_codes(final String amendCodeKey, String amendCodeValue) throws IOException {
+        this.setInputPayloadFileName("update-hearing-request-with-mandatory-amend-code.json");
+        this.setInputFileDirectory("hearings");
+        generatePayloadWithFieldValueFormat("/put/", amendCodeValue);
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        SNLVerificationDTO snlVerificationDTO = caseTitleTemplateKey.equals("CaseTitle501Chars")
-                ? new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.hearingRequest._case.caseTitle: may only be 500 characters long]", null)
-                : new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null);
+
+        commonDelegate.test_expected_response_for_supplied_header
+                (delegateDTO, getSnlSuccessVerifier(),
+                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+   }
+
+    @DisplayName("Amend reason code negative tests")
+    @ParameterizedTest(name = "Update Amend reason code Negative Tests for Single Field")
+    @CsvSource(value = {"amendCodeKey,''",
+                        "amendCodeKey,' '",
+                        "amendCodeKey,'hello'",
+                        "amendCodeKey,'PART_SETt'"}, nullValues = "NIL")
+    public void test_negative_response_for_invalid_amend_reason_code_payload(final String amendCodeTemplateKey,
+                                                                             final String amendCodeTemplateValue) throws Exception {
+        this.setInputPayloadFileName("update-hearing-request-with-mandatory-amend-code.json");
+        this.setInputFileDirectory("hearings");
+        generatePayloadWithFieldValueFormat("/put/", amendCodeTemplateValue);
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(), createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        SNLVerificationDTO snlVerificationDTO = null;
+        switch (amendCodeTemplateValue) {
+            case "":
+            case " ":
+            case "hello":
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
+                        "'"+amendCodeTemplateValue+"' is not a valid value for field 'amendReasonCode'", null);
+                break;
+            default:
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                        "[$.hearingRequest.listing.amendReasonCode: may only be 8 characters long]", null);
+                break;
+        }
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
                 snlVerificationDTO);
-
     }
 
     @DisplayName("Successful case jurisdiction update positive tests for single field")
@@ -781,7 +853,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityRoleCode'", entityRoleCodeValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -1036,7 +1108,7 @@ class PUTHearingsPayloadValidationTest extends HearingsHeaderValidationTest {
                 getInputFileDirectory()) + templatePath + getInputPayloadFileName()), formatValue1, formatValue2, formatValue3));
     }
 
-    private void generatePayloadWithFieldValueFormat(final String formatValue, final String templatePath) throws IOException {
+    private void generatePayloadWithFieldValueFormat(final String templatePath, final String formatValue) throws IOException {
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + templatePath + getInputPayloadFileName()), formatValue));
     }
