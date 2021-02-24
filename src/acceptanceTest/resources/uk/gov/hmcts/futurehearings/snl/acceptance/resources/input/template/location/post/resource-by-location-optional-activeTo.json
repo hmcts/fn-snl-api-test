@@ -4,10 +4,10 @@
     },
     "location": {
       "locationIdHMCTS": "%s",
-      "": "x – HMI Test SNL-QA",
+      "": "x HMI Test SNL QA",
       "locationCluster": "TV",
       "locationPrimaryFlag": true,
-      "locationActiveFrom": "2002-02-31T10:00:30:05Z",
+      "locationActiveFrom": "2002-02-31",
       "locationActiveTo": "%s"
     }
   }

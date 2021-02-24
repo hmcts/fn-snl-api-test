@@ -4,7 +4,7 @@
     },
     "location": {
       "locationIdHMCTS": "%s",
-      "locationDescription": "x – HMI Test SNL-QA",
+      "locationDescription": "x HMI Test SNL QA",
       "locationActiveFrom": "2020-10-01T10:30:00Z",
       "locationPrimaryFlag": true
     }

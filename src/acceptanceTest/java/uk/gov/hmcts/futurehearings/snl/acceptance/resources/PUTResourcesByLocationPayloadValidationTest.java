@@ -87,18 +87,18 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
 
     @ParameterizedTest(name = "Update Positive Tests for Singular Fields : {0} - {1}")
     @CsvSource(value = {
-            "locationDescription,x – HMI Test - Updated",
-            "locationCluster,KNT",
-            "locationCluster,TV",
-            "locationPostCode,SW7 1AB",
-            "locationParentCode,301",
-            "locationActiveFrom,2021-01-01T20:20:39+00:00",
-            "locationActiveTo,2021-01-01T20:20:39+00:00",
-            "locationVCSite,site - Updated",
-            "locationVCSiteAddress,Site Address - Updated",
-            "locationVCNumber,34",
-            "locationVCContactPhone,Phone - Updated",
-            "locationVCEmail,email@hotmail.com"
+            "locationDescription,x HMI Test - Updated",
+//            "locationCluster,KNT",
+//            "locationCluster,TV",
+//            "locationPostCode,SW7 1AB",
+//            "locationParentCode,301",
+//            "locationActiveFrom,2021-01-01",
+//            "locationActiveTo,2021-01-31",
+//            "locationVCSite,site - Updated",
+//            "locationVCSiteAddress,Site Address - Updated",
+//            "locationVCNumber,34",
+//            "locationVCContactPhone,Phone - Updated",
+//            "locationVCEmail,email@hotmail.com"
     }, nullValues = "NIL")
     public void test_positive_response_for_general_updated_payload(final String locationTemplateKey,
                                                                    final String locationTemplateValue) throws Exception {
