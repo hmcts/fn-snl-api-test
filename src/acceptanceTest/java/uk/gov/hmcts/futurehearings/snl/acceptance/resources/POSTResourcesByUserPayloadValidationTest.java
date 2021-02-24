@@ -110,7 +110,16 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     }
 
     @ParameterizedTest(name = "PersonHMCTSID Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Not An Email id,testing", "Invalid_Source_System, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''",
+            "Single Space,' '",
+            "Invalid email,xxxtest@gmail",
+            "Invalid email1,xxxtest@gmail.",
+            "Invalid email1,xxxtest@gmail.c",
+            "Invalid email1,xtest@xxxcom",
+            "Invalid email1,testxxx.com",
+            "Invalid email1,testxxxcom",
+            "Not An Email id,testing",
+            "Invalid_Source_System, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     @Disabled("TODO Defect MCGIRRSD-2193 - Switched this test off as Empty and Blanks are not allowed....")
     public void test_negative_response_with_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
 
@@ -485,7 +494,16 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     }
 
     @ParameterizedTest(name = "personContactEmail negative scenario")
-    @CsvSource(value = {"InValid email 101 Chars,personEmailValue"}, nullValues = "NIL")
+    @CsvSource(value = {"InValid email 101 Chars,personEmailValue",
+            "Empty Space,''",
+            "Single Space,' '",
+            "Invalid email,xxxtest@gmail",
+            "Invalid email1,xxxtest@gmail.",
+            "Invalid email1,xxxtest@gmail.c",
+            "Invalid email1,xtest@xxxcom",
+            "Invalid email1,testxxx.com",
+            "Invalid email1,testxxxcom",
+            "Not An Email id,testing"}, nullValues = "NIL")
     public void test_negative_response_for_person_contact_email_with_mandatory_elements_payload(final String personContactEmailKey,
                                                                                                 String personEmailValue) throws Exception {
 

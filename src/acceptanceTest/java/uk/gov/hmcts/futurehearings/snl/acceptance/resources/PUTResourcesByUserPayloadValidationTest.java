@@ -14,6 +14,7 @@ import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.dto.SNLVerificat
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.error.SNLCommonErrorVerifier;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.verify.success.SNLCommonSuccessVerifier;
 
+import java.text.MessageFormat;
 import java.util.Random;
 import java.util.UUID;
 
@@ -141,10 +142,17 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @Disabled("Disabling this tests as in general itself we will raise a defect as Blank, Empties and Null should not be accepted by the System")
     @ParameterizedTest(name = "Update Negative Tests for Singular Fields : {0} - {1}")
     @CsvSource(value = {
-            "personIdHMCTS,''", "personIdHMCTS,' '", "personIdHMCTS,C", //TODO - Defect to be raised for the blank Value, not to be updated.
+            "personIdHMCTS,''", "personIdHMCTS,' '", "personIdHMCTS,C",
+            "personIdHMCTS,xxxtest@gmail",
+            "personIdHMCTS,xxxtest@gmail.",
+            "personIdHMCTS,xxxtest@gmail.c",
+            "personIdHMCTS,xtest@xxxcom",
+            "personIdHMCTS,testxxx.com",
+            "personIdHMCTS,testxxxcom",
+            "personIdHMCTS,testing",
+            "personIdHMCTS,null",
             "personFirstName,''", "personFirstName,' '", "personFirstName,C",
             "personLastName,''", "personLastName,' '", "personLastName,C",
             "personRegistry,''", "personRegistry,' '", "personRegistry,Z", "personRegistry,BR", "personRegistry,RGB", "personRegistry,C_FE",
@@ -159,6 +167,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
             case "personIdHMCTS":
                 switch (locationTemplateValue) {
                     case "":
+                        String errorDesc = MessageFormat.format("[$.hearingRequest._case.caseRegistered: {0} is an invalid date-time]", locationTemplateValue);
                         snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
                         break;
                     case " ":
