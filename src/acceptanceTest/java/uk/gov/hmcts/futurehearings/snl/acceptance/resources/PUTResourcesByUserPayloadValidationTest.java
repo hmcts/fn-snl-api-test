@@ -5,6 +5,7 @@ import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHea
 import static uk.gov.hmcts.futurehearings.snl.acceptance.common.helper.CommonHeaderHelper.createStandardPayloadHeader;
 
 import org.junit.jupiter.params.provider.CsvFileSource;
+
 import uk.gov.hmcts.futurehearings.snl.Application;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.RestClientTemplate;
 import uk.gov.hmcts.futurehearings.snl.acceptance.common.TestingUtils;
@@ -84,20 +85,20 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    @ParameterizedTest(name= "Update person role id and validated response")
+    @ParameterizedTest(name = "Update person role id and validated response")
     @DisplayName("Update person role id and validated response for a payload with all the mandatory required fields")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/resources/input/template/user/put/valid_person_role_id.csv", numLinesToSkip = 1)
-    public void test_update_positive_response_for_person_role_id_lov_ranges_with_mandatory_elements_payload(final String roleIDDesc, String roleID ) throws Exception {
+    public void test_update_positive_response_for_person_role_id_lov_ranges_with_mandatory_elements_payload(final String roleIDDesc, String roleID) throws Exception {
         this.setInputPayloadFileName("resources-by-username-optional-person-role-id.json");
-            generatePayloadWithHMCTSID(String.valueOf(roleID), "/user/put/");
-            DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                    createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
-            log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-            commonDelegate.test_expected_response_for_supplied_header(
-                    delegateDTO,
-                    getSnlSuccessVerifier(),
-                    new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
-           }
+        generatePayloadWithHMCTSID(String.valueOf(roleID), "/user/put/");
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+    }
 
     //Getting the LOV Values from the MCGirr Spreadsheet - Hearing LOV's Locations Section
     //TODO - Clarify if the Source of the LOV's is Correct.
@@ -120,12 +121,12 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
 
     @ParameterizedTest(name = "Update Positive Tests for Singular Fields : {0} - {1}")
     @CsvSource(value = {
-            "personFirstName,x – HMI Test - Updated",
-            "personLastName,x – HMI Test - Updated",
+            "personFirstName,x  HMI Test  Updated",
+            "personLastName,x  HMI Test  Updated",
             "personRegistry,KNT",
             "personContactEmail,snlqa-updated@test.com",
             "personRoleId,130",
-            "personVenueId,301",
+            "personVenueId,300",
             "personActiveDate,1999-10-02",
             "personInactiveDate,2000-12-19"
     }, nullValues = "NIL")
@@ -144,66 +145,38 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
 
     @ParameterizedTest(name = "Update Negative Tests for Singular Fields : {0} - {1}")
     @CsvSource(value = {
-            "personIdHMCTS,''", "personIdHMCTS,' '", "personIdHMCTS,C",
-            "personIdHMCTS,xxxtest@gmail",
-            "personIdHMCTS,xxxtest@gmail.",
-            "personIdHMCTS,xxxtest@gmail.c",
-            "personIdHMCTS,xtest@xxxcom",
-            "personIdHMCTS,testxxx.com",
-            "personIdHMCTS,testxxxcom",
-            "personIdHMCTS,testing",
-            "personIdHMCTS,null",
             "personFirstName,''", "personFirstName,' '", "personFirstName,C",
             "personLastName,''", "personLastName,' '", "personLastName,C",
             "personRegistry,''", "personRegistry,' '", "personRegistry,Z", "personRegistry,BR", "personRegistry,RGB", "personRegistry,C_FE",
-            "personContactEmail,''", "personContactEmail,' '", "personContactEmail,'xxxtest.com'", "personContactEmail,'x'",
+            //"personContactEmail,''", "personContactEmail,' '", "personContactEmail,'xxxtest.com'", "personContactEmail,'x'", TODO - This should be a mandatory field
             "personActiveDate,''", "personActiveDate,' '", "personActiveDate,'13-11-1988'", "personActiveDate,'13-NOV-1988'", "personActiveDate,'1988-02-31'",
-            "PersonSalutation,'Miss'" //Test to update a Non Existant Field
+            "personSalutation,'Miss'" //Test to update a Non Existant Field
     }, nullValues = "NIL")
     public void test_negative_response_for_general_updated_payload(final String locationTemplateKey,
                                                                    String locationTemplateValue) throws Exception {
         SNLVerificationDTO snlVerificationDTO = null;
         switch (locationTemplateKey) {
-            case "personIdHMCTS":
-                switch (locationTemplateValue) {
-                    case "":
-                        String errorDesc = MessageFormat.format("[$.hearingRequest._case.caseRegistered: {0} is an invalid date-time]", locationTemplateValue);
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
-                        break;
-                    case " ":
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
-                        break;
-                    default:
-                        locationTemplateValue = generateStringForGivenLength(101, locationTemplateValue);//making the value to the Just beyond max length of the Field
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: may only be 8 characters long]", null);
-                        break;
-                }
-                break;
             case "personFirstName":
                 switch (locationTemplateValue) {
                     case "":
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
-                        break;
                     case " ":
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personFirstName: does not match the regex pattern ^[!-~]([ -~]*[!-~])?$]", null);
                         break;
                     default:
                         locationTemplateValue = generateStringForGivenLength(81, locationTemplateValue);//making the value to the Just beyond max length of the Field
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: may only be 8 characters long]", null);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personFirstName: may only be 80 characters long]", null);
                         break;
                 }
                 break;
             case "personLastName":
                 switch (locationTemplateValue) {
                     case "":
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
-                        break;
                     case " ":
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personLastName: does not match the regex pattern ^[!-~]([ -~]*[!-~])?$]", null);
                         break;
                     default:
                         locationTemplateValue = generateStringForGivenLength(81, locationTemplateValue);//making the value to the Just beyond max length of the Field
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: may only be 8 characters long]", null);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details.personLastName: may only be 30 characters long]", null);
                         break;
                 }
                 break;
@@ -224,26 +197,27 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
             case "personRegistry":
                 switch (locationTemplateValue) {
                     case "C_FE":
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location." + locationTemplateKey + ": may only be 3 characters long]", null);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.userRequest.details." + locationTemplateKey + ": may only be 3 characters long]", null);
                         break;
                     default:
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'" + locationTemplateValue + "' is not a valid value for field 'locationCluster'", null);
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'" + locationTemplateValue + "' is not a valid value for field '" + locationTemplateKey + "'", null);
                         break;
                 }
                 break;
-            case "locationDescription":
+            case "personActiveDate":
                 switch (locationTemplateValue) {
                     default:
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
-                                "'" + locationTemplateValue + "' is not a valid value for field 'locationDescription'",
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                                "[$.userRequest.details.personActiveDate: "+locationTemplateValue+" is an invalid date]",
                                 null);
                         break;
                 }
-            case "locationActiveFrom":
+                break;
+            case "personSalutation":
                 switch (locationTemplateValue) {
                     default:
-                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
-                                "'" + locationTemplateValue + "' is not a valid value for field 'locationActiveFromr'",
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
+                                "[$.userRequest.details.personSalutation: is not defined in the schema and the schema does not allow additional properties]",
                                 null);
                         break;
                 }
@@ -252,7 +226,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 break;
         }
         this.setInputPayloadFileName("resources-by-user-general-template.json");
-        generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/location/put/");
+        generatePayloadWithHMCTSIDAndField(locationTemplateKey, locationTemplateValue, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -265,6 +239,8 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
 
     private String makePostResourcesByUserAndFetchUserId() throws Exception {
         String randomString = UUID.randomUUID().toString();
+        //randomString = randomString.substring(0,15).replace("-","_") + "@test.com";
+        randomString = randomString + "@test.com";
         DelegateDTO delegateDTO = DelegateDTO.builder()
                 .targetSubscriptionKey(getApiSubscriptionKey()).authorizationToken(getAuthorizationToken())
                 .targetURL(resourcesByUserRootContext)
