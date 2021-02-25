@@ -106,7 +106,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
         SNLVerificationDTO snlVerificationDTO = null;
         switch (locationIdHMCTSValue) {
             case "":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: does not match the regex pattern ^[!-~]+$]", null);
                 break;
             case " ":
                 snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
@@ -168,7 +168,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @ParameterizedTest(name = " Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Location Description,'x – HMI Test This is location description'"})
+    @CsvSource(value = {"Location Description,'x HMI Test This is location description'"})
     public void test_positive_response_for_location_description_with_mandatory_elements_payload(final String locationDescriptionKey,
                                                                                                 final String locationDescriptionValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
