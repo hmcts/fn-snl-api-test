@@ -12,12 +12,12 @@
       "caseCourt": "1",
       "caseComments": "Ut in irure Lorem",
       "caseRelatedCaseIdHMCTS": ["1","2"],
-      "caseRestrictedFlag": true,
-      "caseInterpreterRequiredFlag": true,
+      "caseRestrictedFlag": false,
+      "caseInterpreterRequiredFlag": false,
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
-      "listingCourt": "301",
+      "listingCourt": "300",
       "listingAutoCreateFlag": true,
       "listingPriority": "CRIT",
       "listingSessionType": "DS",

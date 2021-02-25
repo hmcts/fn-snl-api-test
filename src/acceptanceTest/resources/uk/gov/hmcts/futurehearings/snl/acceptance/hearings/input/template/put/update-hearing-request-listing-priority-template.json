@@ -17,7 +17,7 @@
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
-      "listingCourt": "301",
+      "listingCourt": "300",
       "listingAutoCreateFlag": true,
       "listingPriority": "%s",
       "listingSessionType": "DS",
