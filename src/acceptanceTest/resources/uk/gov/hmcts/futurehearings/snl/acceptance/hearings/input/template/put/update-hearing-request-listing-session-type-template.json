@@ -12,6 +12,7 @@
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
+      "amendReasonCode": "CASE_NR",
       "listingCourt": "300",
       "listingAutoCreateFlag": true,
       "listingPriority": "CRIT",
