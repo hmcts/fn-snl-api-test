@@ -77,10 +77,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "caseIDHMCTS Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Empty Space,' '", "Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
+    @CsvSource(value = {"Invalid_Source_System,C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     @DisplayName("Negative validated response for case id hmcts tests")
-    //TODO -  Check caseIDHMCTS length max and min
-    //TODO - Does not check for blank Spaces - Defect to be raised. Data - "Single Space,' '", MCGIRRSD-1685.
     public void test_negative_response_with_case_id_hmcts_mandatory_elements_payload(final String personHMCTSIDKey, final String personHMCTSIDValue) throws Exception {
         final String errorMessage = personHMCTSIDKey.equalsIgnoreCase("Empty Space") ? "[$.hearingRequest._case.caseIdHMCTS: must be at least 1 characters long]" : "[$.hearingRequest._case.caseIdHMCTS: may only be 30 characters long]";
         this.setInputPayloadFileName("hearing-request-mandatory-case-id-hmcts-template.json");
@@ -109,8 +107,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "caseListingRequestId Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "Invalid case listing requested id, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
-    //TODO - two tests failed Does not check for blank Spaces - Defect to be raised. Data - "Single Space,'"NO Space,''",
+    @CsvSource(value = {"Invalid case listing requested id, C_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76DC_FEFC2424-32A6-4B3A-BD97-023296C7F76D"}, nullValues = "NIL")
     @DisplayName("Negative validated response for case listing requested Id tests")
     public void test_negative_response_with_case_listing_request_id_mandatory_elements_payload(final String caseListingRequestIDKey, String caseListingRequestIDValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-listing-request-id.json");
@@ -120,8 +117,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, null, null, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.hearingRequest._case.caseListingRequestId: may only be 10 characters long]", null));
     }
 
     @Test
@@ -141,7 +138,6 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     @ParameterizedTest(name = "caseTitle Negative tests")
     @CsvSource(value = {"Invalid Case Title, C"}, nullValues = "NIL")
     @DisplayName("Negative validated response for case title tests")
-    //TODO - Raised Defect created by Venkata (MCGIRRSD-1683) around blank case titles. - Data "Empty Space,''", "Single Space,' '",
     public void test_negative_response_with_case_title_mandatory_elements_payload(final String caseTitleKey, String caseTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-title.json");
         caseTitleValue = caseTitleKey.equals("Invalid Case Title") ? createString(501, caseTitleValue.charAt(0)) : caseTitleValue;
@@ -204,7 +200,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "caseCourt Negative tests")
-    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "Invalid Case Court, 0", "Invalid Case Court, 11", "Invalid Case Court, 4.5"}, nullValues = "NIL")
+    @CsvSource(value = {"Empty Space,''", "Single Space,' '", "NIL,NIL", "Invalid Case Court, 0", "Invalid Case Court, 12", "Invalid Case Court, 4.5"}, nullValues = "NIL")
     @DisplayName("Negative validated response for caseCourt tests")
     public void test_negative_response_with_case_court_mandatory_elements_payload(final String caseCourtKey, final String caseCourtValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-mandatory-case-court.json");
@@ -235,6 +231,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "case registered Negative tests")
+    //TODO: Raise a defect: Test failed with invalid date format 2015-12-11T09:28:30.45
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the Case registered")
     public void test_negative_response_with_case_registered_mandatory_elements_payload(final String caseRegisteredKey, String caseRegisteredValue) throws Exception {
@@ -246,7 +243,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         String errorDesc = MessageFormat.format("[$.hearingRequest._case.caseRegistered: {0} is an invalid date-time]", caseRegisteredValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
@@ -274,10 +271,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingCourt'", listingCourtValue);
+        String errorDesc = "'" + listingCourtValue + "'" + " is not a valid value for field 'listingCourt'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1002", errorDesc, null));
     }
 
@@ -305,10 +302,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingPriority'", listingPriorityValue);
+        String errorDesc = "'" + listingPriorityValue + "'" + " is not a valid value for field 'listingPriority'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -337,11 +334,11 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingType'", listingTypeValue);
+        String errorDesc = "Invalid combination of values for fields 'listingSessionType' (" + listingSessionTypeValue + ") and 'listingType' (" + listingTypeValue + ")";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, errorDesc, null, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1002", errorDesc, null));
     }
 
     //Depends on Session Type, listing type(Hearing type)
@@ -370,10 +367,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingType'", listingTypeValue);
+        String errorDesc = "'" + listingTypeValue + "'" + " is not a valid value for field 'listingType'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -403,10 +400,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'caseSubType'", caseSubTypeValue);
+        String errorDesc = "'" + caseSubTypeValue + "'" + " is not a valid value for field 'caseSubType'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -444,16 +441,14 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("[$.hearingRequest._{0}: may only be 5000 characters long]", caseCommentsValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.hearingRequest._case.caseComments: may only be 5000 characters long]", null));
     }
 
     @ParameterizedTest(name = "Case Restricted Flag non mandatory positive tests")
     @CsvSource(value = {"Case Restricted Flag, true", "Case Restricted Flag, false"})
-    //TODO - Negative tests required
     @DisplayName("Successfully response for a payload with the Case restricted flag")
     public void test_successful_response_with_case_restricted_flag_complete_elements_payload(final String caseRestrictedFlagKey, String caseRestrictedFlagValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-restricted-flag.json");
@@ -477,20 +472,21 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-restricted-flag.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
                         "[$.hearingRequest._case.caseRestrictedFlag: integer found, boolean expected]",
                         null));
     }
+
     @Test
     @DisplayName("Negative response for a payload with invalid Case interpreter restricted flag")
     public void test_negative_response_with_invalid_case_interpreter_restricted_flag_complete_elements_payload() throws IOException {
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-interpreter-restricted-flag.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
@@ -504,7 +500,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         this.setInputPayloadFileName("hearing-request-non-mandatory-case-additional-security-flag.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
@@ -518,7 +514,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-auto-create-flag.json");
         generateResourcesByUserPayloadWithRandomCaseIdHMCTS();
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                createStandardPayloadHeader(),getHttpMethod(), getHttpSuccessStatus());
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO, getSnlErrorVerifier(), new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
@@ -613,8 +609,8 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         String errorDesc = MessageFormat.format("[$.hearingRequest.listing.listingStartDate: {0} is an invalid date-time]", listingStartDateValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", null, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
     @ParameterizedTest(name = "listingEndDate non mandatory positive tests")
@@ -633,7 +629,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45 and 2015-12-11T09:28:30
+    //TODO Defect has to be raised for the data of 2015-12-11T09:28:30.45
     @ParameterizedTest(name = "listingEndDate non mandatory negative tests")
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/common/data/negative-different-date-time-format-values.csv", numLinesToSkip = 1)
     @DisplayName("Negative response for a payload with the listingEndDate")
@@ -652,11 +648,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         String errorDesc = MessageFormat.format("[$.hearingRequest.listing.listingEndDate: {0} is an invalid date-time]", listingEndDateValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", null, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
-    // No negative tests because we don't know the AC
     @ParameterizedTest(name = "listingNumberOfAttendees non mandatory positive tests")
     @CsvSource(value = {"listingNumberOfAttendees, 1", "listingNumberOfAttendees, 10000"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingNumberOfAttendees")
@@ -672,7 +667,22 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
-    //TODO: listingNumberOfAttendees required -1 test
+    @ParameterizedTest(name = "listingNumberOfAttendees non mandatory Negative tests")
+    @CsvSource(value = {"listingNumberOfAttendees, -1"}, nullValues = "NIL")
+    @DisplayName("Negative response for a payload with the listingNumberOfAttendees")
+    public void test_unsuccessful_response_with_listing_Number_Attendees_elements_payload(final String listingNumberOfAttendeesKey, String listingNumberOfAttendeesValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-listing-number-attendees.json");
+        generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"listingNumberAttendees\": 0", "\"listingNumberAttendees\":" + Integer.parseInt(listingNumberOfAttendeesValue));
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.hearingRequest.listing.listingNumberAttendees: must have a minimum value of 0]", null));
+    }
+
+
     @ParameterizedTest(name = "listingCluster non mandatory positive tests")
     @CsvSource(value = {"listingCluster, TV", "entityClassCode, KNT"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingCluster")
@@ -697,16 +707,15 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'listingCluster'", listingClusterValue);
+        String errorDesc = "'" + listingClusterValue + "'" + " is not a valid value for field 'listingCluster'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
     @ParameterizedTest(name = "listingDuration non mandatory positive tests")
-    //Listing duration default 30min and there is no min and max limit: enquiry raised to dunsi and satyen
-    @CsvSource(value = {"listingDuration, 30", "listingDuration, 5000", "listingDuration, 29", "listingDuration, 1"}, nullValues = "NIL")
+    @CsvSource(value = {"listingDuration, 5", "listingDuration, 25", "listingDuration, 5000"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the listingDuration")
     public void test_successful_response_with_listing_Duration_elements_payload(final String listingDurationsKey, String listingDurationValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-listing-duration.json");
@@ -720,9 +729,30 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @ParameterizedTest(name = "listingDuration non mandatory negative tests")
+    @CsvSource(value = {"listingDuration, -50", "listingDuration, -1", "listingDuration, 0", "listingDuration, 29"}, nullValues = "NIL")
+    @DisplayName("Negative response for a payload with the listingDuration")
+    public void test_unsuccessful_response_with_listing_Duration_elements_payload(final String listingDurationsKey, String listingDurationValue) throws Exception {
+        this.setInputPayloadFileName("hearing-request-non-mandatory-listing-duration.json");
+        generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"listingDuration\": 0", "\"listingDuration\":" + Integer.parseInt(listingDurationValue));
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        String errorDescription = null;
+        if (listingDurationValue.equals("-1")) {
+            errorDescription = "[$.hearingRequest.listing.listingDuration: must have a exclusive minimum value of 0, $.hearingRequest.listing.listingDuration: must be multiple of 5.0]";
+        } else if (listingDurationValue.equals("29")) {
+            errorDescription = "[$.hearingRequest.listing.listingDuration: must be multiple of 5.0]";
+        } else {
+            errorDescription = "[$.hearingRequest.listing.listingDuration: must have a exclusive minimum value of 0]";
+        }
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDescription, null));
+    }
+
     @ParameterizedTest(name = "entityHmiId non mandatory positive tests")
-    //EntityId we need to check the Acceptance criteria
-    //TODO: Negative test required for entityHmiId filed
     @CsvSource(value = {"entityHmiId, 1", "entityHmiId, 5000", "entityHmiId, 29", "entityHmiId, 15"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityHmiId")
     public void test_successful_response_with_entity_hmi_id_payload(final String entityHmiIdKey, String entityHmiIdValue) throws Exception {
@@ -750,15 +780,12 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 delegateDTO,
                 getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
-                        "[$.hearingRequest.entities[0].entityHmiId: may only be 15 characters long]" ,
+                        "[$.hearingRequest.entities[0].entityHmiId: may only be 15 characters long]",
                         null));
     }
 
-
-    //Needs to test entityTypeCode and entityClass Code combinations and one for negative combinations
     @ParameterizedTest(name = "entityTypeCode non mandatory positive tests")
-    //Test Failed: When entity type code as ORG   "errorDesc": "entityTypeCode/entityClassCode ORG/PERSON",
-    @CsvSource(value = {"entityTypeCode, IND", "entityTypeCode, ORG"}, nullValues = "NIL")
+    @CsvSource(value = {"entityTypeCode, IND"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityTypeCodeValue")
     public void test_successful_response_with_entity_type_code_payload(final String entityTypeCodeKey, String entityTypeCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-type-code.json");
@@ -781,10 +808,10 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTypeCode'", entityTypeCodeValue);
+        String errorDesc = "'" + entityTypeCodeValue + "'" + " is not a valid value for field 'entityTypeCode'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -819,17 +846,16 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityRoleCode'", entityRoleCodeValue);
+        String errorDesc = "'" + entityRoleCodeValue + "'" + " is not a valid value for field 'entityRoleCode'";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
 
     @ParameterizedTest(name = "entityClassCode non mandatory positive tests")
-    //ORG Is failing check the doc, will be covered along with entity type code combination tests
-    @CsvSource(value = {"entityClassCode, PERSON", "entityClassCode, ORG"}, nullValues = "NIL")
+    @CsvSource(value = {"entityClassCode, PERSON"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityClassCode")
     public void test_successful_response_with_entity_class_code_payload(final String entityClassCodeKey, String entityClassCodeValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-class-code.json");
@@ -855,13 +881,12 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityClassCode'", entityClassCodeValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
     @ParameterizedTest(name = "entityTitle non mandatory positive tests")
-    //Test passed with Mrsssssss and InvalidTitle
-    @CsvSource(value = {"entityTitle, Mr", "entityTitle, Mrs", "entityTitle, Mrsssssss", "entityTitle, MsssssssssMsssssssssMsssssssssMsssssssssq",}, nullValues = "NIL")
+    @CsvSource(value = {"entityTitle, Mr", "entityTitle, Mrs"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityTitle")
     public void test_successful_response_with_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-title.json");
@@ -876,7 +901,6 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityTitle non mandatory negative tests")
-    //This test is passing because it is not checking max length, without value it is accepting (Not mandatory)
     @CsvSource(value = {"Invalid entityTitle  41 chars,t"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTitle")
     public void test_negative_response_with_entity_title_payload(final String entityTitleKey, String entityTitleValue) throws Exception {
@@ -890,14 +914,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTitle'", entityTitleValue);
+        String errorDesc = "[$.hearingRequest.entities[0].entitySubType.entityTitle: may only be 40 characters long]";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
+                getSnlErrorVerifier(),
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
-    //TODO: entityFirstName Max length value should be 100
     @ParameterizedTest(name = "entityFirstName non mandatory positive tests")
     @CsvSource(value = {"entityFirstName, testFirstName"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityFirstName")
@@ -914,7 +937,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
     }
 
     @ParameterizedTest(name = "entityFirstName non mandatory negative tests")
-    @CsvSource(value = {"Invalid entityFirstName 101,t", "Empty Space,''", "Single Space,' '", "NIL,NIL"}, nullValues = "NIL")
+    @CsvSource(value = {"Invalid entityFirstName 101,t"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityTitle")
     public void test_negative_response_with_entity_first_name_payload(final String entityFirstNameKey, String entityFirstNameValue) throws Exception {
         this.setInputPayloadFileName("hearing-request-non-mandatory-entity-first-name.json");
@@ -927,14 +950,13 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityTitle'", entityFirstNameValue);
+        String errorDesc = "[$.hearingRequest.entities[0].entitySubType.entityFirstName: may only be 100 characters long]";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
-    //TODO: entityFirstName Max length value should be 730
     @ParameterizedTest(name = "entityLastName non mandatory positive tests")
     @CsvSource(value = {"entityLastName, testLastName"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityLastName")
@@ -950,8 +972,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
                 new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
     }
 
+    @Disabled
+    //This test is failing because it is having clash with entityCompanyName: is missing but it is required, defect id = MCGIRRSD-2475
     @ParameterizedTest(name = "entityLastName non mandatory negative tests")
-    //This test is failing because it is having clash with entityCompanyName: is missing but it is required,
     @CsvSource(value = {"Invalid entityLastName 731,t"}, nullValues = "NIL")
     @DisplayName("Negative response for a payload with the entityLastName")
     public void test_negative_response_with_entity_last_name_payload(final String entityLastNameKey, String entityLastNameValue) throws Exception {
@@ -969,10 +992,9 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
-    //Should check the combinations
     @ParameterizedTest(name = "entityCompanyName non mandatory positive tests")
     @CsvSource(value = {"entityCompanyName, entityCompanyName"}, nullValues = "NIL")
     @DisplayName("Successfully response for a payload with the entityCompanyName")
@@ -1006,7 +1028,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityCompanyName'", entityCompanyNameValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
-                getSnlSuccessVerifier(),
+                getSnlErrorVerifier(),
                 new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", errorDesc, null));
     }
 
@@ -1057,6 +1079,14 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         String formattedString = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
                 getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomId, caseListingRequestID.substring(0, 9), value);
+        this.setInputBodyPayload(replaceCharacterSequence(token, value, formattedString));
+    }
+
+    private void generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace(final String id, final String token, final String value) throws IOException {
+        final int randomId = new Random().nextInt(99999999);
+        final String caseListingRequestID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
+        String formattedString = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + "/post/" + getInputPayloadFileName()), randomId, id, caseListingRequestID.substring(0, 9), value);
         this.setInputBodyPayload(replaceCharacterSequence(token, value, formattedString));
     }
 

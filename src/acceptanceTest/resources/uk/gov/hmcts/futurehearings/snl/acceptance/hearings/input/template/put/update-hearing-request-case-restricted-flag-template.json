@@ -3,21 +3,17 @@
     "meta": {
     },
     "_case": {
-      "caseIdHMCTS": "%s",
       "caseTitle": "Smith vs Best Company PL",
       "caseJurisdiction": "FAM",
-      "caseListingRequestId": "",
-      "caseSubType": "79",
-      "caseRegistered": "2020-01-13T20:20:39+00:00",
       "caseCourt": "1",
       "caseComments": "Ut in irure Lorem",
-      "caseRelatedCaseIdHMCTS": ["1","2"],
       "caseRestrictedFlag": 0,
-      "caseInterpreterRequiredFlag": true,
+      "caseInterpreterRequiredFlag": false,
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
-      "listingCourt": "301",
+      "amendReasonCode":  "CASE_NR",
+      "listingCourt": "300",
       "listingAutoCreateFlag": true,
       "listingPriority": "CRIT",
       "listingSessionType": "DS",

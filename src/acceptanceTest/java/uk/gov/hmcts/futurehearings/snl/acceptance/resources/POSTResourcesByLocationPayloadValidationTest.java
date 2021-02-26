@@ -106,7 +106,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
         SNLVerificationDTO snlVerificationDTO = null;
         switch (locationIdHMCTSValue) {
             case "":
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: must be at least 1 characters long]", null);
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: does not match the regex pattern ^[!-~]+$]", null);
                 break;
             case " ":
                 snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1001", "A Location resource with 'locationIdHMCTS' = ' ' already exists", null);
@@ -168,7 +168,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @ParameterizedTest(name = " Positive Tests Scenario : {0}")
-    @CsvSource(value = {"Location Description,'x – HMI Test This is location description'"})
+    @CsvSource(value = {"Location Description,'x HMI Test This is location description'"})
     public void test_positive_response_for_location_description_with_mandatory_elements_payload(final String locationDescriptionKey,
                                                                                                 final String locationDescriptionValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-mandatory-description.json");
@@ -252,9 +252,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     }
 
     @ParameterizedTest(name = "locationActiveFrom Positive tests")
-    @CsvSource({"Valid_Date_Format,2020-12-15T20:20:39Z",
-            "Valid_Date_Format,2002-02-15T10:00:30+01:25",
-            "Valid_Date_Format, 2002-02-01T10:00:30-05:00"})
+    @CsvSource({"Valid_Date_Format,2020-12-15"})
     public void test_positive_response_with_mandatory_location_activeFrom_payload(final String locationActiveFromKey,
                                                                                   final String locationActiveFromValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-mandatory-activeFrom.json");
@@ -335,9 +333,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
 
     @Disabled("TODO - Review this Test post the confirmation of date formats for the payloads")
     @ParameterizedTest(name = "locationActiveTo Positive tests")
-    @CsvSource({"Valid_Date_Format,2002-02-15T10:00:30:05+01:25",
-            "Valid_Date_Format, 2002-02-01T10:00:30-05:00",
-            "Valid_Date_Format, 2002-02-26T10:00:30.123Z"})
+    @CsvSource({"Valid_Date_Format,2002-02-15"})
     public void test_positive_response_with_mandatory_location_activeTo_payload(final String locationActiveFromKey,
                                                                                 final String locationActiveFromValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-activeTo.json");

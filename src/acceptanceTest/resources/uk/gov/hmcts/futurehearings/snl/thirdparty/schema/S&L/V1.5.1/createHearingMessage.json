@@ -1,0 +1,63 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://www.gov.uk/createHearingMessage.json",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"hearingRequest": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"meta": {
+					"$ref": "reusable.json#/definitions/meta"
+				},
+				"_case": {
+				  "allOf": [
+			       { "$ref": "reusable.json#/definitions/_case" },
+					   {
+					     "properties": {
+                  "caseListingRequestId": {
+                    "type": "string",
+                    "maxLength": 10,
+                    "pattern": "^[!-~]+$"
+                  }
+                },
+                "required": [
+                  "caseListingRequestId"
+                ]
+              }
+					 ]
+				},
+				"entities": {
+				  "type": "array",
+				  "items": {
+            "allOf": [
+              {
+                "$ref": "reusable.json#/definitions/entity",
+                "required": [
+                  "entityRoleCode",
+                  "entityTypeCode",
+                  "entitySubType"
+                ]
+              }
+    			  ]
+				  }
+				},
+        "listing": {
+          "$ref": "reusable.json#/definitions/listing",
+          "required": [
+            "listingType",
+            "listingSessionType"
+          ]
+        }
+			},
+			"required": [
+				"_case",
+				"listing"
+			]
+		}
+	},
+	"required": [
+		"hearingRequest"
+	]
+}

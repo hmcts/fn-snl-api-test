@@ -3,21 +3,17 @@
     "meta": {
     },
     "_case": {
-      "caseIdHMCTS": "%s",
       "caseTitle": "caseTitle",
       "caseJurisdiction": "FAM",
-      "caseListingRequestId": "",
-      "caseSubType": "79",
-      "caseRegistered": "2021-11-13T20:20:39+00:00",
       "caseCourt": "%s",
       "caseComments": "Ut in irure Lorem",
-      "caseRelatedCaseIdHMCTS": ["1","2"],
-      "caseRestrictedFlag": true,
-      "caseInterpreterRequiredFlag": true,
+      "caseRestrictedFlag": false,
+      "caseInterpreterRequiredFlag": false,
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
-      "listingCourt": "301",
+      "amendReasonCode": "CASE_NR",
+      "listingCourt": "300",
       "listingAutoCreateFlag": true,
       "listingPriority": "CRIT",
       "listingSessionType": "DS",

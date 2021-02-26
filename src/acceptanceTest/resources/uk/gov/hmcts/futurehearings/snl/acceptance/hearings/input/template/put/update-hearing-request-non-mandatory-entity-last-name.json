@@ -3,20 +3,16 @@
     "meta": {
     },
     "_case": {
-      "caseIdHMCTS": "%s",
-      "caseListingRequestId": "H100006",
       "caseTitle": "Smith vs Best Company PL",
       "caseJurisdiction": "FAM",
-      "caseSubType": "79",
-      "caseRegistered": "2015-12-11T19:28:35Z",
       "caseCourt": "1",
       "caseComments": "caseComments",
-      "caseRelatedCaseIdHMCTS": [],
       "caseRestrictedFlag": true,
       "caseInterpreterRequiredFlag": false,
       "caseAdditionalSecurityFlag": false
     },
     "listing": {
+      "amendReasonCode": "CASE_NR",
       "listingAutoCreateFlag": false,
       "listingPriority": "CRIT",
       "listingSessionType": "DS",
@@ -26,7 +22,7 @@
       "listingNumberAttendees": 6,
       "listingCluster": "TV",
       "listingDuration": 45,
-      "listingCourt": "301"
+      "listingCourt": "300"
     },
     "entities": [
       {

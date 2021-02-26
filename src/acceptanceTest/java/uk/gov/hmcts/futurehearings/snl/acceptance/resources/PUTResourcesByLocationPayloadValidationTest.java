@@ -87,13 +87,13 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
 
     @ParameterizedTest(name = "Update Positive Tests for Singular Fields : {0} - {1}")
     @CsvSource(value = {
-            "locationDescription,x – HMI Test - Updated",
+            "locationDescription,x HMI Test - Updated",
             "locationCluster,KNT",
             "locationCluster,TV",
             "locationPostCode,SW7 1AB",
             "locationParentCode,301",
-            "locationActiveFrom,2021-01-01T20:20:39+00:00",
-            "locationActiveTo,2021-01-01T20:20:39+00:00",
+            "locationActiveFrom,2021-01-01",
+            "locationActiveTo,2021-01-31",
             "locationVCSite,site - Updated",
             "locationVCSiteAddress,Site Address - Updated",
             "locationVCNumber,34",
@@ -143,7 +143,7 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
                         snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationIdHMCTS: may only be 8 characters long]", null);
                         break;
                 }
-            break;
+                break;
             case "locationCluster":
                 switch (locationTemplateValue) {
                     case "C_FE":
@@ -153,25 +153,25 @@ class PUTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValida
                         snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'" + locationTemplateValue + "' is not a valid value for field 'locationCluster'", null);
                         break;
                 }
-            break;
+                break;
             case "locationDescription":
                 switch (locationTemplateValue) {
-                    default :
-                        snlVerificationDTO =  new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
+                    default:
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
                                 "'" + locationTemplateValue + "' is not a valid value for field 'locationDescription'",
                                 null);
                         break;
                 }
             case "locationActiveFrom":
                 switch (locationTemplateValue) {
-                    default :
-                    snlVerificationDTO =  new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
-                            "'" + locationTemplateValue + "' is not a valid value for field 'locationActiveFromr'",
-                            null);
-                    break;
+                    default:
+                        snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000",
+                                "'" + locationTemplateValue + "' is not a valid value for field 'locationActiveFromr'",
+                                null);
+                        break;
                 }
-            break;
-            default :
+                break;
+            default:
                 break;
         }
         commonDelegate.test_expected_response_for_supplied_header(
