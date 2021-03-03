@@ -45,7 +45,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
     @Test
     @DisplayName("Successfully validated response with all the header values")
     public void test_successful_response_with_a_complete_header() throws Exception {
-
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createCompletePayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         commonDelegate.test_expected_response_for_supplied_header(
@@ -57,7 +56,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
     @Test
     @DisplayName("Successfully validated response with mandatory header values")
     public void test_successful_response_with_a_mandatory_header() throws Exception {
-
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
@@ -118,7 +116,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
     @Test
     @DisplayName("Headers with all empty and null values")
     void test_no_headers_populated() throws Exception {
-
         //2 Sets of Headers Tested - Nulls and Empty
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithAllValuesEmpty(), getHttpMethod(), HttpStatus.NOT_ACCEPTABLE);
@@ -146,8 +143,8 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
 
     @ParameterizedTest(name = "Destination System Header with invalid values - Param : {0} --> {1}")
     @CsvSource(value = {"Null_Value, NIL", "Invalid_Destination_System, S&amp;L", "Invalid_Destination_System, CfT"}, nullValues = "NIL")
-    //MCGIRR have told us that they only do AlphaNumeric Validation So Limited List of Values.....
-    //@Disabled("TODO - Enable this Test post Implementation and Testing of MCGIRRSD-1774")
+        //MCGIRR have told us that they only do AlphaNumeric Validation So Limited List of Values.....
+        //@Disabled("TODO - Enable this Test post Implementation and Testing of MCGIRRSD-1774")
     void test_destination_system_invalid_values(String destinationSystemKey, String destinationSystemVal) throws Exception {
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithDestinationSystemValue(destinationSystemVal), getHttpMethod(),
@@ -163,7 +160,11 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
             "Valid_Date_Format, 2002-10-02T15:00:00+05:00",
             "Valid_Date,2099-10-02T15:00:00Z"})
     public void test_request_created_at_with_valid_values(String requestCreatedAtKey, String requestCreatedAtVal) throws Exception {
-        this.setInputPayloadFileName("hearing-request-standard.json");
+        if (HttpMethod.PUT == HttpMethod.PUT) {
+            this.setInputPayloadFileName("hearing-request-put-standard.json");
+        } else {
+            this.setInputPayloadFileName("hearing-request-standard.json");
+        }
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(UUID.randomUUID().toString().substring(0, 9));
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestCreatedAtSystemValue(requestCreatedAtVal),
@@ -186,7 +187,7 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
             "Invalid_Date_Format, 2002-10-02T15:00:00.05Z",
             "Invalid_Date_Format, 2019-10-12 07:20:50.52Z",
     }, nullValues = "NIL")
-    //TODO Defect to be raised -  "Invalid_Value, value", And add Venkata's Format Test CSV....
+        //TODO Defect to be raised -  "Invalid_Value, value", And add Venkata's Format Test CSV....
     void test_request_created_at_invalid_values(String requestCreatedAtKey, String requestCreatedAtVal) throws Exception {
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestCreatedAtSystemValue(requestCreatedAtVal), getHttpMethod(),
@@ -202,10 +203,9 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
 
 
     @ParameterizedTest(name = "Mandatory Keys truncated from the Header - Key : {0}")
-    @ValueSource(strings = {"Accept","Source-System","Request-Created-At"})
-    //TODO - Please retest with Request-Processed-At once Defect MCGIRRSD-1759 and MCGIRRSD-1776
+    @ValueSource(strings = {"Accept", "Source-System", "Request-Created-At"})
+        //TODO - Please retest with Request-Processed-At once Defect MCGIRRSD-1759 and MCGIRRSD-1776
     void test_header_keys_truncated(String keyToBeTruncated) throws Exception {
-
         HttpStatus httpStatus = null;
         SNLVerificationDTO snlVerificationDTO = null;
         switch (keyToBeTruncated) {
@@ -248,7 +248,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
      "Source-System, Destination-System, Request-Created-At,Request-Processed-At, Request-Type " +
      "Content-Type is giving and Error Desc 'HTTP 415 Unsupported Media Type' while this could not be recreated in Postman.")*/
     void test_with_keys_removed_from_header(String keyToBeRemoved) throws Exception {
-
         HttpStatus httpStatus = null;
         SNLVerificationDTO snlVerificationDTO = null;
         switch (keyToBeRemoved) {
@@ -266,7 +265,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
                 snlVerificationDTO = new SNLVerificationDTO(httpStatus, "9999", "Expected header 'Accept=application/json'", null);
                 break;
         }
-
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRemovedHeaderKey(Arrays.asList(keyToBeRemoved)), getHttpMethod(), httpStatus);
         commonDelegate.test_expected_response_for_supplied_header(delegateDTO,
@@ -306,9 +304,8 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
 
     @ParameterizedTest(name = "Accept System Header with invalid format - Param : {0} --> {1}")
     @CsvSource({"Invalid_Value, Random", "Invalid_Format, application/pdf", "Invalid_Format, application/text"})
-    //@Disabled("TODO - Enable the following tests after MCGIRRSD-1803")
+        //@Disabled("TODO - Enable the following tests after MCGIRRSD-1803")
     void test_accept_at_with_invalid_values(String acceptTypeKey, String acceptTypeVal) throws Exception {
-
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithAcceptTypeAtSystemValue(acceptTypeVal),
                 getHttpMethod(),
@@ -325,7 +322,11 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
     })
     //TODO - The placement of a futuristic Date be it positive or negative is to be decided upoun the outcome of MCGIRRSD-1776
     public void test_request_processed_at_with_valid_values(String requestProcessedAtKey, String requestProcessedAtVal) throws Exception {
-        this.setInputPayloadFileName("hearing-request-standard.json");
+        if (HttpMethod.PUT == HttpMethod.PUT) {
+            this.setInputPayloadFileName("hearing-request-put-standard.json");
+        } else {
+            this.setInputPayloadFileName("hearing-request-standard.json");
+        }
         generateResourcesByUserPayloadWithRandomCaseIdHMCTSAndField(UUID.randomUUID().toString().substring(0, 9));
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createHeaderWithRequestProcessedAtSystemValue(requestProcessedAtVal),
@@ -342,13 +343,12 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
             "X-Destination-System, SNL",
             "X-Request-Created-At, 2012-03-19T07:22:00Z"
     })
-    //TODO - Data - "X-Request-Processed-At, 2012-03-19T07:22:00Z" The Request-Processed is not validated so am looking to Regression Tests post Fixing and Resolution of MCGIRRSD-1759
+        //TODO - Data - "X-Request-Processed-At, 2012-03-19T07:22:00Z" The Request-Processed is not validated so am looking to Regression Tests post Fixing and Resolution of MCGIRRSD-1759
     void test_deprecated_header_values(String deprecatedHeaderKey, String deprecatedHeaderVal) throws Exception {
-
         final HttpStatus httpStatus = deprecatedHeaderKey.equalsIgnoreCase("X-Accept") ? HttpStatus.NOT_ACCEPTABLE : HttpStatus.BAD_REQUEST;
         String expectedErrorMessage =
                 deprecatedHeaderKey.equalsIgnoreCase("X-Accept") ?
-                        "HTTP 406 Not Acceptable" : "Expected header '" + deprecatedHeaderKey.replace("X-", "") +"' must only contain alphanumeric characters";
+                        "HTTP 406 Not Acceptable" : "Expected header '" + deprecatedHeaderKey.replace("X-", "") + "' must only contain alphanumeric characters";
         switch (deprecatedHeaderKey) {
             case "X-Accept":
                 expectedErrorMessage = "HTTP 406 Not Acceptable";
@@ -387,7 +387,6 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
     }, nullValues = "NIL")
     @Disabled("TODO - Raised this One with Satyen as HMI is passing duplicate headers....")
     void test_duplicate_headers(String duplicateHeaderKey, String duplicateHeaderValue) throws Exception {
-
         final String expectedErrorMessage =
                 "Missing/Invalid Header " + duplicateHeaderKey;
         Map<String, String> duplicateHeaderField = new HashMap<String, String>();
