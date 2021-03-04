@@ -91,7 +91,7 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
     final void generatePayloadWithRandomHMCTSIDAndField(final String formatValue, final String templatePath) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID, formatValue));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID.substring(0, 8), formatValue));
     }
 
     final String generatePayloadWithRandomHMCTSIDAndField(int maxLength, final String formatValue, final String templatePath) throws IOException {

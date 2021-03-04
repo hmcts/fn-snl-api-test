@@ -278,7 +278,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("[$.locationRequest.location.locationActiveFrom: {0} is an invalid date-time]", locationActiveFromValue);
+        String errorDesc = MessageFormat.format("[$.locationRequest.location.locationActiveFrom: {0} is an invalid date]", locationActiveFromValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
@@ -291,7 +291,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
     public void test_positive_response_for_location_postcode_with_optional_elements_payload(final String locationPostCodeKey,
                                                                                             final String locationPostCodeValue) throws Exception {
         this.setInputPayloadFileName("resource-by-location-optional-postcode.json");
-        generatePayloadWithRandomHMCTSIDAndField(locationPostCodeValue, "/location/post");
+        generatePayloadWithRandomHMCTSIDAndField(locationPostCodeValue, "/location/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -321,7 +321,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationPostCode: may only be 15 characters long]", null);
                 break;
             default:
-                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1000", "'" + locationPostCodeValue + "' is not a valid value for field 'locationPostCode'", null);
+                snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationPostCode: may only be 15 characters long]", null);
                 break;
 
         }
@@ -359,7 +359,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("[$.locationRequest.location.locationActiveTo: {0} is an invalid date-time]", locationActiveToValue);
+        String errorDesc = MessageFormat.format("[$.locationRequest.location.locationActiveTo: {0} is an invalid date]", locationActiveToValue);
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
@@ -522,7 +522,7 @@ class POSTResourcesByLocationPayloadValidationTest extends ResourcesPayloadValid
                 snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationRecordingEqFlag: integer found, boolean expected]", null);
                 generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationRecordingEqFlag\": 0", "\"locationRecordingEqFlag\":" + Integer.parseInt(locationRecordingEqFlagValue), "/location/post/");
                 break;
-            case "got Invalid Value Float":
+            case "Invalid Value Float":
             case "Invalid Value Negative Float":
                 snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", "[$.locationRequest.location.locationRecordingEqFlag: number found, boolean expected]", null);
                 generateLocationPayloadWithRandomHMCTSIDAndFieldTokenReplace("\"locationRecordingEqFlag\": 0", "\"locationRecordingEqFlag\":" + Float.parseFloat(locationRecordingEqFlagValue), "/location/post/");

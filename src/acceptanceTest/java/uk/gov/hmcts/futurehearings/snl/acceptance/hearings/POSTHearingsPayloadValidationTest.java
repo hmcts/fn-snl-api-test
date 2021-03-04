@@ -878,7 +878,7 @@ public class POSTHearingsPayloadValidationTest extends HearingsPayloadValidation
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-        String errorDesc = MessageFormat.format("'{0}' is not a valid value for field 'entityClassCode'", entityClassCodeValue);
+        String errorDesc = "[$.hearingRequest.entities[0].entitySubType.entityClassCode: does not have a value in the enumeration [PERSON, ORG]";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),

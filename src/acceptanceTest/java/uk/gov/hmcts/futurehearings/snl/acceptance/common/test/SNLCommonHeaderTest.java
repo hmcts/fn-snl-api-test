@@ -97,10 +97,11 @@ public abstract class SNLCommonHeaderTest extends SNLCommonTest {
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), HttpStatus.BAD_REQUEST);
         delegateDTO.inputPayload("{}");
+        String errorDesc = "[$.hearingRequest: is missing but it is required]";
         commonDelegate.test_expected_response_for_supplied_header(
                 delegateDTO,
                 getSnlErrorVerifier(),
-                getSnlVerificationDTO());
+                new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004", errorDesc, null));
     }
 
     @Test
