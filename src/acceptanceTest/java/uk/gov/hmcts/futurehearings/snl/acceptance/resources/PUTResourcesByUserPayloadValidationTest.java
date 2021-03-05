@@ -75,7 +75,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
     @DisplayName("Successfully validated response for a payload with all the mandatory required fields")
     public void test_successful_response_with_mandatory_elements_payload() throws Exception {
         this.setInputPayloadFileName("resources-by-username-complete.json");
-        generatePayloadWithHMCTSID(personIdHMCTS, "/user/put/");
+        generatePayloadWithValueAndPath(personIdHMCTS, "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -90,7 +90,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
     @CsvFileSource(resources = "/uk/gov/hmcts/futurehearings/snl/acceptance/resources/input/template/user/put/valid_person_role_id.csv", numLinesToSkip = 1)
     public void test_update_positive_response_for_person_role_id_lov_ranges_with_mandatory_elements_payload(final String roleIDDesc, String roleID) throws Exception {
         this.setInputPayloadFileName("resources-by-username-optional-person-role-id.json");
-        generatePayloadWithHMCTSID(String.valueOf(roleID), "/user/put/");
+        generatePayloadWithValueAndPath(String.valueOf(roleID), "/user/put/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -102,21 +102,22 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
 
     //Getting the LOV Values from the MCGirr Spreadsheet - Hearing LOV's Locations Section
     //TODO - Clarify if the Source of the LOV's is Correct.
-    @Test
-    @DisplayName("Update PersonVenueID and validated response for a payload with all the mandatory required fields ")
-    //Starting personVenueID range with 301 because we have created user with personVenueId with 300
-    public void test_update_positive_response_for_person_venue_id_lov_ranges_with_mandatory_elements_payload() throws Exception {
+    @ParameterizedTest(name = "Update PersonVenueID and validated response for a payload with all the mandatory required fields ")
+    @CsvSource(value = {"VenueID,300", "VenueID,309", "VenueID,315", "VenueID,318", "VenueID,327", "VenueID,336",
+            "VenueID,350", "VenueID,358", "VenueID,365", "VenueID,370", "VenueID,374", "VenueID,377", "VenueID,385"
+    }, nullValues = "NIL")
+    public void test_update_positive_response_for_person_venue_id_lov_ranges_with_mandatory_elements_payload(final String personVenueIDKey,
+                                                                                                             final String personVenueIDValue) throws Exception {
         this.setInputPayloadFileName("resources-by-username-optional-person-venue-id.json");
-        for (int personVenueID = 301; personVenueID < 386; personVenueID++) {
-            generatePayloadWithHMCTSID(String.valueOf(personVenueID), "/user/put/");
-            DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
-                    createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
-            log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
-            commonDelegate.test_expected_response_for_supplied_header(
-                    delegateDTO,
-                    getSnlSuccessVerifier(),
-                    new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
-        }
+        generatePayloadWithValueAndPath(personVenueIDValue, "/user/put/");
+        DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
+                createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
+        log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
+        commonDelegate.test_expected_response_for_supplied_header(
+                delegateDTO,
+                getSnlSuccessVerifier(),
+                new SNLVerificationDTO(getHttpSuccessStatus(), null, null, null));
+
     }
 
     @ParameterizedTest(name = "Update Positive Tests for Singular Fields : {0} - {1}")
@@ -208,7 +209,7 @@ public class PUTResourcesByUserPayloadValidationTest extends ResourcesPayloadVal
                 switch (locationTemplateValue) {
                     default:
                         snlVerificationDTO = new SNLVerificationDTO(HttpStatus.BAD_REQUEST, "1004",
-                                "[$.userRequest.details.personActiveDate: "+locationTemplateValue+" is an invalid date]",
+                                "[$.userRequest.details.personActiveDate: " + locationTemplateValue + " is an invalid date]",
                                 null);
                         break;
                 }

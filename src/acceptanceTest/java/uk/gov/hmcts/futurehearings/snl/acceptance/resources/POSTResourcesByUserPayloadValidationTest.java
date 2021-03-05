@@ -68,7 +68,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_successful_response_with_mandatory_elements_payload() throws Exception {
 
         this.setInputPayloadFileName("resources-by-username-mandatory-person-id.json");
-        generatePayloadWithHMCTSID("hmctsqa@hmcts.net", "/user/post/");
+        generatePayloadWithHMCTSID("@hmcts.net", "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());
         log.debug("The value of the Delegate Payload : " + delegateDTO.inputPayload());
@@ -81,7 +81,6 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     @Test
     @DisplayName("Successfully validated response for a payload with all the complete payload fields")
     public void test_successful_response_with_complete_elements_payload() throws Exception {
-
         this.setInputPayloadFileName("resources-by-username-complete.json");
         generatePayloadWithRandomHMCTSID("/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
@@ -285,7 +284,7 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
 
     //Getting the LOV Values from the MCGirr Spreadsheet - Hearing LOV's Locations Section
     @ParameterizedTest(name = "PersonVenueID Positive Tests Scenario : {0} - {1}")
-    @CsvSource(value = {"Valid LOV Value,300", "Valid LOV Value,350", "Valid LOV Value,386"}, nullValues = "NIL")
+    @CsvSource(value = {"Valid LOV Value,300", "Valid LOV Value,350", "Valid LOV Value,358"}, nullValues = "NIL")
     //TODO - Clarify if the Source of the LOV's is Correct.
     public void test_positive_response_for_person_venue_id_with_mandatory_elements_payload(final String personVenueIdKey,
                                                                                            final String personVenueIdValue) throws Exception {
@@ -528,7 +527,6 @@ public class POSTResourcesByUserPayloadValidationTest extends ResourcesPayloadVa
     public void test_positive_response_for_person_position_from_date_with_mandatory_elements_payload(final String validPersonPositionFromDate,
                                                                                                      final String validPersonPositionFromDateValue) throws IOException {
         this.setInputPayloadFileName("resources-by-user-optional-person-position-from-date.json");
-
         generatePayloadWithRandomHMCTSIDAndField(validPersonPositionFromDateValue, "/user/post/");
         DelegateDTO delegateDTO = buildDelegateDTO(getRelativeURL(),
                 createStandardPayloadHeader(), getHttpMethod(), getHttpSuccessStatus());

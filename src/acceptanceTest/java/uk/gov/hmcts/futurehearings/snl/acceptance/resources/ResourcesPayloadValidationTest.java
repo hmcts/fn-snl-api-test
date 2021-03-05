@@ -62,7 +62,7 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
     final void generatePayloadWithRandomHMCTSID(final String templatePath) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID.substring(0,8)+"@hmcts.net"));
     }
 
     final String generatePayloadWithRandomHMCTSID(int maxLength, final String templatePath) throws IOException {
@@ -72,9 +72,15 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
         return randomID;
     }
 
-    final void generatePayloadWithHMCTSID(final String randomID, final String templatePath) throws IOException {
+    final void generatePayloadWithHMCTSID(final String value, final String templatePath) throws IOException {
+        final String randomID = UUID.randomUUID().toString().substring(0, 8);
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID+value));
+    }
+
+    final void generatePayloadWithValueAndPath(final String value, final String templatePath) throws IOException {
+        this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()),value));
     }
 
     final void generatePayloadWithHMCTSIDAndValue(final String randomID, final String value, final String templatePath) throws IOException {
@@ -91,7 +97,7 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
     final void generatePayloadWithRandomHMCTSIDAndField(final String formatValue, final String templatePath) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         this.setInputBodyPayload(String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID.substring(0, 8), formatValue));
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID.substring(0, 8)+"@hmcts.net", formatValue));
     }
 
     final String generatePayloadWithRandomHMCTSIDAndField(int maxLength, final String formatValue, final String templatePath) throws IOException {
@@ -120,7 +126,7 @@ public abstract class ResourcesPayloadValidationTest extends SNLCommonPayloadTes
                                                               final String replaceFrom) throws IOException {
         final String randomID = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         String payload = String.format(TestingUtils.readFileContents(String.format(INPUT_TEMPLATE_FILE_PATH,
-                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID);
+                getInputFileDirectory()) + templatePath + getInputPayloadFileName()), randomID.substring(0,8)+"@hmcts.net");
         payload = payload.replace(replaceFrom,formatValue.toString());
         this.setInputBodyPayload(payload);
     }
